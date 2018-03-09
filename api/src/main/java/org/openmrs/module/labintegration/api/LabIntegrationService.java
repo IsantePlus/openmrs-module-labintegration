@@ -11,4 +11,6 @@ package org.openmrs.module.labintegration.api;
 
 import org.openmrs.api.OpenmrsService;
 
-public interface LabIntegrationService extends OpenmrsService {}
+public interface LabIntegrationService extends OpenmrsService {
+	
+}
