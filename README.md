@@ -1,4 +1,4 @@
-${moduleName}
+Lab Integration Module
 ==========================
 
 Description
