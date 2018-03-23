@@ -26,6 +26,6 @@ public class MshHelper {
 		msh.getDateTimeOfMessage().getTime().setValue(dateSource.now());
 		msh.getMessageControlID().setValue(UUID.randomUUID().toString());
 		
-		msh.getReceivingFacility().getNamespaceID().setValue(hl7Config.getReceivingFacility());
+		msh.getReceivingApplication().getNamespaceID().setValue(hl7Config.getReceivingApplication());
 	}
 }
