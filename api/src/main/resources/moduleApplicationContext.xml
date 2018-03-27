@@ -27,7 +27,7 @@
 
     <!-- Wraps LabIntegrationService methods in DB transactions and OpenMRS interceptors,
     which set audit info like dateCreated, changedBy, etc.-->
-    <bean id="labintegration.LabIntegrationService"
+<!--    <bean id="labintegration.LabIntegrationService"
           class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <property name="transactionManager">
             <ref bean="transactionManager"/>
@@ -45,8 +45,8 @@
         </property>
     </bean>
 
-    <!-- Adds LabIntegrationService to OpenMRS context so it can be accessed
-    calling Context.getService(LabIntegrationService.class) -->
+    &lt;!&ndash; Adds LabIntegrationService to OpenMRS context so it can be accessed
+    calling Context.getService(LabIntegrationService.class) &ndash;&gt;
     <bean parent="serviceContext">
         <property name="moduleService">
             <list>
@@ -54,5 +54,5 @@
                 <ref bean="labintegration.LabIntegrationService"/>
             </list>
         </property>
-    </bean>
+    </bean>-->
 </beans>

@@ -53,6 +53,35 @@
 			The Namespace ID of the receiving application in HL7v2 message being sent to OpenELIS.
 		</description>
 	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.openElis.sendingApplication</property>
+		<defaultValue>iSantePlus</defaultValue>
+		<description>
+			The Namespace ID of the sending application in HL7v2 message being sent to OpenELIS.
+		</description>
+	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.production</property>
+		<defaultValue>false</defaultValue>
+		<description>
+			Whether this module is deployed to production - true or false. Translates to the processing ID flag
+			sent in HL7 messages.
+		</description>
+	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.hl7.motherNameAttrTypeUuid</property>
+		<defaultValue>Mother Name</defaultValue>
+		<description>
+			The UUID of the attribute type used to represent the mother name.
+		</description>
+	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.hl7.phoneNumAttrTypeUuid</property>
+		<defaultValue>Telephone Number</defaultValue>
+		<description>
+			The UUID of the attribute type used to represent the patient phone number.
+		</description>
+	</globalProperty>
 	<!-- Required Global Properties -->
 
 	<!--

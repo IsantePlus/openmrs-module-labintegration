@@ -1,4 +1,4 @@
-package org.openmrs.module.labintegration.api.hl7.messages.helpers;
+package org.openmrs.module.labintegration.api.hl7.messages.gnerators;
 
 import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.v25.segment.MSH;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class MshHelper {
+public class MshGenerator {
 	
 	private static final String FIELD_SEPARATOR = "|";
 	
@@ -27,5 +27,6 @@ public class MshHelper {
 		msh.getMessageControlID().setValue(UUID.randomUUID().toString());
 		
 		msh.getReceivingApplication().getNamespaceID().setValue(hl7Config.getReceivingApplication());
+		msh.getSendingApplication().getNamespaceID().setValue(hl7Config.getSendingApplication());
 	}
 }

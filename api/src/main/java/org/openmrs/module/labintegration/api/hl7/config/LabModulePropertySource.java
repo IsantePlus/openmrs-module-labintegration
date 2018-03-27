@@ -1,4 +1,4 @@
-package org.openmrs.module.labintegration.api;
+package org.openmrs.module.labintegration.api.hl7.config;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openmrs.api.AdministrationService;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LabModuleProperties {
+public class LabModulePropertySource {
 	
 	@Autowired
 	private AdministrationService adminService;
