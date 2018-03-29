@@ -1,4 +1,4 @@
-package org.openmrs.module.labintegration.api.communication.hl7.messages;
+package org.openmrs.module.labintegration.api.communication.hl7.messages.testdata;
 
 import org.openmrs.Concept;
 import org.openmrs.ConceptMap;
@@ -8,6 +8,7 @@ import org.openmrs.ConceptSource;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.Order;
+import org.openmrs.Patient;
 import org.openmrs.Provider;
 
 import java.util.Date;
@@ -19,17 +20,17 @@ public class HL7TestOrder {
 	
 	public static final String ENC_UUID = "549c78dc-31da-11e8-acac-c3add5b19973";
 	
-	public static final String ENC_TYPE_NAME = "Lab";
+	public static final String ENC_TYPE_NAME = "Vitals";
 	
-	public static final String CONCEPT_CDOE = "1000-1";
+	public static final String CONCEPT_CDOE = "10081-8";
 	
 	public static final Date SCHEDULED_DATE = new Date();
 	
-	public static final String PROVIDER_ID = "PRV-194";
+	public static final String PROVIDER_ID = "PROVIDER_ID";
 	
 	private final Order order;
 	
-	public HL7TestOrder(HL7TestPatient patient) {
+	public HL7TestOrder(Patient patient) {
 		order = mock(Order.class);
 		
 		mockEncounter();
@@ -38,7 +39,7 @@ public class HL7TestOrder {
 		
 		when(order.getScheduledDate()).thenReturn(SCHEDULED_DATE);
 		
-		when(order.getPatient()).thenReturn(patient.value());
+		when(order.getPatient()).thenReturn(patient);
 	}
 	
 	private void mockEncounter() {

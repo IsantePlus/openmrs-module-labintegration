@@ -6,6 +6,7 @@ import org.hibernate.exception.DataException;
 import org.openmrs.Order;
 import org.openmrs.module.labintegration.api.communnication.OrderParser;
 import org.openmrs.module.labintegration.api.hl7.config.LabIntegrationProperties;
+import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
 import org.openmrs.module.labintegration.api.hl7.config.systems.openelis.OpenElisHL7Config;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.MshGenerator;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.ObrGenerator;
@@ -46,9 +47,10 @@ public class HL7OrderMessageGenerator implements OrderParser {
 			mshGenerator.updateMSH(message.getMSH(), openElisHL7Config);
 			pidGenerator.updatePid(message.getPATIENT().getPID(), order.getPatient(), openElisHL7Config);
 			
-			orcGenerator.updateOrc(message.getORDER().getORC(), order, orderControl, openElisHL7Config);
+			OrderIdentifier orderIdentifier = openElisHL7Config.buildOrderIdentifier(order);
 			
-			obrGenerator.updateObr(message.getORDER().getOBSERVATION_REQUEST().getOBR(), order, openElisHL7Config);
+			orcGenerator.updateOrc(message.getORDER().getORC(), order, orderControl, orderIdentifier);
+			obrGenerator.updateObr(message.getORDER().getOBSERVATION_REQUEST().getOBR(), order, orderIdentifier);
 			
 			return message.toString();
 		}

@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <!-- CIEL -->
+    <concept_reference_source concept_source_id="21" name="CIEL" retired="0"
+        date_created="2005-01-06 00:00:00" creator="1"/>
+
+    <!-- Civil Status -->
+    <concept concept_id="1054" retired="0" date_created="2005-01-06 00:00:00" is_set="0"/>
+
+    <concept concept_id="1056" retired="0" date_created="2005-01-06 00:00:00" is_set="0"/>
+    <concept_name concept_name_id="25" concept_id="1056" name="Separe" locale_preferred="1"
+        creator="1" voided="0" date_created="2005-01-06 00:00:00" locale="ht"/>
+
+    <concept_reference_term concept_reference_term_id="171317" creator="1" date_created="2005-01-06 00:00:00"
+        concept_source_id="21" code="1054" uuid="6742d33a-a8f0-33c1-971a-26f69d99c20a"
+        retired="0"/>
+
+    <concept_reference_map concept_reference_term_id="171317" concept_map_id="171317"
+        concept_id="1054" uuid="171317ABBBBBBBBBBBBBBBBBBBBBBBBBBBBB" concept_map_type_id="1"
+        creator="1" date_created="2005-01-06 00:00:00"/>
+
+    <!-- Religion -->
+    <concept concept_id="162929" retired="0" date_created="2005-01-06 00:00:00" is_set="0"/>
+
+    <concept concept_id="162930" retired="0" date_created="2005-01-06 00:00:00" is_set="0"/>
+    <concept_name concept_name_id="26" concept_id="162930" name="Vaudou" date_created="2005-01-06 00:00:00"
+        creator="1" voided="0" locale="ht" locale_preferred="1"/>
+
+    <concept_reference_term concept_reference_term_id="278665" creator="1" date_created="2005-01-06 00:00:00"
+        concept_source_id="21" code="162929" uuid="22b55ba8-274c-34d1-8a3e-30e33a783ea4"
+        retired="0"/>
+
+    <concept_reference_map concept_reference_term_id="278665" concept_map_id="278665"
+        concept_id="162929" uuid="278664ABBBBBBBBBBBBBBBBBBBBBBBBBBBBB" concept_map_type_id="1"
+        creator="1" date_created="2005-01-06 00:00:00"/>
+
+    <!-- Identifiers -->
+    <patient_identifier_type patient_identifier_type_id="1" name="OpenMRS Identification Number"
+        retired="0" required="0" creator="1" date_created="2005-01-06 00:00:00"
+        uuid="05a29f94-c0ed-11e2-94be-8c13b969e334"/>
+    <patient_identifier_type patient_identifier_type_id="3" name="Code ST" required="0"
+        retired="0" creator="1" date_created="2005-01-06 00:00:00"
+        uuid="2a6f831e-3334-11e8-a2a9-4f6d51e0f490"/>
+
+    <!-- Attribute types -->
+    <person_attribute_type person_attribute_type_id="4" name="First Name of Mother"
+        format="java.lang.String" retired="0" creator="1" date_created="2005-01-06 00:00:00"
+        sort_weight="17" searchable="0"/>
+    <person_attribute_type person_attribute_type_id="8" name="Civil Status"
+        format="java.lang.String" retired="0" creator="1" date_created="2005-01-06 00:00:00"
+        sort_weight="8" searchable="0"/>
+
+    <!-- Registration encounter type -->
+    <encounter_type encounter_type_id="28" name="Enregistrement de patient" retired="0"
+          creator="1" date_created="2005-01-06 00:00:00" uuid="873f968a-73a8-4f9c-ac78-9f4778b751b6"/>
+
+    <!-- Location -->
+    <location location_id="2" name="Bayonnais" creator="1" date_created="2005-01-06 00:00:00"/>
+
+    <!-- Patient -->
+    <person person_id="10" gender="M" birthdate="1987-02-11 10:15:00" dead="0"
+          creator="1" date_created="2005-01-06 00:00:00" voided="0"/>
+    <patient patient_id="10" creator="1" date_created="2005-01-06 00:00:00" voided="0"/>
+
+    <patient_identifier patient_identifier_id="20" patient_id="10" identifier="1004X"
+          identifier_type="1" creator="1" date_created="2005-01-06 00:00:00" voided="0"
+          preferred="1" location_id="2"/>
+    <patient_identifier patient_identifier_id="21" patient_id="10" identifier="NOT_IN_HL7"
+          identifier_type="2" creator="1" date_created="2005-01-06 00:00:00" voided="0"
+          preferred="0" location_id="2"/>
+
+    <person_address person_address_id="4" person_id="10" country="Haiti" city_village="Anse Rouge"
+          address1="Anba Morne Porte" address2="Trou coucou" address3="1ère L'Arbre"
+          creator="1" date_created="2005-01-06 00:00:00" voided="0" state_province="Artibonite"
+          preferred="0"/>
+    <person_name person_name_id="4" preferred="1" person_id="10" given_name="Joe"
+          middle_name="Terry" family_name="Doe" creator="1"
+          date_created="2005-01-06 00:00:00" voided="0"/>
+
+    <person_attribute person_attribute_id="1" person_id="10" person_attribute_type_id="4"
+          creator="1" date_created="2005-01-06 00:00:00" voided="0" value="Janine"/>
+    <person_attribute person_attribute_id="2" person_id="10" person_attribute_type_id="8"
+          creator="1" date_created="2005-01-06 00:00:00" voided="0" value="765432101"/>
+
+    <!-- Registration Encounter -->
+    <encounter encounter_id="20" patient_id="10" encounter_type="28"
+          encounter_datetime="2018-03-28 10:13:23"
+          creator="1" date_created="2005-01-06 00:00:00" voided="0"/>
+
+    <obs obs_id="15" person_id="10" encounter_id="20" concept_id="1054"
+          creator="1" date_created="2005-01-06 00:00:00" voided="0"
+          value_coded="1056"/>
+    <obs obs_id="16" person_id="10" encounter_id="20" concept_id="162929"
+         creator="1" date_created="2005-01-06 00:00:00" voided="0"
+         value_coded="162930"/>
+
+</dataset>

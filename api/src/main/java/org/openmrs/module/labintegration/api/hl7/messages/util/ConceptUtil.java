@@ -7,7 +7,7 @@ import org.openmrs.ConceptSource;
 
 public final class ConceptUtil {
 	
-	private static final String LOINC = "LOINC";
+	public static final String LOINC = "LOINC";
 	
 	public static String getLoincCode(Concept concept) {
 		for (ConceptMap mapping : concept.getConceptMappings()) {

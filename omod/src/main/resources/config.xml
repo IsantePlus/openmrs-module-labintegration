@@ -70,7 +70,7 @@
 	</globalProperty>
 	<globalProperty>
 		<property>@MODULE_ID@.hl7.motherNameAttrTypeUuid</property>
-		<defaultValue>Mother Name</defaultValue>
+		<defaultValue>First Name of Mother</defaultValue>
 		<description>
 			The UUID of the attribute type used to represent the mother name.
 		</description>
@@ -80,6 +80,20 @@
 		<defaultValue>Telephone Number</defaultValue>
 		<description>
 			The UUID of the attribute type used to represent the patient phone number.
+		</description>
+	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.hl7.regForm.typeUuid</property>
+		<defaultValue>873f968a-73a8-4f9c-ac78-9f4778b751b6m</defaultValue>
+		<description>
+			The UUID of the registration form.
+		</description>
+	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.hl7.regForm.religion</property>
+		<defaultValue>Telephone Number</defaultValue>
+		<description>
+			The designation of the religion concept.
 		</description>
 	</globalProperty>
 	<!-- Required Global Properties -->

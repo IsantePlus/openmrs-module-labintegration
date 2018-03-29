@@ -8,6 +8,7 @@ import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pid.PidAddre
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pid.PidIdHelper;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pid.PidMotherNameHelper;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pid.PidNameHelper;
+import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pid.RegistrationDataHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,17 +27,21 @@ public class PidGenerator {
 	@Autowired
 	private PidMotherNameHelper motherNameHelper;
 	
+	@Autowired
+	private RegistrationDataHelper registrationObsHelper;
+	
 	public void updatePid(PID pid, Patient patient, HL7Config hl7Config) throws DataTypeException {
 		idHelper.updateIdNumber(pid, patient, hl7Config);
 		
 		nameHelper.updateNames(pid, patient);
+		motherNameHelper.updateMotherName(pid, patient, hl7Config);
 		
 		updateDateTimeOfBirth(pid, patient);
 		updateAdministrativeSex(pid, patient);
 		
 		addressHelper.updateAddresses(pid, patient);
 		
-		motherNameHelper.updateMotherName(pid, patient, hl7Config);
+		registrationObsHelper.updateWithRegistrationInformation(pid, patient, hl7Config);
 	}
 	
 	private void updateDateTimeOfBirth(PID pid, Patient patient) throws DataTypeException {

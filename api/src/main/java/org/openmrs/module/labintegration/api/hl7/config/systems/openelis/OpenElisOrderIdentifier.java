@@ -1,5 +1,8 @@
 package org.openmrs.module.labintegration.api.hl7.config.systems.openelis;
 
+import ca.uhn.hl7v2.model.DataTypeException;
+import ca.uhn.hl7v2.model.v25.segment.OBR;
+import ca.uhn.hl7v2.model.v25.segment.ORC;
 import org.apache.commons.lang3.StringUtils;
 import org.openmrs.Order;
 import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
@@ -24,8 +27,14 @@ public class OpenElisOrderIdentifier implements OrderIdentifier {
 	}
 	
 	@Override
-	public String value() {
-		return StringUtils.join(new String[] { encounterType, encounterUuid, conceptCode }, ID_SEPARATOR);
+	public void updateORC(ORC orc) throws DataTypeException {
+		orc.getOrderType().getIdentifier().setValue(conceptCode);
+	}
+	
+	@Override
+	public void updateOBR(OBR obr) throws DataTypeException {
+		String identifier = encounterType + ';' + encounterUuid;
+		obr.getUniversalServiceIdentifier().getIdentifier().setValue(identifier);
 	}
 	
 	public String getEncounterType() {

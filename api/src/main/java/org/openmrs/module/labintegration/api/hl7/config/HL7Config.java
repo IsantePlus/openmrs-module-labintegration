@@ -1,5 +1,6 @@
 package org.openmrs.module.labintegration.api.hl7.config;
 
+import org.openmrs.EncounterType;
 import org.openmrs.Order;
 
 public interface HL7Config {
@@ -15,4 +16,10 @@ public interface HL7Config {
 	String getPhoneNumberAttrTypeName();
 	
 	OrderIdentifier buildOrderIdentifier(Order order);
+	
+	EncounterType getRegistrationFormEncounterType();
+	
+	Integer getReligionConceptId();
+	
+	Integer getCivilStatusConceptId();
 }

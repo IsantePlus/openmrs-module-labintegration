@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
 public class PidIdHelper {
 	
 	public void updateIdNumber(PID pid, Patient patient, HL7Config hl7Config) throws DataTypeException {
-		String id = null;
+		PatientIdentifier id = null;
 		
 		String typeUuid = hl7Config.getPatientIdentifierTypeUuid();
 		for (PatientIdentifier identifier : patient.getIdentifiers()) {
 			if (StringUtils.equals(identifier.getIdentifierType().getUuid(), typeUuid)) {
-				id = identifier.getIdentifier();
+				id = identifier;
 				break;
 			}
 		}
@@ -28,6 +28,10 @@ public class PidIdHelper {
 			    patient.getPatientId(), typeUuid));
 		}
 		
-		pid.getPatientID().getIDNumber().setValue(id);
+		pid.getPatientID().getIDNumber().setValue(id.getIdentifier());
+		if (id.getLocation() != null) {
+			pid.getPatientID().getAssigningFacility().getNamespaceID()
+			        .setValue(String.valueOf(id.getLocation().getLocationId()));
+		}
 	}
 }

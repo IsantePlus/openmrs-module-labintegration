@@ -15,9 +15,13 @@ public class PidAddressHelper {
 		for (PersonAddress personAddress : patient.getAddresses()) {
 			XAD xad = pid.getPatientAddress(i);
 			
+			xad.getStreetAddress().getSad1_StreetOrMailingAddress().setValue(personAddress.getAddress2());
+			xad.getOtherDesignation().setValue(personAddress.getAddress3());
 			xad.getCity().setValue(personAddress.getCityVillage());
 			xad.getStateOrProvince().setValue(personAddress.getStateProvince());
 			xad.getZipOrPostalCode().setValue(personAddress.getPostalCode());
+			xad.getCountry().setValue(personAddress.getCountry());
+			xad.getOtherGeographicDesignation().setValue(personAddress.getAddress1());
 			
 			i++;
 		}
