@@ -20,6 +20,10 @@ public abstract class AbstractHL7Config implements HL7Config {
 	
 	private static final String REG_CIVIL_STATUS_CONCEPT = "labintegration.hl7.regForm.civilStatus";
 	
+	private static final String BIRTHPLACE_GROUP_CONCEPT = "labintegration.hl7.regForm.birthPlaceGroup";
+	
+	private static final String BIRTHPLACE_CITY_CONCEPT = "labintegration.hl7.regForm.birthPlaceCity";
+	
 	private static final String DEFAULT_MOTHER_NAME_ATTR_NAME = "First Name of Mother";
 	
 	private static final String DEFAULT_PHONE_NUM_ATTR_NAME = "Telephone Number";
@@ -29,6 +33,10 @@ public abstract class AbstractHL7Config implements HL7Config {
 	private static final String DEFAULT_REG_RELIGION_CONCEPT = "CIEL:162929";
 	
 	private static final String DEFAULT_REG_CIVIL_STATUS_CONCEPT = "CIEL:1054";
+	
+	private static final String DEFAULT_BIRTHPLACE_GROUP_CONCEPT = "PIH:birthplace address construct";
+	
+	private static final String DEFAULT_BIRTHPLACE_CITY_CONCEPT = "PIH:Country";
 	
 	@Autowired
 	private LabModulePropertySource propertySource;
@@ -51,14 +59,24 @@ public abstract class AbstractHL7Config implements HL7Config {
 	@Override
 	public Integer getReligionConceptId() {
 		Concept concept = propertySource.getConceptFromProperty(REG_RELIGION_CONCEPT, DEFAULT_REG_RELIGION_CONCEPT);
-		
 		return concept.getConceptId();
 	}
 	
 	@Override
 	public Integer getCivilStatusConceptId() {
 		Concept concept = propertySource.getConceptFromProperty(REG_CIVIL_STATUS_CONCEPT, DEFAULT_REG_CIVIL_STATUS_CONCEPT);
-		
+		return concept.getConceptId();
+	}
+	
+	@Override
+	public Integer getBirthPlaceGroupConceptId() {
+		Concept concept = propertySource.getConceptFromProperty(BIRTHPLACE_GROUP_CONCEPT, DEFAULT_BIRTHPLACE_GROUP_CONCEPT);
+		return concept.getConceptId();
+	}
+	
+	@Override
+	public Integer getBirthPlaceCityConceptId() {
+		Concept concept = propertySource.getConceptFromProperty(BIRTHPLACE_CITY_CONCEPT, DEFAULT_BIRTHPLACE_CITY_CONCEPT);
 		return concept.getConceptId();
 	}
 	

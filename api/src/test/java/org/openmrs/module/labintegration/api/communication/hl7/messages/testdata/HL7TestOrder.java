@@ -11,6 +11,7 @@ import org.openmrs.Order;
 import org.openmrs.Patient;
 import org.openmrs.Provider;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import static org.mockito.Mockito.mock;
@@ -24,9 +25,23 @@ public class HL7TestOrder {
 	
 	public static final String CONCEPT_CDOE = "10081-8";
 	
-	public static final Date SCHEDULED_DATE = new Date();
-	
 	public static final String PROVIDER_ID = "PROVIDER_ID";
+	
+	public static final Date SCHEDULED_DATE;
+	
+	static {
+		Calendar calendar = Calendar.getInstance();
+		
+		calendar.set(Calendar.YEAR, 2018);
+		calendar.set(Calendar.MONTH, 2);
+		calendar.set(Calendar.DAY_OF_MONTH, 25);
+		calendar.set(Calendar.HOUR, 8);
+		calendar.set(Calendar.MINUTE, 25);
+		calendar.set(Calendar.SECOND, 33);
+		calendar.set(Calendar.MILLISECOND, 400);
+		
+		SCHEDULED_DATE = calendar.getTime();
+	}
 	
 	private final Order order;
 	

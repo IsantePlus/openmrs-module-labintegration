@@ -72,14 +72,14 @@
 		<property>@MODULE_ID@.hl7.motherNameAttrTypeUuid</property>
 		<defaultValue>First Name of Mother</defaultValue>
 		<description>
-			The UUID of the attribute type used to represent the mother name.
+			The name of the attribute type used to represent the mother name.
 		</description>
 	</globalProperty>
 	<globalProperty>
 		<property>@MODULE_ID@.hl7.phoneNumAttrTypeUuid</property>
 		<defaultValue>Telephone Number</defaultValue>
 		<description>
-			The UUID of the attribute type used to represent the patient phone number.
+			The name of the attribute type used to represent the patient phone number.
 		</description>
 	</globalProperty>
 	<globalProperty>
@@ -91,9 +91,34 @@
 	</globalProperty>
 	<globalProperty>
 		<property>@MODULE_ID@.hl7.regForm.religion</property>
-		<defaultValue>Telephone Number</defaultValue>
+		<defaultValue>CIEL:162929</defaultValue>
 		<description>
-			The designation of the religion concept.
+			The designation of the religion concept, in the form of SOURCE:CODE. Will be
+			used to retrieve the correct obs from the registration form.
+		</description>
+	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.hl7.regForm.religion</property>
+		<defaultValue>CIEL:1054</defaultValue>
+		<description>
+			The designation of the civil status concept, in the form of SOURCE:CODE. Will be
+			used to retrieve the correct obs from the registration form.
+		</description>
+	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.hl7.regForm.religion</property>
+		<defaultValue>PIH:birthplace address construct</defaultValue>
+		<description>
+			The designation of the concept grouping birth address concepts, in the form of
+			SOURCE:CODE. Will be used to retrieve the correct obs from the registration form.
+		</description>
+	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.hl7.regForm.religion</property>
+		<defaultValue>PIH:Country</defaultValue>
+		<description>
+			The designation of the birth city, in the form of SOURCE:CODE. Will be used to
+			retrieve the correct obs from the birth obs group.
 		</description>
 	</globalProperty>
 	<!-- Required Global Properties -->

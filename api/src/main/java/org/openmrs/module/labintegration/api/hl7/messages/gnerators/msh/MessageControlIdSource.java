@@ -21,7 +21,7 @@ public class MessageControlIdSource {
 		return dateFormat.format(date) + rollingNumber();
 	}
 	
-	private int rollingNumber() {
+	private String rollingNumber() {
 		synchronized (counterLock) {
 			int value = rollingNumber;
 			
@@ -30,7 +30,7 @@ public class MessageControlIdSource {
 				rollingNumber = 0;
 			}
 			
-			return value;
+			return String.format("%05d", value);
 		}
 	}
 }

@@ -22,4 +22,8 @@ public interface HL7Config {
 	Integer getReligionConceptId();
 	
 	Integer getCivilStatusConceptId();
+	
+	Integer getBirthPlaceGroupConceptId();
+	
+	Integer getBirthPlaceCityConceptId();
 }

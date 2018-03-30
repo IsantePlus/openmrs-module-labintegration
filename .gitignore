@@ -11,3 +11,5 @@ target
 *.war
 *.ear
 /target/*
+
+id_file

@@ -37,6 +37,10 @@ public class RegistrationDataHelper {
 			
 			String civilStatus = EncounterUtil.getCodedObsValue(regEncounter, hl7Config.getCivilStatusConceptId());
 			pid.getMaritalStatus().getText().setValue(civilStatus);
+			
+			String birthCity = EncounterUtil.getObsTextValue(regEncounter, hl7Config.getBirthPlaceCityConceptId(),
+			    hl7Config.getBirthPlaceGroupConceptId());
+			pid.getBirthPlace().setValue(birthCity);
 		}
 	}
 	
