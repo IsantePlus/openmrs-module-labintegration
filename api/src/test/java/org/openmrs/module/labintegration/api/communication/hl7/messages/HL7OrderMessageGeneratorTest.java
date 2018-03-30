@@ -48,7 +48,8 @@ public class HL7OrderMessageGeneratorTest extends BaseModuleContextSensitiveTest
 			in = getClass().getClassLoader().getResourceAsStream(EXPECTED_FILE);
 			String expected = IOUtils.toString(in);
 			
-			// replace crlfs from file
+			// remove lfs from file
+			expected = expected.replace("\r\n", "\r");
 			return expected.replace("\n", "\r");
 		}
 		finally {
