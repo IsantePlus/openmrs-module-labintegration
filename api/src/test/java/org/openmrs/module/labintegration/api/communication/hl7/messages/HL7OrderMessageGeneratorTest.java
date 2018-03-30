@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 @ContextConfiguration(locations = { "classpath*:moduleApplicationContext.xml", "classpath*:applicationContext-service.xml",
         "classpath*:test-labContext.xml" }, inheritLocations = false)
@@ -38,8 +39,11 @@ public class HL7OrderMessageGeneratorTest extends BaseModuleContextSensitiveTest
 		HL7TestOrder order = new HL7TestOrder(patient);
 		
 		String msg = hl7OrderMessageGenerator.createMessage(order.value(), "NW");
-		
-		assertEquals(readExpected(), msg);
+
+		String expected = readExpected();
+		assertFalse(msg.contains("\n"));
+		assertFalse(expected.contains("\n"));
+		assertEquals(expected, msg);
 	}
 	
 	private String readExpected() throws IOException {
