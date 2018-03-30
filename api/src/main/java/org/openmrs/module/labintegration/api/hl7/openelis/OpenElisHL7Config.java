@@ -1,8 +1,8 @@
-package org.openmrs.module.labintegration.api.hl7.config.systems.openelis;
+package org.openmrs.module.labintegration.api.hl7.openelis;
 
 import org.openmrs.Order;
 import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
-import org.openmrs.module.labintegration.api.hl7.config.systems.AbstractHL7Config;
+import org.openmrs.module.labintegration.api.hl7.config.AbstractHL7Config;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,6 +13,8 @@ public class OpenElisHL7Config extends AbstractHL7Config {
 	private static final String SENDING_APP = "labintegration.openElis.sendingApplication";
 	
 	private static final String PID_TYPE_UUID = "labintegration.openElis.pidTypeUuid";
+	
+	private static final String OPENELIS_URL = "labintegration.openElis.url";
 	
 	private static final String DEFAULT_RECEIVING_APP = "OpenELIS";
 	
@@ -38,5 +40,9 @@ public class OpenElisHL7Config extends AbstractHL7Config {
 	@Override
 	public OrderIdentifier buildOrderIdentifier(Order order) {
 		return new OpenElisOrderIdentifier(order);
+	}
+	
+	public String getOpenelisUrl() {
+		return getPropertySource().getProperty(OPENELIS_URL, null);
 	}
 }

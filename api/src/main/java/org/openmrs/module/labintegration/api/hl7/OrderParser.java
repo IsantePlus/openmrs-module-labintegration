@@ -1,4 +1,4 @@
-package org.openmrs.module.labintegration.api.communnication;
+package org.openmrs.module.labintegration.api.hl7;
 
 import org.openmrs.Order;
 

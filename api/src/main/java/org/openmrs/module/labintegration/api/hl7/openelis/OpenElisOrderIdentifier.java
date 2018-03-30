@@ -1,4 +1,4 @@
-package org.openmrs.module.labintegration.api.hl7.config.systems.openelis;
+package org.openmrs.module.labintegration.api.hl7.openelis;
 
 import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.v25.segment.OBR;

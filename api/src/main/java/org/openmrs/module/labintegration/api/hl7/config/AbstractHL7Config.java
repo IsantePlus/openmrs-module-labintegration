@@ -1,9 +1,7 @@
-package org.openmrs.module.labintegration.api.hl7.config.systems;
+package org.openmrs.module.labintegration.api.hl7.config;
 
 import org.openmrs.Concept;
 import org.openmrs.EncounterType;
-import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
-import org.openmrs.module.labintegration.api.hl7.config.LabModulePropertySource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

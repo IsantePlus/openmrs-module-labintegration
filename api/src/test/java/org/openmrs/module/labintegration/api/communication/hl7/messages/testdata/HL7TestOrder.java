@@ -23,7 +23,7 @@ public class HL7TestOrder {
 	
 	public static final String ENC_TYPE_NAME = "Vitals";
 	
-	public static final String CONCEPT_CDOE = "10081-8";
+	public static final String CONCEPT_CODE = "10081-8";
 	
 	public static final String PROVIDER_ID = "PROVIDER_ID";
 	
@@ -74,7 +74,7 @@ public class HL7TestOrder {
 		ConceptSource otherSource = new ConceptSource();
 		otherSource.setName("Other");
 		
-		ConceptReferenceTerm loincTerm = new ConceptReferenceTerm(loincSource, CONCEPT_CDOE, "loinc name");
+		ConceptReferenceTerm loincTerm = new ConceptReferenceTerm(loincSource, CONCEPT_CODE, "loinc name");
 		ConceptMap loincMapping = new ConceptMap(loincTerm, new ConceptMapType());
 		
 		ConceptReferenceTerm otherTerm = new ConceptReferenceTerm(otherSource, "XXXX", "other name");
