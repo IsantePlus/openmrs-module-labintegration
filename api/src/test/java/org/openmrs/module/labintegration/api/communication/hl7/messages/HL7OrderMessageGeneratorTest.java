@@ -1,6 +1,7 @@
 package org.openmrs.module.labintegration.api.communication.hl7.messages;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.openmrs.Patient;
 import org.openmrs.api.PatientService;
@@ -43,6 +44,8 @@ public class HL7OrderMessageGeneratorTest extends BaseModuleContextSensitiveTest
 		String expected = readExpected();
 		assertFalse(msg.contains("\n"));
 		assertFalse(expected.contains("\n"));
+		assertEquals(StringUtils.countMatches(expected, "\r"),
+				StringUtils.countMatches(msg, "\r"));
 		assertEquals(expected, msg);
 	}
 	
