@@ -44,8 +44,12 @@ public class HL7OrderMessageGeneratorTest extends BaseModuleContextSensitiveTest
 		String expected = readExpected();
 		assertFalse(msg.contains("\n"));
 		assertFalse(expected.contains("\n"));
-		assertEquals(StringUtils.countMatches(expected, "\r"),
-				StringUtils.countMatches(msg, "\r"));
+
+		int expectedMatches = StringUtils.countMatches(expected, "\r");
+		int msgMatches = StringUtils.countMatches(msg, "\r");
+		assertEquals("MSG: " + msgMatches + " , EXP: " + expectedMatches,
+				expectedMatches, msgMatches);
+
 		assertEquals(expected, msg);
 	}
 	
