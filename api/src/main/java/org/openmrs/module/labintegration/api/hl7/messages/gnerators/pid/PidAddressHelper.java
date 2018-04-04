@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PidAddressHelper {
-	
+
+	private static final String HAITI = "HTI";
+
 	public void updateAddresses(PID pid, Patient patient) throws DataTypeException {
 		int i = 0;
 		for (PersonAddress personAddress : patient.getAddresses()) {
@@ -20,7 +22,7 @@ public class PidAddressHelper {
 			xad.getCity().setValue(personAddress.getCityVillage());
 			xad.getStateOrProvince().setValue(personAddress.getStateProvince());
 			xad.getZipOrPostalCode().setValue(personAddress.getPostalCode());
-			xad.getCountry().setValue(personAddress.getCountry());
+			xad.getCountry().setValue(HAITI);
 			xad.getOtherGeographicDesignation().setValue(personAddress.getAddress1());
 			
 			i++;
