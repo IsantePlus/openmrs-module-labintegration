@@ -121,6 +121,12 @@
 			retrieve the correct obs from the birth obs group.
 		</description>
 	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.openElis.url</property>
+		<description>
+			The URL to the OpenELIS endpoint that accepts HL7 message posts.
+		</description>
+	</globalProperty>
 	<!-- Required Global Properties -->
 
 	<!--

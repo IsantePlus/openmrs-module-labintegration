@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PidAddressHelper {
-
-    private static final String HAITI = "HTI";
-
+	
+	private static final String HAITI = "HTI";
+	
 	public void updateAddresses(PID pid, Patient patient) throws DataTypeException {
 		int i = 0;
 		for (PersonAddress personAddress : patient.getAddresses()) {

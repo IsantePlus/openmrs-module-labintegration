@@ -5,9 +5,9 @@ import ca.uhn.hl7v2.model.v25.message.OML_O21;
 import org.hibernate.exception.DataException;
 import org.openmrs.Order;
 import org.openmrs.module.labintegration.api.hl7.OrderParser;
+import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
 import org.openmrs.module.labintegration.api.hl7.config.LabIntegrationProperties;
 import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
-import org.openmrs.module.labintegration.api.hl7.openelis.OpenElisHL7Config;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.MshGenerator;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.ObrGenerator;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.OrcGenerator;
@@ -27,9 +27,6 @@ public class HL7OrderMessageGenerator implements OrderParser {
 	private PidGenerator pidGenerator;
 	
 	@Autowired
-	private OpenElisHL7Config openElisHL7Config;
-	
-	@Autowired
 	private LabIntegrationProperties labIntegrationProperties;
 	
 	@Autowired
@@ -39,17 +36,17 @@ public class HL7OrderMessageGenerator implements OrderParser {
 	private ObrGenerator obrGenerator;
 	
 	@Override
-	public String createMessage(Order order, String orderControl) {
+	public String createMessage(Order order, OrderControl orderControl, HL7Config hl7Config) throws MessageCreationException {
 		try {
 			OML_O21 message = new OML_O21();
 			message.initQuickstart("OML", "O21", labIntegrationProperties.getHL7ProcessingId());
 			
-			mshGenerator.updateMSH(message.getMSH(), openElisHL7Config);
-			pidGenerator.updatePid(message.getPATIENT().getPID(), order.getPatient(), openElisHL7Config);
+			mshGenerator.updateMSH(message.getMSH(), hl7Config);
+			pidGenerator.updatePid(message.getPATIENT().getPID(), order.getPatient(), hl7Config);
 			
-			OrderIdentifier orderIdentifier = openElisHL7Config.buildOrderIdentifier(order);
+			OrderIdentifier orderIdentifier = hl7Config.buildOrderIdentifier(order);
 			
-			orcGenerator.updateOrc(message.getORDER().getORC(), order, orderControl, orderIdentifier);
+			orcGenerator.updateOrc(message.getORDER().getORC(), order, orderControl.name(), orderIdentifier);
 			obrGenerator.updateObr(message.getORDER().getOBSERVATION_REQUEST().getOBR(), order, orderIdentifier);
 			
 			return message.toString();

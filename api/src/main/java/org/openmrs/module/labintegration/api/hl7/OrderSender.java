@@ -4,5 +4,7 @@ import org.openmrs.Order;
 
 public interface OrderSender {
 	
-	void sendOrder(Order order);
+	void sendNewOrder(Order order) throws NewOrderException;
+	
+	boolean enabled();
 }
