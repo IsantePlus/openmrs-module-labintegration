@@ -19,9 +19,9 @@ import static org.junit.Assert.assertTrue;
 @RunWith(MockitoJUnitRunner.class)
 public class AckParserTest {
 	
-	private static final String ACK_CA_FILE = "ACK_CA.hl7";
+	private static final String ACK_COMMIT_ACCEPT_FILE = "ACK_Commit_Accept.hl7";
 	
-	private static final String ACK_CE_FILE = "ACK_CE.hl7";
+	private static final String ACK_COMMIT_ERROR_FILE = "ACK_Commit_Error.hl7";
 	
 	private static final String MSG_ID = "20070701151010000018";
 	
@@ -29,7 +29,7 @@ public class AckParserTest {
 	
 	@Test
 	public void shouldParseAck() throws IOException, InvalidAckException {
-		String msg = HL7TestMsgUtil.readMsg(ACK_CA_FILE);
+		String msg = HL7TestMsgUtil.readMsg(ACK_COMMIT_ACCEPT_FILE);
 		
 		Acknowledgement ack = ackParser.parse(msg);
 		
@@ -42,7 +42,7 @@ public class AckParserTest {
 	
 	@Test
 	public void shouldParseAckError() throws IOException, InvalidAckException {
-		String msg = HL7TestMsgUtil.readMsg(ACK_CE_FILE);
+		String msg = HL7TestMsgUtil.readMsg(ACK_COMMIT_ERROR_FILE);
 		
 		Acknowledgement ack = ackParser.parse(msg);
 		

@@ -46,7 +46,7 @@ public class HL7OrderMessageGenerator implements OrderParser {
 			
 			OrderIdentifier orderIdentifier = hl7Config.buildOrderIdentifier(order);
 			
-			orcGenerator.updateOrc(message.getORDER().getORC(), order, orderControl.name(), orderIdentifier);
+			orcGenerator.updateOrc(message.getORDER().getORC(), order, orderControl.code(), orderIdentifier);
 			obrGenerator.updateObr(message.getORDER().getOBSERVATION_REQUEST().getOBR(), order, orderIdentifier);
 			
 			return message.toString();

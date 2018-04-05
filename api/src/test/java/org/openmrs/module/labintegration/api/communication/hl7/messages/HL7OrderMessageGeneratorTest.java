@@ -39,7 +39,7 @@ public class HL7OrderMessageGeneratorTest extends BaseModuleContextSensitiveTest
 		Patient patient = patientService.getPatient(PATIENT_ID);
 		HL7TestOrder order = new HL7TestOrder(patient);
 		
-		String msg = hl7OrderMessageGenerator.createMessage(order.value(), OrderControl.NW, openElisHL7Config);
+		String msg = hl7OrderMessageGenerator.createMessage(order.value(), OrderControl.NEW_ORDER, openElisHL7Config);
 		
 		String expected = HL7TestMsgUtil.readMsg(EXPECTED_FILE);
 		assertEquals(expected, msg);

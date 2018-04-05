@@ -8,6 +8,8 @@ import java.util.Calendar;
 
 public final class HL7TestMsgUtil {
 	
+	private static final int HOUR = 60 * 60 * 1000;
+	
 	public static String readMsg(String filename) throws IOException {
 		InputStream in = null;
 		try {
@@ -18,7 +20,7 @@ public final class HL7TestMsgUtil {
 			expected = expected.replace("\n", "\r");
 			// timezones
 			int offset = Calendar.getInstance().getTimeZone().getRawOffset();
-			offset = offset / (60 * 60 * 1000);
+			offset = offset / HOUR;
 			return expected.replace("{time_offset}", String.format("%02d", offset));
 		}
 		finally {

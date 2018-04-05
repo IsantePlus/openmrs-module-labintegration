@@ -6,5 +6,5 @@ public interface OrderSender {
 	
 	void sendNewOrder(Order order) throws NewOrderException;
 	
-	boolean enabled();
+	boolean isEnabled();
 }

@@ -31,7 +31,7 @@ public class OpenElisOrderSender implements OrderSender {
 	@Override
 	public void sendNewOrder(Order order) throws NewOrderException {
 		try {
-			String msg = msgGenerator.createMessage(order, OrderControl.NW, config);
+			String msg = msgGenerator.createMessage(order, OrderControl.NEW_ORDER, config);
 			
 			ResponseEntity<String> response = restTemplate.postForEntity(config.getOpenElisUrl(), msg, String.class);
 			
@@ -52,7 +52,7 @@ public class OpenElisOrderSender implements OrderSender {
 	}
 	
 	@Override
-	public boolean enabled() {
+	public boolean isEnabled() {
 		return config.getOpenElisUrl() != null;
 	}
 }
