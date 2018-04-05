@@ -7,4 +7,8 @@ public class LabHL7ConfigurationException extends RuntimeException {
 	public LabHL7ConfigurationException(String message) {
 		super(message);
 	}
+	
+	public LabHL7ConfigurationException(String message, Throwable throwable) {
+		super(message, throwable);
+	}
 }

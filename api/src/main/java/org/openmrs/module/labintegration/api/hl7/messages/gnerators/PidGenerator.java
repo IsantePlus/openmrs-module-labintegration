@@ -4,6 +4,7 @@ import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.v25.segment.PID;
 import org.openmrs.Patient;
 import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
+import org.openmrs.module.labintegration.api.hl7.messages.MessageCreationException;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pid.PidAddressHelper;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pid.PidIdHelper;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pid.PidMotherNameHelper;
@@ -30,7 +31,7 @@ public class PidGenerator {
 	@Autowired
 	private RegistrationDataHelper registrationObsHelper;
 	
-	public void updatePid(PID pid, Patient patient, HL7Config hl7Config) throws DataTypeException {
+	public void updatePid(PID pid, Patient patient, HL7Config hl7Config) throws DataTypeException, MessageCreationException {
 		idHelper.updateIdNumber(pid, patient, hl7Config);
 		
 		nameHelper.updateNames(pid, patient);

@@ -11,4 +11,11 @@
     <packaging>jar</packaging>
     <name>Lab Integration API</name>
     <description>API project for Lab Integration</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+    </dependencies>
 </project>

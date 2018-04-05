@@ -12,7 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class PidIdHelper {
 	
-	public void updateIdNumber(PID pid, Patient patient, HL7Config hl7Config) throws DataTypeException {
+	public void updateIdNumber(PID pid, Patient patient, HL7Config hl7Config) throws DataTypeException,
+	        MessageCreationException {
 		PatientIdentifier id = null;
 		
 		String typeUuid = hl7Config.getPatientIdentifierTypeUuid();
