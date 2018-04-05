@@ -6,5 +6,7 @@ public interface OrderSender {
 	
 	void sendNewOrder(Order order) throws NewOrderException;
 	
+	void sendOrderCancellation(Order order) throws OrderCancellationException;
+	
 	boolean isEnabled();
 }
