@@ -23,15 +23,17 @@ public class LabIntegrationActivator extends BaseModuleActivator {
 	/**
 	 * @see #started()
 	 */
+	@Override
 	public void started() {
 		log.info("Started Lab Integration");
 	}
 	
 	/**
-	 * @see #shutdown()
+	 * @see #stopped()
 	 */
-	public void shutdown() {
-		log.info("Shutdown Lab Integration");
+	@Override
+	public void stopped() {
+		log.info("Stopped Lab Integration");
 	}
 	
 }
