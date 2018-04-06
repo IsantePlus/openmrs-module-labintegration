@@ -57,15 +57,21 @@
         <openmrsPlatformVersion>2.0.5</openmrsPlatformVersion>
         <javaCompilerVersion>1.8</javaCompilerVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <springVersion>4.1.4.RELEASE</springVersion>
+        <eventVersion>2.5.0</eventVersion>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-web</artifactId>
-                <version>${springVersion}</version>
+                <groupId>org.openmrs.web</groupId>
+                <artifactId>openmrs-web</artifactId>
+                <version>${openmrsPlatformVersion}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs</groupId>
+                <artifactId>event-api</artifactId>
+                <version>${eventVersion}</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>
