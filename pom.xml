@@ -57,7 +57,7 @@
         <openmrsPlatformVersion>2.0.5</openmrsPlatformVersion>
         <javaCompilerVersion>1.8</javaCompilerVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <eventVersion>2.5.0</eventVersion>
+        <eventVersion>2.5</eventVersion>
     </properties>
 
     <dependencyManagement>
@@ -79,6 +79,11 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+                <artifactId>maven-java-formatter-plugin</artifactId>
+                <inherited>false</inherited>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
