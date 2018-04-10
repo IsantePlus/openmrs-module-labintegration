@@ -9,9 +9,13 @@ import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.Message;
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.openmrs.Encounter;
+import org.openmrs.api.EncounterService;
 import org.openmrs.event.EventListener;
+import org.openmrs.module.labintegration.api.LabIntegrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component("labintegration.EncounterEventListener")
@@ -22,8 +26,11 @@ public class EncounterEventListener implements EventListener {
 	private static final String UUID_STRING_NAME = "uuid";
 	private static final String ACTION_STRING_NAME = "action";
 	
-	//@Autowired
-	//private EncounterService encounterService;
+	@Autowired
+	private EncounterService encounterService;
+	
+	@Autowired
+	private LabIntegrationService labIntegrationService;
 	
 	private static final String ADULT_LAB_ORDER_ENCOUNTER_TYPE_UUID =
 			"10d73929-54b6-4d18-a647-8b7316bc1ae3";
@@ -43,11 +50,12 @@ public class EncounterEventListener implements EventListener {
 			String messageAction = mapMessage.getString(ACTION_STRING_NAME);
 			LOGGER.info("Fetched Encounter {} event. Action: {}", uuid, messageAction);
 			
-			//Encounter encounter = encounterService.getEncounterByUuid(uuid);
+			Encounter encounter = encounterService.getEncounterByUuid(uuid);
 			if ((CREATED.toString().equals(messageAction)
 					|| UPDATED.toString().equals(messageAction))
 					&& ACCEPTED_ENCOUNTERS_UUIDS.stream().anyMatch(x -> x.equals(uuid))) {
-				LOGGER.info("Processing order encounter {}", uuid);
+				LOGGER.info("Found order encounter {}", uuid);
+				labIntegrationService.doOrder(encounter);
 			}
 		} catch (JMSException e) {
 			LOGGER.error(
