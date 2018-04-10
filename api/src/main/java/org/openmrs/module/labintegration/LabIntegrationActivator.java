@@ -9,23 +9,28 @@
  */
 package org.openmrs.module.labintegration;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.openmrs.Encounter;
+import org.openmrs.api.context.Context;
+import org.openmrs.event.Event;
 import org.openmrs.module.BaseModuleActivator;
+import org.openmrs.module.labintegration.api.event.EncounterEventListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class contains the logic that is run every time this module is either started or shutdown
  */
 public class LabIntegrationActivator extends BaseModuleActivator {
 	
-	private Log log = LogFactory.getLog(this.getClass());
+	private static final Logger LOGGER = LoggerFactory.getLogger(LabIntegrationActivator.class);
 	
 	/**
 	 * @see #started()
 	 */
 	@Override
 	public void started() {
-		log.info("Started Lab Integration");
+		LOGGER.info("Started Lab Integration");
+		Event.subscribe(Encounter.class, null, getEncounterEventListener());
 	}
 	
 	/**
@@ -33,7 +38,12 @@ public class LabIntegrationActivator extends BaseModuleActivator {
 	 */
 	@Override
 	public void stopped() {
-		log.info("Stopped Lab Integration");
+		LOGGER.info("Stopped Lab Integration");
+		Event.unsubscribe(Encounter.class, null, getEncounterEventListener());
 	}
 	
+	private EncounterEventListener getEncounterEventListener() {
+		return Context.getRegisteredComponent(
+				"labintegration.EncounterEventListener", EncounterEventListener.class);
+	}
 }
