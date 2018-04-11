@@ -4,7 +4,7 @@ import org.openmrs.Order;
 import org.openmrs.module.labintegration.api.hl7.NewOrderException;
 import org.openmrs.module.labintegration.api.hl7.OrderCancellationException;
 import org.openmrs.module.labintegration.api.hl7.OrderSender;
-import org.openmrs.module.labintegration.api.hl7.messages.HL7OrderMessageGenerator;
+import org.openmrs.module.labintegration.api.hl7.messages.OMLO21OrderParser;
 import org.openmrs.module.labintegration.api.hl7.messages.MessageCreationException;
 import org.openmrs.module.labintegration.api.hl7.messages.OrderControl;
 import org.openmrs.module.labintegration.api.hl7.messages.ack.AckParser;
@@ -22,7 +22,7 @@ public class OpenElisOrderSender implements OrderSender {
 	private OpenElisHL7Config config;
 	
 	@Autowired
-	private HL7OrderMessageGenerator msgGenerator;
+	private OMLO21OrderParser orderParser;
 	
 	@Autowired
 	private AckParser ackParser;
@@ -74,7 +74,7 @@ public class OpenElisOrderSender implements OrderSender {
 	
 	private Acknowledgement sendToOpenElis(Order order, OrderControl orderControl) throws MessageCreationException,
 	        InvalidAckException {
-		String msg = msgGenerator.createMessage(order, orderControl, config);
+		String msg = orderParser.createMessage(order, orderControl, config);
 		
 		ResponseEntity<String> response = restTemplate.postForEntity(config.getOpenElisUrl(), msg, String.class);
 		

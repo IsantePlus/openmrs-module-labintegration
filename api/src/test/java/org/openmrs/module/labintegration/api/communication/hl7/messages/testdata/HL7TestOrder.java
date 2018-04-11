@@ -35,7 +35,7 @@ public class HL7TestOrder {
 		calendar.set(Calendar.YEAR, 2018);
 		calendar.set(Calendar.MONTH, 2);
 		calendar.set(Calendar.DAY_OF_MONTH, 25);
-		calendar.set(Calendar.HOUR, 8);
+		calendar.set(Calendar.HOUR_OF_DAY, 8);
 		calendar.set(Calendar.MINUTE, 25);
 		calendar.set(Calendar.SECOND, 33);
 		calendar.set(Calendar.MILLISECOND, 400);
