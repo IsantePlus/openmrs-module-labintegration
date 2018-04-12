@@ -1,6 +1,6 @@
 package org.openmrs.module.labintegration.api.hl7.messages.ack;
 
-import ca.uhn.hl7v2.model.v25.message.ACK;
+import ca.uhn.hl7v2.model.v251.message.ACK;
 import ca.uhn.hl7v2.parser.PipeParser;
 import org.springframework.stereotype.Component;
 

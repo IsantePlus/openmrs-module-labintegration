@@ -1,7 +1,7 @@
 package org.openmrs.module.labintegration.api.hl7.messages.gnerators;
 
 import ca.uhn.hl7v2.model.DataTypeException;
-import ca.uhn.hl7v2.model.v25.segment.PID;
+import ca.uhn.hl7v2.model.v251.segment.PID;
 import org.openmrs.Patient;
 import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
 import org.openmrs.module.labintegration.api.hl7.messages.MessageCreationException;

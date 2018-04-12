@@ -1,8 +1,8 @@
 package org.openmrs.module.labintegration.api.hl7.config;
 
 import ca.uhn.hl7v2.model.DataTypeException;
-import ca.uhn.hl7v2.model.v25.segment.OBR;
-import ca.uhn.hl7v2.model.v25.segment.ORC;
+import ca.uhn.hl7v2.model.v251.segment.OBR;
+import ca.uhn.hl7v2.model.v251.segment.ORC;
 
 public interface OrderIdentifier {
 	
