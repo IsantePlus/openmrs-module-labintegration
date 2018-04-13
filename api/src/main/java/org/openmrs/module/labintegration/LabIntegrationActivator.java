@@ -9,13 +9,10 @@
  */
 package org.openmrs.module.labintegration;
 
-//import org.openmrs.Encounter;
+import org.openmrs.api.EncounterService;
 import org.openmrs.api.context.Context;
-//import org.openmrs.event.Event;
 import org.openmrs.module.BaseModuleActivator;
-import org.openmrs.module.htmlformentryui.fragment.controller.htmlform.EnterHtmlFormFragmentController;
-//import org.openmrs.module.labintegration.api.event.EncounterEventListener;
-import org.openmrs.module.labintegration.api.event.FormSubmitAfterAdvice;
+import org.openmrs.module.labintegration.api.event.SaveEncounterAfterAdvice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +30,7 @@ public class LabIntegrationActivator extends BaseModuleActivator {
 	public void started() {
 		LOGGER.info("Started Lab Integration");
 		//Event.subscribe(Encounter.class, null, getEncounterEventListener());
-		Context.addAdvice(EnterHtmlFormFragmentController.class, getFormSubmitAfterAdvice());
+		Context.addAdvice(EncounterService.class, getFormSubmitAfterAdvice());
 	}
 	
 	/**
@@ -43,7 +40,7 @@ public class LabIntegrationActivator extends BaseModuleActivator {
 	public void stopped() {
 		LOGGER.info("Stopped Lab Integration");
 		//Event.unsubscribe(Encounter.class, null, getEncounterEventListener());
-		Context.removeAdvice(EnterHtmlFormFragmentController.class, getFormSubmitAfterAdvice());
+		Context.removeAdvice(EncounterService.class, getFormSubmitAfterAdvice());
 	}
 	
 //	private EncounterEventListener getEncounterEventListener() {
@@ -51,8 +48,8 @@ public class LabIntegrationActivator extends BaseModuleActivator {
 //				"labintegration.EncounterEventListener", EncounterEventListener.class);
 //	}
 	
-	private FormSubmitAfterAdvice getFormSubmitAfterAdvice() {
+	private SaveEncounterAfterAdvice getFormSubmitAfterAdvice() {
 		return Context.getRegisteredComponent(
-				"labintegration.FormSubmitAfterAdvice", FormSubmitAfterAdvice.class);
+				"labintegration.SaveEncounterAfterAdvice", SaveEncounterAfterAdvice.class);
 	}
 }

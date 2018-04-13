@@ -128,6 +128,12 @@
                 <version>${uicommonsVersion}</version>
                 <scope>provided</scope>
             </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.springframework</groupId>-->
+                <!--<artifactId>spring-aspects</artifactId>-->
+                <!--<version>4.1.4.RELEASE</version>-->
+                <!--<scope>provided</scope>-->
+            <!--</dependency>-->
         </dependencies>
     </dependencyManagement>
 
