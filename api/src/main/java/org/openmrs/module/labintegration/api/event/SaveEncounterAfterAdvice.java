@@ -29,8 +29,7 @@ public class SaveEncounterAfterAdvice implements AfterReturningAdvice {
 	private LabIntegrationService labIntegrationService;
 	
 	@Override
-	public void afterReturning(Object savedObject, Method method, Object[] args, Object target)
-			throws Throwable {
+	public void afterReturning(Object savedObject, Method method, Object[] args, Object target) {
 		if (StringUtils.equals(method.getName(), SAVE_ENCOUNTER_METHOD_NAME)
 				&& savedObject != null) {
 			Encounter encounter = (Encounter) savedObject;

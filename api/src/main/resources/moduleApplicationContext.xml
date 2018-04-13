@@ -25,21 +25,6 @@
 
     <context:component-scan base-package="org.openmrs.module.labintegration"/>
 
-    <!--<aop:aspectj-autoproxy/>-->
-
-    <!--<aop:config>-->
-        <!--<aop:aspect ref="labintegration.FormSubmitAfterAdvice">-->
-            <!--<aop:pointcut-->
-                <!--id="orderFormSubmitPointcut"-->
-                <!--expression="execution(* org.openmrs.module.htmlformentryui.fragment.controller.htmlform.EnterHtmlFormFragmentController.submit(..))"-->
-            <!--/>-->
-            <!--<aop:after-returning method="afterReturning" pointcut-ref="orderFormSubmitPointcut" returning="returnValue" />-->
-        <!--</aop:aspect>-->
-    <!--</aop:config>-->
-
-    <!--execution(* org.openmrs.module.htmlformentryui.fragment.controller.htmlform"-->
-    <!--+ ".EnterHtmlFormFragmentController.submit(..))-->
-
     <!-- Wraps LabIntegrationService methods in DB transactions and OpenMRS interceptors,
     which set audit info like dateCreated, changedBy, etc.-->
 <!--    <bean id="labintegration.LabIntegrationService"
