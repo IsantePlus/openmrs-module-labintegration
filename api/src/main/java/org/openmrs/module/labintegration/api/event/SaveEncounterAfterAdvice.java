@@ -1,7 +1,7 @@
 package org.openmrs.module.labintegration.api.event;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.Encounter;
@@ -22,7 +22,7 @@ public class SaveEncounterAfterAdvice implements AfterReturningAdvice {
 	private static final String LAB_ORDER_ENCOUNTER_TYPE_UUID =
 			"f037e97b-471e-4898-a07c-b8e169e0ddc4";
 	
-	private static final List<String> ACCEPTED_ENCOUNTERS_UUIDS = Arrays.asList(
+	private static final List<String> ACCEPTED_ENCOUNTERS_UUIDS = Collections.singletonList(
 			LAB_ORDER_ENCOUNTER_TYPE_UUID);
 	
 	@Autowired
