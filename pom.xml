@@ -58,6 +58,12 @@
         <javaCompilerVersion>1.8</javaCompilerVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <eventVersion>2.5</eventVersion>
+        <emrapiVersion>1.21.0</emrapiVersion>
+        <uiframeworkVersion>3.11.0</uiframeworkVersion>
+        <appframeworkVersion>2.10.0</appframeworkVersion>
+        <appuiVersion>1.9.0-SNAPSHOT</appuiVersion>
+        <uicommonsVersion>2.4.0-SNAPSHOT</uicommonsVersion>
+        <htmlformentryuiVersion>1.6.3</htmlformentryuiVersion>
     </properties>
 
     <dependencyManagement>
@@ -72,6 +78,54 @@
                 <groupId>org.openmrs</groupId>
                 <artifactId>event-api</artifactId>
                 <version>${eventVersion}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>htmlformentry-api</artifactId>
+                <version>3.3.2</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>htmlformentry-omod</artifactId>
+                <version>3.3.2</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>htmlformentryui-omod</artifactId>
+                <version>1.6.3</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>uiframework-api</artifactId>
+                <version>${uiframeworkVersion}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>emrapi-api</artifactId>
+                <version>${emrapiVersion}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>appframework-api</artifactId>
+                <version>${appframeworkVersion}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>appui-omod</artifactId>
+                <version>${appuiVersion}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>uicommons</artifactId>
+                <version>${uicommonsVersion}</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>
