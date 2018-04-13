@@ -47,6 +47,11 @@ public class OpenElisHL7Config extends AbstractHL7Config {
 		return new OpenElisOrderIdentifier(order);
 	}
 	
+	@Override
+	public String getSendingFacilityNamespaceID() {
+		return null;
+	}
+	
 	public URI getOpenElisUrl() {
 		String url = getPropertySource().getProperty(OPENELIS_URL, null);
 		try {
