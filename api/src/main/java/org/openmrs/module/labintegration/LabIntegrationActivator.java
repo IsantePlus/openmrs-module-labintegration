@@ -29,7 +29,6 @@ public class LabIntegrationActivator extends BaseModuleActivator {
 	@Override
 	public void started() {
 		LOGGER.info("Started Lab Integration");
-		//Event.subscribe(Encounter.class, null, getEncounterEventListener());
 		Context.addAdvice(EncounterService.class, getFormSubmitAfterAdvice());
 	}
 	
@@ -39,14 +38,8 @@ public class LabIntegrationActivator extends BaseModuleActivator {
 	@Override
 	public void stopped() {
 		LOGGER.info("Stopped Lab Integration");
-		//Event.unsubscribe(Encounter.class, null, getEncounterEventListener());
 		Context.removeAdvice(EncounterService.class, getFormSubmitAfterAdvice());
 	}
-	
-//	private EncounterEventListener getEncounterEventListener() {
-//		return Context.getRegisteredComponent(
-//				"labintegration.EncounterEventListener", EncounterEventListener.class);
-//	}
 	
 	private SaveEncounterAfterAdvice getFormSubmitAfterAdvice() {
 		return Context.getRegisteredComponent(

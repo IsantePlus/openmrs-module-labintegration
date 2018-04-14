@@ -69,7 +69,7 @@ public class OpenElisOrderSender implements OrderSender {
 	
 	@Override
 	public boolean isEnabled() {
-		return config.getOpenElisUrl() != null;
+		return config.isOpenElisConfigured();
 	}
 	
 	private Acknowledgement sendToOpenElis(Order order, OrderControl orderControl) throws MessageCreationException,

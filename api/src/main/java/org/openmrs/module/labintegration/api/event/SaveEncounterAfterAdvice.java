@@ -3,6 +3,7 @@ package org.openmrs.module.labintegration.api.event;
 import java.lang.reflect.Method;
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.Encounter;
+import org.openmrs.module.labintegration.PropertiesUtil;
 import org.openmrs.module.labintegration.api.LabIntegrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +18,6 @@ public class SaveEncounterAfterAdvice implements AfterReturningAdvice {
 	
 	private static final String SAVE_ENCOUNTER_METHOD_NAME = "saveEncounter";
 	
-	private static final String LAB_ORDER_ENCOUNTER_TYPE_UUID =
-			"f037e97b-471e-4898-a07c-b8e169e0ddc4";
-	
 	@Autowired
 	private LabIntegrationService labIntegrationService;
 	
@@ -31,7 +29,8 @@ public class SaveEncounterAfterAdvice implements AfterReturningAdvice {
 			LOGGER.info("Invoked saveEncounter method in EncounterService. Saved encounter {}",
 					encounter.getUuid());
 			
-			if (LAB_ORDER_ENCOUNTER_TYPE_UUID.equals(encounter.getEncounterType().getUuid())) {
+			if (StringUtils.equals(PropertiesUtil.getLabOrderEncounterTypeUuid(),
+					encounter.getEncounterType().getUuid())) {
 				LOGGER.info("Order encounter occurred {}", encounter.getUuid());
 				labIntegrationService.doOrder(encounter);
 			}
