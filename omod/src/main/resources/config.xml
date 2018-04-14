@@ -28,12 +28,6 @@
 		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>
 	</aware_of_modules>
 
-	<require_modules>
-		<require_module version="${htmlformentryuiVersion}">
-			org.openmrs.module.htmlformentryui
-		</require_module>
-	</require_modules>
-
 	<!-- AOP
 	<advice>
 		<point>org.openmrs.api.FormService</point>
