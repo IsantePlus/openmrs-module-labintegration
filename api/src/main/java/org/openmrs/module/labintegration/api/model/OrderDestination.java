@@ -4,19 +4,19 @@ public enum OrderDestination {
 	SCC("SCC"),
 	OPEN_ELIS("OpenELIS");
 	
-	private String text;
+	private String name;
 	
 	OrderDestination(String text) {
-		this.text = text;
+		this.name = text;
 	}
 	
-	public String getText() {
-		return this.text;
+	public String getName() {
+		return this.name;
 	}
 	
 	public static OrderDestination fromString(String text) {
 		for (OrderDestination b : OrderDestination.values()) {
-			if (b.text.equalsIgnoreCase(text)) {
+			if (b.name.equalsIgnoreCase(text)) {
 				return b;
 			}
 		}
