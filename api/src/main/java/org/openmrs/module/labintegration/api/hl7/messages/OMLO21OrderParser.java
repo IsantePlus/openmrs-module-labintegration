@@ -1,7 +1,7 @@
 package org.openmrs.module.labintegration.api.hl7.messages;
 
 import ca.uhn.hl7v2.HL7Exception;
-import ca.uhn.hl7v2.model.v251.message.OML_O21;
+import ca.uhn.hl7v2.model.v25.message.OML_O21;
 import org.hibernate.exception.DataException;
 import org.openmrs.Order;
 import org.openmrs.module.labintegration.api.hl7.OrderParser;

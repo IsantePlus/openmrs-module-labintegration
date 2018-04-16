@@ -1,7 +1,7 @@
 package org.openmrs.module.labintegration.api.hl7.messages;
 
 import ca.uhn.hl7v2.HL7Exception;
-import ca.uhn.hl7v2.model.v251.message.ORM_O01;
+import ca.uhn.hl7v2.model.v25.message.ORM_O01;
 import org.openmrs.Order;
 import org.openmrs.module.labintegration.api.hl7.OrderParser;
 import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
