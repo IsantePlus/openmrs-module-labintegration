@@ -57,15 +57,14 @@
         <openmrsPlatformVersion>2.0.5</openmrsPlatformVersion>
         <javaCompilerVersion>1.8</javaCompilerVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <springVersion>4.1.4.RELEASE</springVersion>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-web</artifactId>
-                <version>${springVersion}</version>
+                <groupId>org.openmrs.web</groupId>
+                <artifactId>openmrs-web</artifactId>
+                <version>${openmrsPlatformVersion}</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>
@@ -73,6 +72,19 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+                <artifactId>maven-java-formatter-plugin</artifactId>
+                <inherited>false</inherited>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <target>${javaCompilerVersion}</target>
+                    <source>${javaCompilerVersion}</source>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
