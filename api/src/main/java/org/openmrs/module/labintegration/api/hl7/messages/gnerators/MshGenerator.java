@@ -34,5 +34,7 @@ public class MshGenerator {
 		
 		msh.getReceivingApplication().getNamespaceID().setValue(hl7Config.getReceivingApplication());
 		msh.getSendingApplication().getNamespaceID().setValue(hl7Config.getSendingApplication());
+		
+		msh.getSendingFacility().getNamespaceID().setValue(hl7Config.getSendingFacilityNamespaceID());
 	}
 }
