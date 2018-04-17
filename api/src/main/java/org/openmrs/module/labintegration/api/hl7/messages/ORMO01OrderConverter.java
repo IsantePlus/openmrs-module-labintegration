@@ -3,7 +3,7 @@ package org.openmrs.module.labintegration.api.hl7.messages;
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.v25.message.ORM_O01;
 import org.openmrs.Order;
-import org.openmrs.module.labintegration.api.hl7.OrderParser;
+import org.openmrs.module.labintegration.api.hl7.OrderConverter;
 import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
 import org.openmrs.module.labintegration.api.hl7.config.LabIntegrationProperties;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.MshGenerator;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class ORMO01OrderParser implements OrderParser {
+public class ORMO01OrderConverter implements OrderConverter {
 	
 	@Autowired
 	private MshGenerator mshGenerator;

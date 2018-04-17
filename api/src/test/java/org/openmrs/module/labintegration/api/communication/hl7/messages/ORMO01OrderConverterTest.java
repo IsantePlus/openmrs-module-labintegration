@@ -8,8 +8,8 @@ import org.openmrs.Patient;
 import org.openmrs.api.PatientService;
 import org.openmrs.module.labintegration.api.communication.hl7.messages.testdata.HL7TestMsgUtil;
 import org.openmrs.module.labintegration.api.communication.hl7.messages.testdata.HL7TestOrder;
-import org.openmrs.module.labintegration.api.communication.hl7.messages.utils.OrderParserTestUtils;
-import org.openmrs.module.labintegration.api.hl7.messages.ORMO01OrderParser;
+import org.openmrs.module.labintegration.api.communication.hl7.messages.utils.OrderConverterTestUtils;
+import org.openmrs.module.labintegration.api.hl7.messages.ORMO01OrderConverter;
 import org.openmrs.module.labintegration.api.hl7.messages.OrderControl;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.MshGenerator;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.msh.MessageControlIdSource;
@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 
 @ContextConfiguration(locations = { "classpath*:moduleApplicationContext.xml", "classpath*:applicationContext-service.xml",
         "classpath*:test-labContext.xml" }, inheritLocations = false)
-public class ORMO01OrderParserTest extends BaseModuleContextSensitiveTest {
+public class ORMO01OrderConverterTest extends BaseModuleContextSensitiveTest {
 	
 	private static final String DATASET = "lab-dataset.xml";
 	
@@ -39,7 +39,7 @@ public class ORMO01OrderParserTest extends BaseModuleContextSensitiveTest {
 	private MshGenerator mshGenerator;
 	
 	@Autowired
-	private ORMO01OrderParser ORMO01OrderParser;
+	private ORMO01OrderConverter orderConverter;
 	
 	@Autowired
 	private PatientService patientService;
@@ -49,7 +49,7 @@ public class ORMO01OrderParserTest extends BaseModuleContextSensitiveTest {
 	
 	@Before
 	public void init() {
-		OrderParserTestUtils.mockRollingNumber(controlIdSource);
+		OrderConverterTestUtils.mockRollingNumber(controlIdSource);
 	}
 	
 	@Test
@@ -58,7 +58,7 @@ public class ORMO01OrderParserTest extends BaseModuleContextSensitiveTest {
 		Patient patient = patientService.getPatient(PATIENT_ID);
 		HL7TestOrder order = new HL7TestOrder(patient);
 		
-		String msg = ORMO01OrderParser.createMessage(order.value(), OrderControl.NEW_ORDER, scchl7Config);
+		String msg = orderConverter.createMessage(order.value(), OrderControl.NEW_ORDER, scchl7Config);
 		
 		String expected = HL7TestMsgUtil.readMsg(ORM_O01_FILE);
 		assertEquals(expected, msg);

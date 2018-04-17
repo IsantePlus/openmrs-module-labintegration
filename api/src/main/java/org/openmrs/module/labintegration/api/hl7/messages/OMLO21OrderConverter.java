@@ -4,7 +4,7 @@ import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.v25.message.OML_O21;
 import org.hibernate.exception.DataException;
 import org.openmrs.Order;
-import org.openmrs.module.labintegration.api.hl7.OrderParser;
+import org.openmrs.module.labintegration.api.hl7.OrderConverter;
 import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
 import org.openmrs.module.labintegration.api.hl7.config.LabIntegrationProperties;
 import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class OMLO21OrderParser implements OrderParser {
+public class OMLO21OrderConverter implements OrderConverter {
 	
 	@Autowired
 	private MshGenerator mshGenerator;

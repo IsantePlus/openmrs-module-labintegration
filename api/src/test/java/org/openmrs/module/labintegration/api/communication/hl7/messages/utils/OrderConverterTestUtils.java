@@ -4,7 +4,7 @@ import org.openmrs.module.labintegration.api.hl7.messages.gnerators.msh.MessageC
 
 import static org.mockito.Mockito.when;
 
-public final class OrderParserTestUtils {
+public final class OrderConverterTestUtils {
 	
 	private static final String ROLLING_NUMBER = "00000";
 	
