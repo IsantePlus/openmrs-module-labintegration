@@ -44,7 +44,7 @@ public class OpenElisHL7Config extends AbstractHL7Config {
 	
 	@Override
 	public OrderIdentifier buildOrderIdentifier(Order order) {
-		return new OpenElisOrderIdentifier(order);
+		return new OpenElisOrderIdentifier();
 	}
 	
 	@Override

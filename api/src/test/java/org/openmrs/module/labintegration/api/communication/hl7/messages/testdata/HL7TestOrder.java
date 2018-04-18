@@ -27,18 +27,11 @@ public class HL7TestOrder {
 	public static final String CONCEPT_CODE = "10081-8";
 	
 	public static final int SCHEDULED_DATE_MONTH = 2;
-	
+
 	public static final int ACTIVATED_DATE_MONTH = 3;
-	
-	public static final Date SCHEDULED_DATE;
-	
-	public static final Date ACTIVATED_DATE;
-	
-	static {
-		SCHEDULED_DATE = getScheduledDate();
-		ACTIVATED_DATE = getActivatedDate();
-	}
-	
+
+	public static final int EFFECTIVE_START_DATE_MONTH = 4;
+
 	private final Order order;
 	
 	public HL7TestOrder(Patient patient, Provider provider) {
@@ -52,9 +45,13 @@ public class HL7TestOrder {
 	private static Date getScheduledDate() {
 		return getDefaultDate(SCHEDULED_DATE_MONTH);
 	}
-	
+
 	private static Date getActivatedDate() {
 		return getDefaultDate(ACTIVATED_DATE_MONTH);
+	}
+
+	private static Date getEffectiveStartDate() {
+		return getDefaultDate(EFFECTIVE_START_DATE_MONTH);
 	}
 	
 	private static Date getDefaultDate(int month) {
@@ -72,10 +69,12 @@ public class HL7TestOrder {
 	}
 	
 	private void mockOrder(Patient patient, Provider provider) {
-		when(order.getScheduledDate()).thenReturn(SCHEDULED_DATE);
-		when(order.getDateActivated()).thenReturn(ACTIVATED_DATE);
+		when(order.getScheduledDate()).thenReturn(getScheduledDate());
+		when(order.getDateActivated()).thenReturn(getActivatedDate());
+		when(order.getEffectiveStartDate()).thenReturn(getEffectiveStartDate());
 		when(order.getPatient()).thenReturn(patient);
 		when(order.getOrderer()).thenReturn(provider);
+		when(order.getUrgency()).thenReturn(Order.Urgency.ROUTINE);
 	}
 	
 	private void mockEncounter() {

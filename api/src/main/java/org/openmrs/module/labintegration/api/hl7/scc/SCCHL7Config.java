@@ -3,6 +3,7 @@ package org.openmrs.module.labintegration.api.hl7.scc;
 import org.openmrs.Order;
 import org.openmrs.module.labintegration.api.hl7.config.AbstractHL7Config;
 import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,7 +18,10 @@ public class SCCHL7Config extends AbstractHL7Config {
 	private static final String BILLING_NUMBER_TYPE_UUID = "labintegration.scc.billingNumberTypeUuid";
 	
 	private static final String DEFAULT_BILLING_NUMBER_TYPE_UUID = "a41eb133-8c9c-4359-889f-50046cc13b0d";
-	
+
+	@Autowired
+	private SCCOrderIdentifier orderIdentifier;
+
 	@Override
 	public String getReceivingApplication() {
 		return null;
@@ -35,7 +39,7 @@ public class SCCHL7Config extends AbstractHL7Config {
 	
 	@Override
 	public OrderIdentifier buildOrderIdentifier(Order order) {
-		return null;
+		return orderIdentifier;
 	}
 	
 	@Override
