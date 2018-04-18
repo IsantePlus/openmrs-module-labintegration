@@ -23,7 +23,7 @@ public class MshGenerator {
 	@Autowired
 	private MessageControlIdSource controlIdSource;
 	
-	public void updateMSH(MSH msh, HL7Config hl7Config) throws DataTypeException {
+	public void updateMsh(MSH msh, HL7Config hl7Config) throws DataTypeException {
 		Date msgDate = dateSource.now();
 		
 		msh.getFieldSeparator().setValue(FIELD_SEPARATOR);

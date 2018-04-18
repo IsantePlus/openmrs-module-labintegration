@@ -127,6 +127,19 @@
 			The URL to the OpenELIS endpoint that accepts HL7 message posts.
 		</description>
 	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.openElis.pidTypeUuid</property>
+		<description>
+			UUID of the Patient Identifier Type for the OpenELIS.
+		</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>@MODULE_ID@.scc.pidTypeUuid</property>
+		<description>
+			UUID of the Patient Identifier Type for the SCC.
+		</description>
+	</globalProperty>
 	<!-- Required Global Properties -->
 
 	<!--

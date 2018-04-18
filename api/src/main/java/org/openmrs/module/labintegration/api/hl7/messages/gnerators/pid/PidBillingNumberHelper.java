@@ -10,17 +10,15 @@ import org.openmrs.module.labintegration.api.hl7.messages.util.PatientUtil;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PidIdHelper {
+public class PidBillingNumberHelper {
 	
-	public void updateIdNumber(PID pid, Patient patient, HL7Config hl7Config) throws DataTypeException,
+	public void updateBillingNumber(PID pid, Patient patient, HL7Config hl7Config) throws DataTypeException,
 	        MessageCreationException {
+		pid.getPatientAccountNumber().getAssigningFacility().getNamespaceID()
+		        .setValue(hl7Config.getSendingFacilityNamespaceID());
 		
-		PatientIdentifier id = PatientUtil.getPatientIdentifier(patient, hl7Config.getPatientIdentifierTypeUuid());
+		PatientIdentifier id = PatientUtil.getPatientIdentifier(patient, hl7Config.getBillingNumberTypeUuid());
 		
-		pid.getPatientID().getIDNumber().setValue(id.getIdentifier());
-		if (id.getLocation() != null) {
-			pid.getPatientID().getAssigningFacility().getNamespaceID()
-			        .setValue(String.valueOf(id.getLocation().getLocationId()));
-		}
+		pid.getPatientAccountNumber().getCheckDigit().setValue(id != null ? id.getIdentifier() : null);
 	}
 }

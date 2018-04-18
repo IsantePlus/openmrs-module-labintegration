@@ -22,7 +22,7 @@ public class OpenElisOrderIdentifier implements OrderIdentifier {
 		this.conceptCode = ConceptUtil.getLoincCode(order.getConcept());
 		
 		if (StringUtils.isBlank(encounterType) || StringUtils.isBlank(encounterUuid) || StringUtils.isBlank(conceptCode)) {
-			throw new IllegalStateException("Encounter type, encounter UUID and concept LOINC code " + "are mandatory");
+			throw new IllegalStateException("Encounter type, encounter UUID and concept LOINC code are mandatory");
 		}
 	}
 	

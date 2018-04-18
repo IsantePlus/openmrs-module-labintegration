@@ -41,7 +41,7 @@ public class OMLO21OrderConverter implements OrderConverter {
 			OML_O21 message = new OML_O21();
 			message.initQuickstart("OML", "O21", labIntegrationProperties.getHL7ProcessingId());
 			
-			mshGenerator.updateMSH(message.getMSH(), hl7Config);
+			mshGenerator.updateMsh(message.getMSH(), hl7Config);
 			pidGenerator.updatePid(message.getPATIENT().getPID(), order.getPatient(), hl7Config);
 			
 			OrderIdentifier orderIdentifier = hl7Config.buildOrderIdentifier(order);

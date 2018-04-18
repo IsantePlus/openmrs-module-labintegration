@@ -11,6 +11,7 @@ import org.openmrs.Order;
 import org.openmrs.Patient;
 import org.openmrs.Provider;
 
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,36 +26,56 @@ public class HL7TestOrder {
 	
 	public static final String CONCEPT_CODE = "10081-8";
 	
-	public static final String PROVIDER_ID = "PROVIDER_ID";
+	public static final int SCHEDULED_DATE_MONTH = 2;
+	
+	public static final int ACTIVATED_DATE_MONTH = 3;
 	
 	public static final Date SCHEDULED_DATE;
 	
+	public static final Date ACTIVATED_DATE;
+	
 	static {
+		SCHEDULED_DATE = getScheduledDate();
+		ACTIVATED_DATE = getActivatedDate();
+	}
+	
+	private final Order order;
+	
+	public HL7TestOrder(Patient patient, Provider provider) {
+		order = mock(Order.class);
+		
+		mockEncounter();
+		mockConcept();
+		mockOrder(patient, provider);
+	}
+	
+	private static Date getScheduledDate() {
+		return getDefaultDate(SCHEDULED_DATE_MONTH);
+	}
+	
+	private static Date getActivatedDate() {
+		return getDefaultDate(ACTIVATED_DATE_MONTH);
+	}
+	
+	private static Date getDefaultDate(int month) {
 		Calendar calendar = Calendar.getInstance();
 		
 		calendar.set(Calendar.YEAR, 2018);
-		calendar.set(Calendar.MONTH, 2);
+		calendar.set(Calendar.MONTH, month);
 		calendar.set(Calendar.DAY_OF_MONTH, 25);
 		calendar.set(Calendar.HOUR_OF_DAY, 8);
 		calendar.set(Calendar.MINUTE, 25);
 		calendar.set(Calendar.SECOND, 33);
 		calendar.set(Calendar.MILLISECOND, 400);
 		
-		SCHEDULED_DATE = calendar.getTime();
+		return calendar.getTime();
 	}
 	
-	private final Order order;
-	
-	public HL7TestOrder(Patient patient) {
-		order = mock(Order.class);
-		
-		mockEncounter();
-		mockConcept();
-		mockProvider();
-		
+	private void mockOrder(Patient patient, Provider provider) {
 		when(order.getScheduledDate()).thenReturn(SCHEDULED_DATE);
-		
+		when(order.getDateActivated()).thenReturn(ACTIVATED_DATE);
 		when(order.getPatient()).thenReturn(patient);
+		when(order.getOrderer()).thenReturn(provider);
 	}
 	
 	private void mockEncounter() {
@@ -85,12 +106,6 @@ public class HL7TestOrder {
 		concept.addConceptMapping(loincMapping);
 		
 		when(order.getConcept()).thenReturn(concept);
-	}
-	
-	private void mockProvider() {
-		Provider provider = mock(Provider.class);
-		when(provider.getIdentifier()).thenReturn(PROVIDER_ID);
-		when(order.getOrderer()).thenReturn(provider);
 	}
 	
 	public Order value() {

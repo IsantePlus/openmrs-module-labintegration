@@ -7,6 +7,8 @@ import org.openmrs.module.labintegration.api.hl7.OrderConverter;
 import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
 import org.openmrs.module.labintegration.api.hl7.config.LabIntegrationProperties;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.MshGenerator;
+import org.openmrs.module.labintegration.api.hl7.messages.gnerators.PidGenerator;
+import org.openmrs.module.labintegration.api.hl7.messages.gnerators.Pv1Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,12 @@ public class ORMO01OrderConverter implements OrderConverter {
 	private MshGenerator mshGenerator;
 	
 	@Autowired
+	private PidGenerator pidGenerator;
+	
+	@Autowired
+	private Pv1Generator pv1Generator;
+	
+	@Autowired
 	private LabIntegrationProperties labIntegrationProperties;
 	
 	@Override
@@ -27,7 +35,9 @@ public class ORMO01OrderConverter implements OrderConverter {
 			ORM_O01 message = new ORM_O01();
 			
 			message.initQuickstart("ORM", "O01", labIntegrationProperties.getHL7ProcessingId());
-			mshGenerator.updateMSH(message.getMSH(), hl7Config);
+			mshGenerator.updateMsh(message.getMSH(), hl7Config);
+			pidGenerator.updatePid(message.getPATIENT().getPID(), order.getPatient(), hl7Config);
+			pv1Generator.updatePv1(message.getPATIENT().getPATIENT_VISIT().getPV1(), hl7Config, order);
 			
 			return message.toString();
 		}

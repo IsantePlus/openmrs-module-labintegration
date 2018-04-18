@@ -52,6 +52,11 @@ public class OpenElisHL7Config extends AbstractHL7Config {
 		return null;
 	}
 	
+	@Override
+	public String getBillingNumberTypeUuid() {
+		return null;
+	}
+	
 	public URI getOpenElisUrl() {
 		String url = getPropertySource().getProperty(OPENELIS_URL, null);
 		try {
