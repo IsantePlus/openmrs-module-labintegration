@@ -1,1 +1,5 @@
 MSH|^!\&||LNSP|||20180330150703.345+{time_offset}00||ORM^O01^ORM_O01|2018033015070300000|D|2.5
+PID||1004X^^^^^2|||Doe^Joe^Terry|Janine||M|||Trou coucou^1ère L'Arbre^Anse Rouge^Artibonite^^HTI^^Anba Morne Porte|||||^Separe|^Vaudou|^5234A^^^^LNSP|||||Birth City
+PV1|||2||||||||||||||PROVIDER_ID^Fami&von^Prov^Ider^^a^dr|||||||||||||||||||||||||||20180425082533.4+{time_offset}00
+ORC|NW|PROVIDER_ID|||||^^^20180525082533.4+{time_offset}00^^R||20180425082533.4+{time_offset}00|||PROVIDER_ID^Fami&von^Prov^Ider^^a^dr|||||||||||||||||10081-8
+OBR||||Vitals;549c78dc-31da-11e8-acac-c3add5b19973||20180325082533.4+{time_offset}00|||||L|||||PROVIDER_ID^Fami&von^Prov^Ider^^a^dr|||||||||||^^^20180525082533.4+{time_offset}00^^R

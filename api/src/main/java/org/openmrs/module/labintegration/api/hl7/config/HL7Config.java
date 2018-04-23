@@ -28,4 +28,6 @@ public interface HL7Config {
 	Integer getBirthPlaceCityConceptId();
 	
 	String getSendingFacilityNamespaceID();
+	
+	String getBillingNumberTypeUuid();
 }

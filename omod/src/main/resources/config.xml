@@ -133,6 +133,19 @@
 			The UUID of EncounterType that specifies encounters with lab orders.
 		</description>
 	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.openElis.pidTypeUuid</property>
+		<description>
+			UUID of the Patient Identifier Type for the OpenELIS.
+		</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>@MODULE_ID@.scc.pidTypeUuid</property>
+		<description>
+			UUID of the Patient Identifier Type for the SCC.
+		</description>
+	</globalProperty>
 	<!-- Required Global Properties -->
 
 	<!--

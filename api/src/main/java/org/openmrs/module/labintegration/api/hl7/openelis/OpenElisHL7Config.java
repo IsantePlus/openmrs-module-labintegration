@@ -44,11 +44,16 @@ public class OpenElisHL7Config extends AbstractHL7Config {
 	
 	@Override
 	public OrderIdentifier buildOrderIdentifier(Order order) {
-		return new OpenElisOrderIdentifier(order);
+		return new OpenElisOrderIdentifier();
 	}
 	
 	@Override
 	public String getSendingFacilityNamespaceID() {
+		return null;
+	}
+	
+	@Override
+	public String getBillingNumberTypeUuid() {
 		return null;
 	}
 	

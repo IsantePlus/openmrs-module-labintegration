@@ -5,7 +5,9 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.openmrs.Patient;
+import org.openmrs.Provider;
 import org.openmrs.api.PatientService;
+import org.openmrs.api.ProviderService;
 import org.openmrs.module.labintegration.api.communication.hl7.messages.testdata.HL7TestMsgUtil;
 import org.openmrs.module.labintegration.api.communication.hl7.messages.testdata.HL7TestOrder;
 import org.openmrs.module.labintegration.api.communication.hl7.messages.utils.OrderConverterTestUtils;
@@ -14,21 +16,13 @@ import org.openmrs.module.labintegration.api.hl7.messages.OrderControl;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.MshGenerator;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.msh.MessageControlIdSource;
 import org.openmrs.module.labintegration.api.hl7.openelis.OpenElisHL7Config;
-import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
 import static org.junit.Assert.assertEquals;
 
-@ContextConfiguration(locations = { "classpath*:moduleApplicationContext.xml", "classpath*:applicationContext-service.xml",
-        "classpath*:test-labContext.xml" }, inheritLocations = false)
-public class OMLO21OrderConverterTest extends BaseModuleContextSensitiveTest {
-	
-	private static final String DATASET = "lab-dataset.xml";
+public class OMLO21OrderConverterTest extends AbstractOrderConverterTest {
 	
 	private static final String EXPECTED_FILE = "OML_O21.hl7";
-	
-	private static final int PATIENT_ID = 10;
 	
 	@Spy
 	@Autowired
@@ -45,6 +39,9 @@ public class OMLO21OrderConverterTest extends BaseModuleContextSensitiveTest {
 	private PatientService patientService;
 	
 	@Autowired
+	private ProviderService providerService;
+	
+	@Autowired
 	private OpenElisHL7Config openElisHL7Config;
 	
 	@Before
@@ -56,7 +53,8 @@ public class OMLO21OrderConverterTest extends BaseModuleContextSensitiveTest {
 	public void shouldGenerateMessage() throws Exception {
 		executeDataSet(DATASET);
 		Patient patient = patientService.getPatient(PATIENT_ID);
-		HL7TestOrder order = new HL7TestOrder(patient);
+		Provider provider = providerService.getProvider(PROVIDER_ID);
+		HL7TestOrder order = new HL7TestOrder(patient, provider);
 		
 		String msg = orderConverter.createMessage(order.value(), OrderControl.NEW_ORDER, openElisHL7Config);
 		
