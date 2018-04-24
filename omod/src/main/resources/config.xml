@@ -129,6 +129,11 @@
 	</globalProperty>
 	<!-- Required Global Properties -->
 
+	<globalProperty>
+		<property>labintegration.order.conceptCode</property>
+		<description>Specifies concept code for laboratory orders.</description>
+	</globalProperty>
+
 	<!--
 	<dwr>
 		<allow>

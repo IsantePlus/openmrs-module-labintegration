@@ -3,7 +3,7 @@ package org.openmrs.module.labintegration.api.communication.hl7.messages;
 import org.junit.Test;
 import org.openmrs.Patient;
 import org.openmrs.api.PatientService;
-import org.openmrs.module.labintegration.api.communication.hl7.messages.testdata.HL7TestMsgUtil;
+import org.openmrs.module.labintegration.api.hl7.util.HL7TestMsgUtil;
 import org.openmrs.module.labintegration.api.communication.hl7.messages.testdata.HL7TestOrder;
 import org.openmrs.module.labintegration.api.hl7.messages.HL7OrderMessageGenerator;
 import org.openmrs.module.labintegration.api.hl7.messages.OrderControl;

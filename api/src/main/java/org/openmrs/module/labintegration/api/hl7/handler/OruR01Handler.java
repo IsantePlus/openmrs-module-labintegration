@@ -21,7 +21,6 @@ import ca.uhn.hl7v2.model.v25.message.ORU_R01;
 import ca.uhn.hl7v2.model.v25.segment.MSH;
 import ca.uhn.hl7v2.model.v25.segment.OBR;
 import ca.uhn.hl7v2.model.v25.segment.OBX;
-import ca.uhn.hl7v2.model.v25.segment.ORC;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -33,10 +32,12 @@ import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.api.context.Context;
 import org.openmrs.hl7.HL7Constants;
+import org.openmrs.module.labintegration.LabIntegrationConfig;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 @SuppressWarnings("PMD.CyclomaticComplexity")
@@ -45,6 +46,9 @@ public class OruR01Handler implements Application {
 	private static final Logger LOGGER = LoggerFactory.getLogger(OruR01Handler.class);
 	
 	private static final String MESSAGE_VERSION = "2.5";
+	
+	@Autowired
+	private LabIntegrationConfig labIntegrationConfig;
 	
 	/**
 	 * Always returns true, assuming that the router calling this handler will only call this
@@ -73,15 +77,14 @@ public class OruR01Handler implements Application {
 			ORU_R01 oruR01Massage = (ORU_R01) message;
 			response = processOruR01(oruR01Massage);
 		}
-		catch (ClassCastException exception) {
-			LOGGER.warn("Error casting " + message.getClass().getName() + " to ORU_R01", exception);
+		catch (ClassCastException ex) {
+			LOGGER.warn("Error casting " + message.getClass().getName() + " to ORU_R01", ex);
 			throw new ApplicationException(Context.getMessageSourceService().getMessage("ORUR01.error.invalidMessageType ",
-			    new Object[] { message.getClass().getName() }, null), exception);
+			    new Object[] { message.getClass().getName() }, null), ex);
 		}
-		catch (HL7Exception exception) {
-			LOGGER.warn("Error while processing ORU_R01 message", exception);
-			throw new ApplicationException(Context.getMessageSourceService().getMessage("ORUR01.error.WhileProcessing"),
-			        exception);
+		catch (HL7Exception ex) {
+			LOGGER.warn("Error while processing ORU_R01 message", ex);
+			throw new ApplicationException(Context.getMessageSourceService().getMessage("ORUR01.error.WhileProcessing"), ex);
 		}
 		
 		LOGGER.debug("Finished processing ORU_R01 message");
@@ -99,10 +102,11 @@ public class OruR01Handler implements Application {
 		
 		validateMessageVersion(message);
 		
-		// Extract segments from message to use below
+		// Extract segments from message
 		MSH msh = getMSH(message);
 		
 		//ORC orc = getORC(message);
+		
 		// ORC values
 		//ID orderControl = orc.getOrc1_OrderControl();
 		//EI placerOrderNumber = orc.getOrc2_PlacerOrderNumber();
@@ -243,7 +247,13 @@ public class OruR01Handler implements Application {
 		if (datetime == null) {
 			datetime = encounter.getEncounterDatetime();
 		}
-		
+
+		//Search concept
+		//Concept conceptQuestion = Context.getConceptService().getConcept(labIntegrationConfig.getLabOrderConceptCode());
+		//Get obs
+		//List<Obs> obsList = Context.getObsService().getObservations(null, asList(encounter), asList(conceptQuestion),
+		//asList(concept), null, null, null, null, null, null, null, true);
+
 		Obs obs = new Obs();
 		obs.setPerson(encounter.getPatient());
 		obs.setConcept(concept);
@@ -253,16 +263,16 @@ public class OruR01Handler implements Application {
 		obs.setCreator(encounter.getCreator());
 		obs.setDateCreated(encounter.getDateCreated());
 		
-		// set comments if there are any
+		// Set comments if there are any
 		StringBuilder comments = new StringBuilder();
 		ORU_R01_OBSERVATION parent = (ORU_R01_OBSERVATION) obx.getParent();
-		// iterate over all OBX NTEs
+		// Iterate over all OBX NTEs
 		for (int i = 0; i < parent.getNTEReps(); i++) {
 			for (FT obxComment : parent.getNTE(i).getComment()) {
 				comments = comments.append(" ").append(obxComment.getValue());
 			}
 		}
-		// only set comments if there are any
+		// Only set comments if there are any
 		if (StringUtils.hasText(comments.toString())) {
 			obs.setComment(comments.toString());
 		}
@@ -301,13 +311,13 @@ public class OruR01Handler implements Application {
 							}
 						}
 					}
-					//answer the boolean answer concept was't found
+					// Answer the boolean answer concept was't found
 					if (!isValidAnswer) {
 						throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.invalidAnswer",
 						    new Object[] { answer.toString(), uid }, null));
 					}
 				} else {
-					//throw this exception to make sure that the handler doesn't silently ignore bad hl7 message
+					// Throw this exception to make sure that the handler doesn't silently ignore bad hl7 message
 					throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.CannotSetBoolean",
 					    new Object[] { obs.getConcept().getConceptId() }, null));
 				}
@@ -343,7 +353,7 @@ public class OruR01Handler implements Application {
 			}
 			obs.setValueText(value.getValue());
 		} else {
-			// unsupported data type
+			// Unsupported data type
 			throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.UpsupportedObsType",
 			    new Object[] { dataType }, null));
 		}
@@ -445,9 +455,9 @@ public class OruR01Handler implements Application {
 		return message.getMSH();
 	}
 	
-	private ORC getORC(ORU_R01 message) {
-		return message.getPATIENT_RESULT().getORDER_OBSERVATION().getORC();
-	}
+	//	private ORC getORC(ORU_R01 message) {
+	//		return message.getPATIENT_RESULT().getORDER_OBSERVATION().getORC();
+	//	}
 	
 	private void validateMessageVersion(ORU_R01 message) throws ApplicationException {
 		if (!message.getVersion().equals(MESSAGE_VERSION)) {
