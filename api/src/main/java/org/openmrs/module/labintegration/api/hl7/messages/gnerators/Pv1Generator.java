@@ -12,6 +12,9 @@ import org.openmrs.module.labintegration.api.hl7.messages.gnerators.helpers.Prov
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 @Component
 public class Pv1Generator {
 	
@@ -25,8 +28,13 @@ public class Pv1Generator {
 		updateAttendingDoctor(pv1, order);
 		
 		assignedPatientLocationHelper.updateAssignedPatientLocation(pv1, hl7Config, order);
-		
-		pv1.getAdmitDateTime().getTime().setValue(order.getDateActivated());
+
+		if (hl7Config.getAdmitDateFormat() != null) {
+			DateFormat df = new SimpleDateFormat(hl7Config.getAdmitDateFormat());
+			pv1.getAdmitDateTime().getTime().setValue(df.format(order.getDateActivated()));
+		} else {
+			pv1.getAdmitDateTime().getTime().setValue(order.getDateActivated());
+		}
 	}
 	
 	private void updateAttendingDoctor(PV1 pv1, Order order) throws HL7Exception {
