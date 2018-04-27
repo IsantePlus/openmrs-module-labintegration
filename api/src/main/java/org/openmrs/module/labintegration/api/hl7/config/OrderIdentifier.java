@@ -8,15 +8,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.openmrs.Order;
 import org.openmrs.module.labintegration.api.hl7.messages.util.ConceptUtil;
 
-public interface OrderIdentifier {
+public abstract class OrderIdentifier {
 
-	char ID_SEPARATOR = ';';
+	public static final char ID_SEPARATOR = ';';
 
-	void updateORC(ORC orc, Order order) throws HL7Exception;
+	public abstract void updateORC(ORC orc, Order order) throws HL7Exception;
 	
-	void updateOBR(OBR obr, Order order) throws HL7Exception;
+	public abstract void updateOBR(OBR obr, Order order) throws HL7Exception;
 	
-	default void updateOrderTypeID(ORC orc, Order order) throws DataTypeException {
+	protected void updateOrderTypeID(ORC orc, Order order) throws DataTypeException {
 		String conceptCode = ConceptUtil.getLoincCode(order.getConcept());
 		if (StringUtils.isBlank(conceptCode)) {
 			throw new IllegalStateException("LOINC code is mandatory");
@@ -25,7 +25,7 @@ public interface OrderIdentifier {
 		orc.getOrderType().getIdentifier().setValue(conceptCode);
 	}
 	
-	default void updateUniversalServiceID(OBR obr, Order order) throws DataTypeException {
+	protected void updateUniversalServiceID(OBR obr, Order order) throws DataTypeException {
 		String encounterType = order.getEncounter().getEncounterType().getName();
 		String encounterUuid = order.getEncounter().getUuid();
 

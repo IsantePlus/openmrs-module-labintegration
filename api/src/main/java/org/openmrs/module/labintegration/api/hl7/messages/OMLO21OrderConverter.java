@@ -12,6 +12,7 @@ import org.openmrs.module.labintegration.api.hl7.messages.gnerators.MshGenerator
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.ObrGenerator;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.OrcGenerator;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.PidGenerator;
+import org.openmrs.module.labintegration.api.hl7.messages.util.VersionSwitcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,8 +41,9 @@ public class OMLO21OrderConverter implements OrderConverter {
 		try {
 			OML_O21 message = new OML_O21();
 			message.initQuickstart("OML", "O21", labIntegrationProperties.getHL7ProcessingId());
-			
+
 			mshGenerator.updateMsh(message.getMSH(), hl7Config);
+
 			pidGenerator.updatePid(message.getPATIENT().getPID(), order.getPatient(), hl7Config);
 			
 			OrderIdentifier orderIdentifier = hl7Config.buildOrderIdentifier(order);
@@ -49,7 +51,9 @@ public class OMLO21OrderConverter implements OrderConverter {
 			orcGenerator.updateOrc(message.getORDER().getORC(), order, orderControl.code(), orderIdentifier);
 			obrGenerator.updateObr(message.getORDER().getOBSERVATION_REQUEST().getOBR(), order, orderIdentifier);
 			
-			return message.toString();
+			String msg = message.toString();
+
+			return VersionSwitcher.switchVersion(msg);
 		}
 		catch (IOException e) {
 			throw messageCreationException(e);

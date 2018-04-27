@@ -1,9 +1,9 @@
 package org.openmrs.module.labintegration.api.impl;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.Encounter;
+import org.openmrs.Obs;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.labintegration.api.LabIntegrationService;
 import org.openmrs.module.labintegration.api.exception.LabIntegrationException;
@@ -13,6 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component("labintegration.LabIntegrationServiceImpl")
 public class LabIntegrationServiceImpl extends BaseOpenmrsService implements LabIntegrationService {
@@ -43,9 +46,15 @@ public class LabIntegrationServiceImpl extends BaseOpenmrsService implements Lab
 	}
 	
 	private List<OrderDestination> getOrderDestinations(Encounter encounter) {
-		return encounter.getAllObs().stream()
-				.filter(e -> e.getConcept().getUuid().equals(ORDER_DESTINATION_CONCEPT_UUID))
-				.map(e -> OrderDestination.fromString(e.getValueText()))
-				.collect(Collectors.toList());
+		List<OrderDestination> destinations = new ArrayList<OrderDestination>();
+
+		for (Obs obs : encounter.getAllObs()) {
+			if (ObjectUtils.equals(obs.getConcept().getUuid(),
+					ORDER_DESTINATION_CONCEPT_UUID)) {
+				destinations.add(OrderDestination.fromString(obs.getValueText()));
+			}
+		}
+
+		return destinations;
 	}
 }

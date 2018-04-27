@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SCCOrderIdentifier implements OrderIdentifier {
+public class SCCOrderIdentifier extends OrderIdentifier {
 
 	private static final String DEFAULT_ACTION_CODE = "L";
 

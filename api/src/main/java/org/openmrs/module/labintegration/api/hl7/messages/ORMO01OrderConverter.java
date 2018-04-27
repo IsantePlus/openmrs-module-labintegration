@@ -55,7 +55,10 @@ public class ORMO01OrderConverter implements OrderConverter {
 			
 			return message.toString();
 		}
-		catch (IOException | HL7Exception e) {
+		catch (IOException e) {
+			throw messageCreationException(e);
+		}
+		catch (HL7Exception e) {
 			throw messageCreationException(e);
 		}
 	}
