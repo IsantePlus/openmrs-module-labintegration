@@ -33,6 +33,7 @@ import org.openmrs.Obs;
 import org.openmrs.api.context.Context;
 import org.openmrs.hl7.HL7Constants;
 import org.openmrs.module.labintegration.LabIntegrationConfig;
+import org.openmrs.module.labintegration.api.hl7.messages.util.OruR01Util;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
 import org.slf4j.Logger;
@@ -134,8 +135,8 @@ public class OruR01Handler implements Application {
 				throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.InvalidOBR",
 				    new Object[] { messageControlId }, null));
 			}
-			String encounterId = obr.getObr4_UniversalServiceIdentifier().getIdentifier().getValue();
-			
+
+			String encounterId = OruR01Util.getUuidFromOBRSegment4(obr);
 			// Get the encounter
 			Encounter encounter = Context.getEncounterService().getEncounterByUuid(encounterId);
 			if (encounter == null) {
