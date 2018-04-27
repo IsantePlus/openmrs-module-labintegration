@@ -7,6 +7,7 @@ import org.openmrs.Obs;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.labintegration.api.LabIntegrationService;
 import org.openmrs.module.labintegration.api.exception.LabIntegrationException;
+import org.openmrs.module.labintegration.api.hl7.OrderSenderManager;
 import org.openmrs.module.labintegration.api.hl7.openelis.OpenElisHL7Config;
 import org.openmrs.module.labintegration.api.model.OrderDestination;
 import org.slf4j.Logger;
@@ -27,6 +28,9 @@ public class LabIntegrationServiceImpl extends BaseOpenmrsService implements Lab
 	
 	@Autowired
 	private OpenElisHL7Config openElisHL7Config;
+
+	@Autowired
+	private OrderSenderManager orderSenderManager;
 	
 	@Override
 	public void doOrder(Encounter encounter) {
@@ -35,7 +39,8 @@ public class LabIntegrationServiceImpl extends BaseOpenmrsService implements Lab
 		LOGGER.info("Started processing order (created or updated) in Encounter {} to {}", encounter.getUuid(),
 				StringUtils.join(orderDestinations, ','));
 		
-		
+		orderSenderManager.sendOrders(encounter.getOR);
+		encounter.getOrders()
 	}
 	
 	private void validateDestinations(List<OrderDestination> orderDestinations) {
