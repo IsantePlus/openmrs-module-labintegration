@@ -1,15 +1,17 @@
 package org.openmrs.module.labintegration.api.event;
 
-import java.lang.reflect.Method;
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.Encounter;
 import org.openmrs.module.labintegration.PropertiesUtil;
 import org.openmrs.module.labintegration.api.LabIntegrationService;
+import org.openmrs.module.labintegration.api.hl7.NewOrderException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.AfterReturningAdvice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.lang.reflect.Method;
 
 @Component("labintegration.SaveEncounterAfterAdvice")
 public class SaveEncounterAfterAdvice implements AfterReturningAdvice {
@@ -32,7 +34,12 @@ public class SaveEncounterAfterAdvice implements AfterReturningAdvice {
 			if (StringUtils.equals(PropertiesUtil.getLabOrderEncounterTypeUuid(),
 					encounter.getEncounterType().getUuid())) {
 				LOGGER.info("Order encounter occurred {}", encounter.getUuid());
-				labIntegrationService.doOrder(encounter);
+				try {
+					labIntegrationService.doOrder(encounter);
+				} catch (NewOrderException e) {
+					// TODO
+					LOGGER.error("Unable to sed order messages", e);
+				}
 			}
 		}
 	}
