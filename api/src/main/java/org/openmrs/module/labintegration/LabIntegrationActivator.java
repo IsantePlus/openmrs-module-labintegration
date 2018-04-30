@@ -9,29 +9,40 @@
  */
 package org.openmrs.module.labintegration;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.openmrs.api.EncounterService;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.BaseModuleActivator;
+import org.openmrs.module.labintegration.api.event.SaveEncounterAfterAdvice;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class contains the logic that is run every time this module is either started or shutdown
  */
 public class LabIntegrationActivator extends BaseModuleActivator {
 	
-	private Log log = LogFactory.getLog(this.getClass());
+	private static final Logger LOGGER = LoggerFactory.getLogger(LabIntegrationActivator.class);
 	
 	/**
 	 * @see #started()
 	 */
+	@Override
 	public void started() {
-		log.info("Started Lab Integration");
+		LOGGER.info("Started Lab Integration");
+		Context.addAdvice(EncounterService.class, getFormSubmitAfterAdvice());
 	}
 	
 	/**
-	 * @see #shutdown()
+	 * @see #stopped()
 	 */
-	public void shutdown() {
-		log.info("Shutdown Lab Integration");
+	@Override
+	public void stopped() {
+		LOGGER.info("Stopped Lab Integration");
+		Context.removeAdvice(EncounterService.class, getFormSubmitAfterAdvice());
 	}
 	
+	private SaveEncounterAfterAdvice getFormSubmitAfterAdvice() {
+		return Context.getRegisteredComponent(
+				"labintegration.SaveEncounterAfterAdvice", SaveEncounterAfterAdvice.class);
+	}
 }

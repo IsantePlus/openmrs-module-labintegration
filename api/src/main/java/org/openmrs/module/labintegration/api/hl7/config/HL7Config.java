@@ -26,4 +26,8 @@ public interface HL7Config {
 	Integer getBirthPlaceGroupConceptId();
 	
 	Integer getBirthPlaceCityConceptId();
+	
+	String getSendingFacilityNamespaceID();
+	
+	String getBillingNumberTypeUuid();
 }

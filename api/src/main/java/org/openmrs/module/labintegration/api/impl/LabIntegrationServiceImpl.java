@@ -1,17 +1,67 @@
-/**
- * This Source Code Form is subject to the terms of the Mozilla Public License,
- * v. 2.0. If a copy of the MPL was not distributed with this file, You can
- * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
- * the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
- * <p>
- * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
- * graphic logo is a trademark of OpenMRS Inc.
- */
 package org.openmrs.module.labintegration.api.impl;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
+import org.openmrs.Encounter;
+import org.openmrs.Obs;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.labintegration.api.LabIntegrationService;
+import org.openmrs.module.labintegration.api.exception.LabIntegrationException;
+import org.openmrs.module.labintegration.api.hl7.NewOrderException;
+import org.openmrs.module.labintegration.api.hl7.OrderSenderManager;
+import org.openmrs.module.labintegration.api.hl7.openelis.OpenElisHL7Config;
+import org.openmrs.module.labintegration.api.model.OrderDestination;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Component("labintegration.LabIntegrationServiceImpl")
 public class LabIntegrationServiceImpl extends BaseOpenmrsService implements LabIntegrationService {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(LabIntegrationServiceImpl.class);
+	
+	private static final String ORDER_DESTINATION_CONCEPT_UUID =
+			"160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+	
+	@Autowired
+	private OpenElisHL7Config openElisHL7Config;
+
+	@Autowired
+	private OrderSenderManager orderSenderManager;
+	
+	@Override
+	public void doOrder(Encounter encounter) throws NewOrderException {
+		List<OrderDestination> orderDestinations = getOrderDestinations(encounter);
+		validateDestinations(orderDestinations);
+		LOGGER.info("Started processing order (created or updated) in Encounter {} to {}", encounter.getUuid(),
+				StringUtils.join(orderDestinations, ','));
+
+		for (OrderDestination destination : orderDestinations) {
+			orderSenderManager.sendOrders(encounter, destination);
+		}
+	}
+	
+	private void validateDestinations(List<OrderDestination> orderDestinations) {
+		if (orderDestinations.contains(OrderDestination.OPEN_ELIS)
+				&& !openElisHL7Config.isOpenElisConfigured()) {
+			throw new LabIntegrationException("Tried to order from OpenELIS that is not configured");
+		}
+	}
+	
+	private List<OrderDestination> getOrderDestinations(Encounter encounter) {
+		List<OrderDestination> destinations = new ArrayList<OrderDestination>();
+
+		for (Obs obs : encounter.getAllObs()) {
+			if (ObjectUtils.equals(obs.getConcept().getUuid(),
+					ORDER_DESTINATION_CONCEPT_UUID)) {
+				destinations.add(OrderDestination.fromString(obs.getValueText()));
+			}
+		}
+
+		return destinations;
+	}
 }

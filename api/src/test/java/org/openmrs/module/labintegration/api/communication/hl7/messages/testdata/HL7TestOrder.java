@@ -11,6 +11,7 @@ import org.openmrs.Order;
 import org.openmrs.Patient;
 import org.openmrs.Provider;
 
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,36 +26,55 @@ public class HL7TestOrder {
 	
 	public static final String CONCEPT_CODE = "10081-8";
 	
-	public static final String PROVIDER_ID = "PROVIDER_ID";
-	
-	public static final Date SCHEDULED_DATE;
-	
-	static {
-		Calendar calendar = Calendar.getInstance();
-		
-		calendar.set(Calendar.YEAR, 2018);
-		calendar.set(Calendar.MONTH, 2);
-		calendar.set(Calendar.DAY_OF_MONTH, 25);
-		calendar.set(Calendar.HOUR, 8);
-		calendar.set(Calendar.MINUTE, 25);
-		calendar.set(Calendar.SECOND, 33);
-		calendar.set(Calendar.MILLISECOND, 400);
-		
-		SCHEDULED_DATE = calendar.getTime();
-	}
-	
+	public static final int SCHEDULED_DATE_MONTH = 2;
+
+	public static final int ACTIVATED_DATE_MONTH = 3;
+
+	public static final int EFFECTIVE_START_DATE_MONTH = 4;
+
 	private final Order order;
 	
-	public HL7TestOrder(Patient patient) {
+	public HL7TestOrder(Patient patient, Provider provider) {
 		order = mock(Order.class);
 		
 		mockEncounter();
 		mockConcept();
-		mockProvider();
+		mockOrder(patient, provider);
+	}
+	
+	private static Date getScheduledDate() {
+		return getDefaultDate(SCHEDULED_DATE_MONTH);
+	}
+
+	private static Date getActivatedDate() {
+		return getDefaultDate(ACTIVATED_DATE_MONTH);
+	}
+
+	private static Date getEffectiveStartDate() {
+		return getDefaultDate(EFFECTIVE_START_DATE_MONTH);
+	}
+	
+	private static Date getDefaultDate(int month) {
+		Calendar calendar = Calendar.getInstance();
 		
-		when(order.getScheduledDate()).thenReturn(SCHEDULED_DATE);
+		calendar.set(Calendar.YEAR, 2018);
+		calendar.set(Calendar.MONTH, month);
+		calendar.set(Calendar.DAY_OF_MONTH, 25);
+		calendar.set(Calendar.HOUR_OF_DAY, 8);
+		calendar.set(Calendar.MINUTE, 25);
+		calendar.set(Calendar.SECOND, 33);
+		calendar.set(Calendar.MILLISECOND, 400);
 		
+		return calendar.getTime();
+	}
+	
+	private void mockOrder(Patient patient, Provider provider) {
+		when(order.getScheduledDate()).thenReturn(getScheduledDate());
+		when(order.getDateActivated()).thenReturn(getActivatedDate());
+		when(order.getEffectiveStartDate()).thenReturn(getEffectiveStartDate());
 		when(order.getPatient()).thenReturn(patient);
+		when(order.getOrderer()).thenReturn(provider);
+		when(order.getUrgency()).thenReturn(Order.Urgency.ROUTINE);
 	}
 	
 	private void mockEncounter() {
@@ -85,12 +105,6 @@ public class HL7TestOrder {
 		concept.addConceptMapping(loincMapping);
 		
 		when(order.getConcept()).thenReturn(concept);
-	}
-	
-	private void mockProvider() {
-		Provider provider = mock(Provider.class);
-		when(provider.getIdentifier()).thenReturn(PROVIDER_ID);
-		when(order.getOrderer()).thenReturn(provider);
 	}
 	
 	public Order value() {

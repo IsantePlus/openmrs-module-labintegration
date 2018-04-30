@@ -1,7 +1,7 @@
 package org.openmrs.module.labintegration.api.hl7.openelis;
 
-import org.apache.commons.lang3.StringUtils;
 import org.openmrs.Order;
+import org.openmrs.module.labintegration.PropertiesUtil;
 import org.openmrs.module.labintegration.api.hl7.config.AbstractHL7Config;
 import org.openmrs.module.labintegration.api.hl7.config.LabHL7ConfigurationException;
 import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
@@ -44,16 +44,30 @@ public class OpenElisHL7Config extends AbstractHL7Config {
 	
 	@Override
 	public OrderIdentifier buildOrderIdentifier(Order order) {
-		return new OpenElisOrderIdentifier(order);
+		return new OpenElisOrderIdentifier();
+	}
+	
+	@Override
+	public String getSendingFacilityNamespaceID() {
+		return null;
+	}
+	
+	@Override
+	public String getBillingNumberTypeUuid() {
+		return null;
 	}
 	
 	public URI getOpenElisUrl() {
-		String url = getPropertySource().getProperty(OPENELIS_URL, null);
+		String url = PropertiesUtil.getGlobalProperty(OPENELIS_URL);
 		try {
-			return StringUtils.isBlank(url) ? null : new URI(url);
+			return new URI(url);
 		}
 		catch (URISyntaxException e) {
 			throw new LabHL7ConfigurationException("Incorrect OpenELIS url: " + url, e);
 		}
+	}
+	
+	public boolean isOpenElisConfigured() {
+		return PropertiesUtil.isGlobalPropertySet(OPENELIS_URL);
 	}
 }

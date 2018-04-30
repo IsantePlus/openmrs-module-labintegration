@@ -28,7 +28,6 @@
 		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>
 	</aware_of_modules>
 
-
 	<!-- AOP
 	<advice>
 		<point>org.openmrs.api.FormService</point>
@@ -125,6 +124,26 @@
 		<property>@MODULE_ID@.openElis.url</property>
 		<description>
 			The URL to the OpenELIS endpoint that accepts HL7 message posts.
+		</description>
+	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.orderEncounterTypeUuid</property>
+		<defaultValue>f037e97b-471e-4898-a07c-b8e169e0ddc4</defaultValue>
+		<description>
+			The UUID of EncounterType that specifies encounters with lab orders.
+		</description>
+	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.openElis.pidTypeUuid</property>
+		<description>
+			UUID of the Patient Identifier Type for the OpenELIS.
+		</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>@MODULE_ID@.scc.pidTypeUuid</property>
+		<description>
+			UUID of the Patient Identifier Type for the SCC.
 		</description>
 	</globalProperty>
 	<!-- Required Global Properties -->
