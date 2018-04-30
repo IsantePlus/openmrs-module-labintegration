@@ -29,13 +29,11 @@ import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.api.context.Context;
 import org.openmrs.hl7.HL7Constants;
-import org.openmrs.module.labintegration.LabIntegrationConfig;
 import org.openmrs.module.labintegration.api.hl7.messages.util.OruR01Util;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -50,9 +48,6 @@ public class OruR01Handler implements Application {
 	private static final Logger LOGGER = LoggerFactory.getLogger(OruR01Handler.class);
 	
 	private static final String MESSAGE_VERSION = "2.5";
-	
-	@Autowired
-	private LabIntegrationConfig labIntegrationConfig;
 	
 	/**
 	 * Always returns true, assuming that the router calling this handler will only call this
