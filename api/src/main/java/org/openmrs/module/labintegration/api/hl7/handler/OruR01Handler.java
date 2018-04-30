@@ -21,9 +21,6 @@ import ca.uhn.hl7v2.model.v25.message.ORU_R01;
 import ca.uhn.hl7v2.model.v25.segment.MSH;
 import ca.uhn.hl7v2.model.v25.segment.OBR;
 import ca.uhn.hl7v2.model.v25.segment.OBX;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
 import org.openmrs.Concept;
 import org.openmrs.ConceptAnswer;
 import org.openmrs.ConceptName;
@@ -32,14 +29,18 @@ import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.api.context.Context;
 import org.openmrs.hl7.HL7Constants;
-import org.openmrs.module.labintegration.LabIntegrationConfig;
 import org.openmrs.module.labintegration.api.hl7.messages.util.OruR01Util;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 @SuppressWarnings("PMD.CyclomaticComplexity")
 public class OruR01Handler implements Application {
@@ -47,9 +48,6 @@ public class OruR01Handler implements Application {
 	private static final Logger LOGGER = LoggerFactory.getLogger(OruR01Handler.class);
 	
 	private static final String MESSAGE_VERSION = "2.5";
-	
-	@Autowired
-	private LabIntegrationConfig labIntegrationConfig;
 	
 	/**
 	 * Always returns true, assuming that the router calling this handler will only call this
@@ -154,7 +152,7 @@ public class OruR01Handler implements Application {
 				LOGGER.debug("Parsing observation");
 				Obs obs = parseObs(encounter, obx, messageControlId);
 				LOGGER.debug("Finished creating observations");
-				if (obs != null && encounter.getEncounterId() == null) {
+				if (obs != null) {
 					// set this obs on the encounter object that we will be saving later
 					encounter.addObs(obs);
 				}
@@ -195,6 +193,11 @@ public class OruR01Handler implements Application {
 		String hl7ConceptId = codedElement.getIdentifier().getValue();
 		
 		String codingSystem = codedElement.getNameOfCodingSystem().getValue();
+
+		if ("LN".equals(codingSystem)) {
+			codingSystem = "LOINC";
+		}
+
 		return getConcept(hl7ConceptId, codingSystem, uid);
 	}
 	
@@ -236,7 +239,7 @@ public class OruR01Handler implements Application {
 		
 		String dataType = values[0].getName();
 		LOGGER.debug(" datatype = {}", dataType);
-		
+
 		Concept concept = getConcept(obx.getObservationIdentifier(), uid);
 		LOGGER.debug(" concept = {}", concept);
 		
@@ -265,17 +268,19 @@ public class OruR01Handler implements Application {
 		obs.setDateCreated(encounter.getDateCreated());
 		
 		// Set comments if there are any
-		StringBuilder comments = new StringBuilder();
 		ORU_R01_OBSERVATION parent = (ORU_R01_OBSERVATION) obx.getParent();
 		// Iterate over all OBX NTEs
-		for (int i = 0; i < parent.getNTEReps(); i++) {
+        List<String> commentList = new ArrayList<>();
+        for (int i = 0; i < parent.getNTEReps(); i++) {
 			for (FT obxComment : parent.getNTE(i).getComment()) {
-				comments = comments.append(" ").append(obxComment.getValue());
+				commentList.add(obxComment.getValue());
 			}
 		}
+		String comments = org.apache.commons.lang3.StringUtils.join(commentList, " ");
+
 		// Only set comments if there are any
-		if (StringUtils.hasText(comments.toString())) {
-			obs.setComment(comments.toString());
+		if (StringUtils.hasText(comments)) {
+			obs.setComment(comments);
 		}
 		
 		Type obx5 = values[0].getData();

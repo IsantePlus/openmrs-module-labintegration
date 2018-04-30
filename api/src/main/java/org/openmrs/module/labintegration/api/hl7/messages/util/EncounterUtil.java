@@ -41,7 +41,7 @@ public final class EncounterUtil {
 		return obs == null ? null : obs.getValueText();
 	}
 	
-	private static Obs findObs(Encounter encounter, int conceptId, Integer groupId) {
+	public static Obs findObs(Encounter encounter, int conceptId, Integer groupId) {
 		Collection<Obs> obsToSearch = Collections.emptyList();
 		if (groupId == null) {
 			obsToSearch = encounter.getObs();

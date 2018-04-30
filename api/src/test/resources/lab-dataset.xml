@@ -9,15 +9,18 @@
                               date_created="2005-01-06 00:00:00" creator="1"/>
 
     <!-- LOINC -->
+    <concept concept_id="678" retired="0" date_created="2004-01-01 00:00:00" is_set="0"
+             datatype_id="1"/>
+    <concept_numeric concept_id="678" precise="2"/>
+    
     <concept_reference_source concept_source_id="6" name="LOINC" retired="0"
                               date_created="2010-04-25 11:14:13" creator="1"/>
     <concept_reference_term concept_reference_term_id="138097" creator="1" date_created="2011-01-22 00:00:00"
-                            concept_source_id="6" code="53225-9" uuid="957a10b2-9e69-3561-83eb-60aebbf90b13"
+                            concept_source_id="6" code="14682-9" uuid="957a10b2-9e69-3561-83eb-60aebbf90b13"
                             retired="0"/>
     <concept_reference_map concept_reference_term_id="138097" concept_map_id="138097"
                            concept_id="678" concept_map_type_id="2" uuid="138097ABBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
                            creator="1" date_created="2011-01-22 17:12:55"/>
-    <concept concept_id="678" retired="0" date_created="2004-01-01 00:00:00" is_set="0"/>
 
     <!-- Civil Status -->
     <concept concept_id="1054" retired="0" date_created="2005-01-06 00:00:00" is_set="0"/>
@@ -151,7 +154,7 @@
         creator="1" date_created="2005-01-06 00:00:00" voided="0"
         obs_group_id="17" value_text="Birth City" obs_datetime="2005-01-06 00:00:00"/>
 
-    <!-- Registration Encounter for OruR01MessageControllerTest-->
+    <!-- Encounter for OruR01MessageControllerTest-->
     <encounter encounter_id="21"
                patient_id="10" encounter_type="22"
                encounter_datetime="2018-03-28 17:16:07"
