@@ -8,7 +8,6 @@ import org.openmrs.Patient;
 import org.openmrs.Provider;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.ProviderService;
-import org.openmrs.module.labintegration.api.communication.hl7.messages.testdata.HL7TestMsgUtil;
 import org.openmrs.module.labintegration.api.communication.hl7.messages.testdata.HL7TestOrder;
 import org.openmrs.module.labintegration.api.communication.hl7.messages.utils.OrderConverterTestUtils;
 import org.openmrs.module.labintegration.api.hl7.messages.OMLO21OrderConverter;
@@ -16,6 +15,7 @@ import org.openmrs.module.labintegration.api.hl7.messages.OrderControl;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.MshGenerator;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.msh.MessageControlIdSource;
 import org.openmrs.module.labintegration.api.hl7.openelis.OpenElisHL7Config;
+import org.openmrs.module.labintegration.api.hl7.util.HL7TestMsgUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.assertEquals;
