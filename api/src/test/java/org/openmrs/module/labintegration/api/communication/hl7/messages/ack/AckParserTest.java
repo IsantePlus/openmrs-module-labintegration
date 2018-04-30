@@ -3,7 +3,7 @@ package org.openmrs.module.labintegration.api.communication.hl7.messages.ack;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openmrs.module.labintegration.api.communication.hl7.messages.testdata.HL7TestMsgUtil;
+import org.openmrs.module.labintegration.api.hl7.util.HL7TestMsgUtil;
 import org.openmrs.module.labintegration.api.hl7.messages.ack.AckParser;
 import org.openmrs.module.labintegration.api.hl7.messages.ack.Acknowledgement;
 import org.openmrs.module.labintegration.api.hl7.messages.ack.InvalidAckException;

@@ -1,4 +1,4 @@
-package org.openmrs.module.labintegration.api.communication.hl7.messages.testdata;
+package org.openmrs.module.labintegration.api.hl7.util;
 
 import org.apache.commons.io.IOUtils;
 

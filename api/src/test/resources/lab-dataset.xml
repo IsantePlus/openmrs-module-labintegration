@@ -8,6 +8,20 @@
     <concept_reference_source concept_source_id="11" name="PIH" retired="0"
                               date_created="2005-01-06 00:00:00" creator="1"/>
 
+    <!-- LOINC -->
+    <concept concept_id="678" retired="0" date_created="2004-01-01 00:00:00" is_set="0"
+             datatype_id="1"/>
+    <concept_numeric concept_id="678" precise="2"/>
+    
+    <concept_reference_source concept_source_id="6" name="LOINC" retired="0"
+                              date_created="2010-04-25 11:14:13" creator="1"/>
+    <concept_reference_term concept_reference_term_id="138097" creator="1" date_created="2011-01-22 00:00:00"
+                            concept_source_id="6" code="14682-9" uuid="957a10b2-9e69-3561-83eb-60aebbf90b13"
+                            retired="0"/>
+    <concept_reference_map concept_reference_term_id="138097" concept_map_id="138097"
+                           concept_id="678" concept_map_type_id="2" uuid="138097ABBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+                           creator="1" date_created="2011-01-22 17:12:55"/>
+
     <!-- Civil Status -->
     <concept concept_id="1054" retired="0" date_created="2005-01-06 00:00:00" is_set="0"/>
 
@@ -79,6 +93,9 @@
     <encounter_type encounter_type_id="28" name="Enregistrement de patient" retired="0"
         creator="1" date_created="2005-01-06 00:00:00" uuid="873f968a-73a8-4f9c-ac78-9f4778b751b6"/>
 
+    <encounter_type encounter_type_id="22" name="Vitals" retired="0"
+        creator="1" date_created="2013-08-12 14:08:05" uuid="67a71486-1a54-468f-ac3e-7091a9a79584"/>
+
     <!-- Location -->
     <location location_id="2" name="Bayonnais" creator="1" date_created="2005-01-06 00:00:00"/>
 
@@ -136,5 +153,12 @@
     <obs obs_id="18" person_id="10" encounter_id="20" concept_id="21400"
         creator="1" date_created="2005-01-06 00:00:00" voided="0"
         obs_group_id="17" value_text="Birth City" obs_datetime="2005-01-06 00:00:00"/>
+
+    <!-- Encounter for OruR01MessageControllerTest-->
+    <encounter encounter_id="21"
+               patient_id="10" encounter_type="22"
+               encounter_datetime="2018-03-28 17:16:07"
+               creator="1" date_created="2005-01-06 00:00:00" voided="0"
+               uuid="549c78dc-31da-11e8-acac-c3add5b19973"/>
 
 </dataset>
