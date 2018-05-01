@@ -10,6 +10,7 @@ import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.api.EncounterService;
 import org.openmrs.hl7.HL7Service;
+import org.openmrs.module.labintegration.api.hl7.messages.MessageCreationException;
 import org.openmrs.module.labintegration.api.hl7.messages.util.EncounterUtil;
 import org.openmrs.module.labintegration.api.hl7.oru.OruRo1Receiver;
 import org.openmrs.module.labintegration.api.hl7.util.HL7TestMsgUtil;
@@ -55,7 +56,7 @@ public class OruRo1ReceiverTest extends BaseModuleContextSensitiveTest {
 	}
 
 	@Test
-	public void shouldParseOruRo1FinalMessage() throws IOException, HL7Exception {
+	public void shouldParseOruRo1FinalMessage() throws IOException, MessageCreationException, HL7Exception {
 		String hl7Msg = HL7TestMsgUtil.readMsg(FINAL_RESULT_ORU_RO1);
 		oruRo1Receiver.receiveMsg(hl7Msg);
 
@@ -68,7 +69,7 @@ public class OruRo1ReceiverTest extends BaseModuleContextSensitiveTest {
 	}
 
 	@Test
-	public void shouldParseOruRo1FinalMessageAndReturnACK() throws IOException, HL7Exception {
+	public void shouldParseOruRo1FinalMessageAndReturnACK() throws IOException, HL7Exception, MessageCreationException {
         String hl7Msg = HL7TestMsgUtil.readMsg(FINAL_RESULT_ORU_RO1);
 
         ACK actual = oruRo1Receiver.receiveMsg(hl7Msg);
@@ -98,7 +99,7 @@ public class OruRo1ReceiverTest extends BaseModuleContextSensitiveTest {
 	}
 
     @Test
-    public void shouldParseOruRo1ErrorMessageAndReturnACK() throws IOException, HL7Exception {
+    public void shouldParseOruRo1ErrorMessageAndReturnACK() throws IOException, HL7Exception, MessageCreationException {
         String hl7Msg = HL7TestMsgUtil.readMsg(FINAL_RESULT_ERROR_ORU_RO1);
 
         ACK actual = oruRo1Receiver.receiveMsg(hl7Msg);
@@ -121,11 +122,11 @@ public class OruRo1ReceiverTest extends BaseModuleContextSensitiveTest {
         assertEquals("2.5.1",
                 actual.getMSH().getMsh12_VersionID().getVersionID().getValue());
 
-        // AA = Application Accept
         assertEquals("AE", actual.getMSA().getMsa1_AcknowledgmentCode().getValue());
         assertEquals(oruR01.getMSH().getMsh10_MessageControlID().getValue(),
                 actual.getMSA().getMsa2_MessageControlID().getValue());
 
-        // todo add checking actual.getERR().getErrorCodeAndLocation()
+        assertEquals("ORUR01.error.InvalidEncounter",
+                actual.getERR().getErrorCodeAndLocation(0).getCodeIdentifyingError().getAlternateText().getValue());
     }
 }
