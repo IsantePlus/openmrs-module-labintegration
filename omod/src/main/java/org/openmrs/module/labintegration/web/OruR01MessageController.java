@@ -1,6 +1,5 @@
 package org.openmrs.module.labintegration.web;
 
-import ca.uhn.hl7v2.HL7Exception;
 import org.openmrs.module.labintegration.api.hl7.oru.OruRo1Receiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,10 +20,7 @@ public class OruR01MessageController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public void parseOruR01Message(@RequestBody String msg) {
-		try {
-			receiver.receiveMsg(msg);
-		} catch (HL7Exception e) {
-			LOGGER.error("Error", e);
-		}
+		receiver.receiveMsg(msg);
+		// todo send ack
 	}
 }

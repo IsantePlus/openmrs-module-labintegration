@@ -1,0 +1,6 @@
+MSH|^~\&|^OpenELIS||^iSantePlus||20180420150015.407-0600||ORU^R01^ORU_R01|2018042015001500034|P|2.5.1
+PID||1004X^^^^^2|||Doe^Joe^Terry|Janine||M|||Trou coucou^1ère L'Arbre^Anse Rouge^Artibonite^^HTI^^Anba Morne Porte|||||^Separe|^Vaudou||||||Birth City
+ORC|RE|PROVIDER_ID38|1234518000053-1||||||||||||||||||||||||||14682-9
+OBR||||Vitals;549c78dc-31da-11e8-acac-c3add5b1993||20180329171607.562+0100|||||||||||||||||||F
+OBX|1|NM|14682-9^Creatinine^LN||12|mg/l
+NTE|||This is a note about the result
