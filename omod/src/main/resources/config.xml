@@ -49,14 +49,14 @@
 		<property>@MODULE_ID@.openElis.receivingApplication</property>
 		<defaultValue>OpenELIS</defaultValue>
 		<description>
-			The Namespace ID of the receiving application in HL7v2 message being sent to OpenELIS.
+			The Namespace ID of the receiving application in the HL7v2 message being sent to OpenELIS.
 		</description>
 	</globalProperty>
 	<globalProperty>
 		<property>@MODULE_ID@.openElis.sendingApplication</property>
 		<defaultValue>iSantePlus</defaultValue>
 		<description>
-			The Namespace ID of the sending application in HL7v2 message being sent to OpenELIS.
+			The Namespace ID of the sending application in the HL7v2 message being sent to OpenELIS.
 		</description>
 	</globalProperty>
 	<globalProperty>
@@ -71,7 +71,7 @@
 		<property>@MODULE_ID@.hl7.motherNameAttrTypeUuid</property>
 		<defaultValue>First Name of Mother</defaultValue>
 		<description>
-			The name of the attribute type used to represent the mother name.
+				The name of the attribute type used to represent the mother name.
 		</description>
 	</globalProperty>
 	<globalProperty>
@@ -97,7 +97,7 @@
 		</description>
 	</globalProperty>
 	<globalProperty>
-		<property>@MODULE_ID@.hl7.regForm.religion</property>
+		<property>@MODULE_ID@.hl7.regForm.civilStatus</property>
 		<defaultValue>CIEL:1054</defaultValue>
 		<description>
 			The designation of the civil status concept, in the form of SOURCE:CODE. Will be
@@ -105,7 +105,7 @@
 		</description>
 	</globalProperty>
 	<globalProperty>
-		<property>@MODULE_ID@.hl7.regForm.religion</property>
+		<property>@MODULE_ID@.hl7.regForm.birthPlaceGroup</property>
 		<defaultValue>PIH:birthplace address construct</defaultValue>
 		<description>
 			The designation of the concept grouping birth address concepts, in the form of
@@ -113,7 +113,7 @@
 		</description>
 	</globalProperty>
 	<globalProperty>
-		<property>@MODULE_ID@.hl7.regForm.religion</property>
+		<property>@MODULE_ID@.hl7.regForm.birthPlaceCity</property>
 		<defaultValue>PIH:Country</defaultValue>
 		<description>
 			The designation of the birth city, in the form of SOURCE:CODE. Will be used to
@@ -135,8 +135,9 @@
 	</globalProperty>
 	<globalProperty>
 		<property>@MODULE_ID@.openElis.pidTypeUuid</property>
+		<defaultValue>05a29f94-c0ed-11e2-94be-8c13b969e334</defaultValue>
 		<description>
-			UUID of the Patient Identifier Type for the OpenELIS.
+			UUID of the Patient Identifier Type for the OpenELIS integration.
 		</description>
 	</globalProperty>
 
@@ -147,11 +148,6 @@
 		</description>
 	</globalProperty>
 	<!-- Required Global Properties -->
-
-	<globalProperty>
-		<property>labintegration.order.conceptCode</property>
-		<description>Specifies concept code for laboratory orders.</description>
-	</globalProperty>
 
 	<!--
 	<dwr>

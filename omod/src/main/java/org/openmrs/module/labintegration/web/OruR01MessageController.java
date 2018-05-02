@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "api/message/orur01")
+@RequestMapping(value = "api/message/orders/results")
 public class OruR01MessageController {
 
 	@Autowired
