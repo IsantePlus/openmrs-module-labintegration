@@ -9,7 +9,6 @@
  */
 package org.openmrs.module.labintegration;
 
-import org.openmrs.api.context.Context;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,16 +18,4 @@ import org.springframework.stereotype.Component;
 public class LabIntegrationConfig {
 	
 	public static final String MODULE_PRIVILEGE = "Lab Integration Privilege";
-	
-	public static final String LAB_ORDER_CONCEPT_CODE = "labintegration.order.conceptCode";
-	
-	public static final String LAB_ORDER_CONCEPT_CODE_DEFAULT = "1271";
-	
-	public int getLabOrderConceptCode() {
-		return Integer.parseInt(getProperty(LAB_ORDER_CONCEPT_CODE, LAB_ORDER_CONCEPT_CODE_DEFAULT));
-	}
-	
-	private String getProperty(String name, String defaultVal) {
-		return Context.getAdministrationService().getGlobalProperty(name, defaultVal);
-	}
 }
