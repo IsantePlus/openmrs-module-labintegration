@@ -154,11 +154,12 @@
         creator="1" date_created="2005-01-06 00:00:00" voided="0"
         obs_group_id="17" value_text="Birth City" obs_datetime="2005-01-06 00:00:00"/>
 
-    <!-- Encounter for OruR01MessageControllerTest-->
+    <!-- Encounter for Oru Receiver Test-->
     <encounter encounter_id="21"
                patient_id="10" encounter_type="22"
                encounter_datetime="2018-03-28 17:16:07"
                creator="1" date_created="2005-01-06 00:00:00" voided="0"
                uuid="549c78dc-31da-11e8-acac-c3add5b19973"/>
+
 
 </dataset>

@@ -29,7 +29,9 @@ import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.api.context.Context;
 import org.openmrs.hl7.HL7Constants;
+import org.openmrs.module.labintegration.api.alerts.AlertCreator;
 import org.openmrs.module.labintegration.api.hl7.messages.util.OruR01Util;
+import org.openmrs.module.labintegration.api.hl7.util.OpenElisStatusHelper;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
 import org.slf4j.Logger;
@@ -155,6 +157,7 @@ public class OruR01Handler implements Application {
 				if (obs != null) {
 					// set this obs on the encounter object that we will be saving later
 					encounter.addObs(obs);
+					createAlert(encounter, obs, message);
 				}
 			}
 			
@@ -471,5 +474,9 @@ public class OruR01Handler implements Application {
 			        .getMessage("ORUR01.error.invalidMessageVersion"));
 		}
 	}
-	
+
+	private void createAlert(Encounter encounter, Obs obs, ORU_R01 oru) {
+		AlertCreator alertCreator = Context.getRegisteredComponent("alertCreator", AlertCreator.class);
+		alertCreator.createAlert(encounter, obs, OpenElisStatusHelper.getStatus(oru));
+	}
 }
