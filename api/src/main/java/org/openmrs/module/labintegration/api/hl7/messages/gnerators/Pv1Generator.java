@@ -38,11 +38,11 @@ public class Pv1Generator {
 	}
 	
 	private void updateAttendingDoctor(PV1 pv1, Order order) throws HL7Exception {
-		int quantity = pv1.getAdmittingDoctorReps();
+		int quantity = pv1.getAttendingDoctorReps();
 		pv1.insertAttendingDoctor(quantity);
 		
 		Provider doctor = order.getOrderer();
-		XCN orderingProvider = pv1.getAdmittingDoctor(quantity);
+		XCN orderingProvider = pv1.getAttendingDoctor(quantity);
 		providerInformationHelper.updateProviderInformation(orderingProvider, doctor);
 		
 		pv1.getAttendingDoctor()[quantity] = orderingProvider;
