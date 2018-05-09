@@ -14,6 +14,9 @@ import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pid.Registra
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 @Component
 public class PidGenerator {
 	
@@ -42,7 +45,7 @@ public class PidGenerator {
 		nameHelper.updateNames(pid, patient);
 		motherNameHelper.updateMotherName(pid, patient, hl7Config);
 		
-		updateDateTimeOfBirth(pid, patient);
+		updateDateTimeOfBirth(pid, patient, hl7Config);
 		updateAdministrativeSex(pid, patient);
 		
 		addressHelper.updateAddresses(pid, patient);
@@ -50,8 +53,13 @@ public class PidGenerator {
 		registrationObsHelper.updateWithRegistrationInformation(pid, patient, hl7Config);
 	}
 	
-	private void updateDateTimeOfBirth(PID pid, Patient patient) throws DataTypeException {
-		pid.getDateTimeOfBirth().getTime().setValue(patient.getBirthDateTime());
+	private void updateDateTimeOfBirth(PID pid, Patient patient, HL7Config hl7Config) throws DataTypeException {
+		if (hl7Config.getPatientDateOfBirthFormat() != null) {
+			DateFormat df = new SimpleDateFormat(hl7Config.getPatientDateOfBirthFormat());
+			pid.getDateTimeOfBirth().getTime().setValue(df.format(patient.getBirthdate()));
+		} else {
+			pid.getDateTimeOfBirth().getTime().setValue(patient.getBirthdate());
+		}
 	}
 	
 	private void updateAdministrativeSex(PID pid, Patient patient) throws DataTypeException {

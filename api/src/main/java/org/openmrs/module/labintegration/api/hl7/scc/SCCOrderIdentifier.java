@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SCCOrderIdentifier extends OrderIdentifier {
 
-	private static final String DEFAULT_ACTION_CODE = "L";
+	private static final String DEFAULT_ACTION_CODE = "O";
 
 	@Autowired
 	private QuantityTimingHelper quantityTimingHelper;

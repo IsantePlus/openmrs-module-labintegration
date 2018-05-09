@@ -56,7 +56,17 @@ public class OpenElisHL7Config extends AbstractHL7Config {
 	public String getBillingNumberTypeUuid() {
 		return null;
 	}
-	
+
+	@Override
+	public String getPatientDateOfBirthFormat() {
+		return null;
+	}
+
+	@Override
+	public String getAdmitDateFormat() {
+		return null;
+	}
+
 	public URI getOpenElisUrl() {
 		String url = PropertiesUtil.getGlobalProperty(OPENELIS_URL);
 		try {

@@ -30,4 +30,8 @@ public interface HL7Config {
 	String getSendingFacilityNamespaceID();
 	
 	String getBillingNumberTypeUuid();
+
+	String getPatientDateOfBirthFormat();
+
+	String getAdmitDateFormat();
 }
