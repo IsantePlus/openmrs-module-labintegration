@@ -7,6 +7,7 @@ import org.openmrs.ConceptReferenceTerm;
 import org.openmrs.ConceptSource;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
+import org.openmrs.Location;
 import org.openmrs.Order;
 import org.openmrs.Patient;
 import org.openmrs.Provider;
@@ -80,9 +81,13 @@ public class HL7TestOrder {
 	private void mockEncounter() {
 		Encounter encounter = mock(Encounter.class);
 		when(encounter.getUuid()).thenReturn(ENC_UUID);
-		
+
 		EncounterType encounterType = new EncounterType(ENC_TYPE_NAME, "description");
 		when(encounter.getEncounterType()).thenReturn(encounterType);
+
+		Location location = new Location();
+		location.setUuid("LOCATION-UUID");
+		when(encounter.getLocation()).thenReturn(location);
 		
 		when(order.getEncounter()).thenReturn(encounter);
 	}
