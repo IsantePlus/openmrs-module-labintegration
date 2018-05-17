@@ -3,7 +3,7 @@ package org.openmrs.module.labintegration.api.hl7.scc;
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.v25.segment.OBR;
 import ca.uhn.hl7v2.model.v25.segment.ORC;
-import org.openmrs.Order;
+import org.openmrs.Obs;
 import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.helpers.OrderingProviderHelper;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.helpers.QuantityTimingHelper;
@@ -22,21 +22,21 @@ public class SCCOrderIdentifier extends OrderIdentifier {
 	private OrderingProviderHelper orderingProviderHelper;
 
 	@Override
-	public void updateORC(ORC orc, Order order) throws HL7Exception {
-		updateOrderTypeID(orc, order);
+	public void updateORC(ORC orc, Obs obs) throws HL7Exception {
+		updateOrderTypeID(orc, obs);
 
-		orderingProviderHelper.updateOrderingProvider(orc, order);
-		quantityTimingHelper.updateQuantityTiming(orc, order);
+		orderingProviderHelper.updateOrderingProvider(orc, obs);
+		quantityTimingHelper.updateQuantityTiming(orc, obs);
 
-		orc.getDateTimeOfTransaction().getTime().setValue(order.getDateActivated());
+		orc.getDateTimeOfTransaction().getTime().setValue(obs.getEncounter().getEncounterDatetime());
 	}
 
 	@Override
-	public void updateOBR(OBR obr, Order order) throws HL7Exception {
-		updateUniversalServiceID(obr, order);
+	public void updateOBR(OBR obr, Obs obs) throws HL7Exception {
+		updateUniversalServiceID(obr, obs);
 
-		orderingProviderHelper.updateOrderingProvider(obr, order);
-		quantityTimingHelper.updateQuantityTiming(obr, order);
+		orderingProviderHelper.updateOrderingProvider(obr, obs);
+		quantityTimingHelper.updateQuantityTiming(obr, obs);
 
 		obr.getSpecimenActionCode().setValue(DEFAULT_ACTION_CODE);
 	}

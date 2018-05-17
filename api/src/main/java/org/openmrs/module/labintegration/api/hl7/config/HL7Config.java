@@ -1,7 +1,7 @@
 package org.openmrs.module.labintegration.api.hl7.config;
 
+import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
-import org.openmrs.Order;
 
 public interface HL7Config {
 	
@@ -15,7 +15,7 @@ public interface HL7Config {
 	
 	String getPhoneNumberAttrTypeName();
 	
-	OrderIdentifier buildOrderIdentifier(Order order);
+	OrderIdentifier buildOrderIdentifier(Encounter encounter);
 	
 	EncounterType getRegistrationFormEncounterType();
 	
