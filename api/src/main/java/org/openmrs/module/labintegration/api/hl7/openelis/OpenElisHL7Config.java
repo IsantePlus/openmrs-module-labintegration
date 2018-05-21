@@ -1,6 +1,6 @@
 package org.openmrs.module.labintegration.api.hl7.openelis;
 
-import org.openmrs.Order;
+import org.openmrs.Encounter;
 import org.openmrs.module.labintegration.PropertiesUtil;
 import org.openmrs.module.labintegration.api.hl7.config.AbstractHL7Config;
 import org.openmrs.module.labintegration.api.hl7.config.LabHL7ConfigurationException;
@@ -43,7 +43,7 @@ public class OpenElisHL7Config extends AbstractHL7Config {
 	}
 	
 	@Override
-	public OrderIdentifier buildOrderIdentifier(Order order) {
+	public OrderIdentifier buildOrderIdentifier(Encounter encounter) {
 		return new OpenElisOrderIdentifier();
 	}
 	

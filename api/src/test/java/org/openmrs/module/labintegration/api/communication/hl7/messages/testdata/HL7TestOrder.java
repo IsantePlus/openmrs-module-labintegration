@@ -6,15 +6,17 @@ import org.openmrs.ConceptMapType;
 import org.openmrs.ConceptReferenceTerm;
 import org.openmrs.ConceptSource;
 import org.openmrs.Encounter;
+import org.openmrs.EncounterProvider;
 import org.openmrs.EncounterType;
-import org.openmrs.Order;
+import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.Provider;
 
-import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 
+import static java.util.Collections.singletonList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -32,14 +34,11 @@ public class HL7TestOrder {
 
 	public static final int EFFECTIVE_START_DATE_MONTH = 4;
 
-	private final Order order;
+	private final Encounter encounter;
 	
 	public HL7TestOrder(Patient patient, Provider provider) {
-		order = mock(Order.class);
-		
-		mockEncounter();
-		mockConcept();
-		mockOrder(patient, provider);
+		encounter = mockEncounter(patient, provider);
+		mockConceptAndObs();
 	}
 	
 	private static Date getScheduledDate() {
@@ -68,26 +67,25 @@ public class HL7TestOrder {
 		return calendar.getTime();
 	}
 	
-	private void mockOrder(Patient patient, Provider provider) {
-		when(order.getScheduledDate()).thenReturn(getScheduledDate());
-		when(order.getDateActivated()).thenReturn(getActivatedDate());
-		when(order.getEffectiveStartDate()).thenReturn(getEffectiveStartDate());
-		when(order.getPatient()).thenReturn(patient);
-		when(order.getOrderer()).thenReturn(provider);
-		when(order.getUrgency()).thenReturn(Order.Urgency.ROUTINE);
-	}
-	
-	private void mockEncounter() {
+	private Encounter mockEncounter(Patient patient, Provider provider) {
 		Encounter encounter = mock(Encounter.class);
 		when(encounter.getUuid()).thenReturn(ENC_UUID);
 		
 		EncounterType encounterType = new EncounterType(ENC_TYPE_NAME, "description");
 		when(encounter.getEncounterType()).thenReturn(encounterType);
-		
-		when(order.getEncounter()).thenReturn(encounter);
+
+		when(encounter.getPatient()).thenReturn(patient);
+
+		EncounterProvider encProvider = mock(EncounterProvider.class);
+		when(encProvider.getProvider()).thenReturn(provider);
+		when(encounter.getEncounterProviders()).thenReturn(new HashSet<>(singletonList(encProvider)));
+
+		when(encounter.getEncounterDatetime()).thenReturn(getScheduledDate());
+
+		return encounter;
 	}
 	
-	private void mockConcept() {
+	private void mockConceptAndObs() {
 		ConceptSource loincSource = new ConceptSource();
 		loincSource.setName("LOINC");
 		
@@ -103,11 +101,16 @@ public class HL7TestOrder {
 		Concept concept = new Concept();
 		concept.addConceptMapping(otherMapping);
 		concept.addConceptMapping(loincMapping);
-		
-		when(order.getConcept()).thenReturn(concept);
+		concept.setId(657);
+
+		Obs obs = mock(Obs.class);
+		when(obs.getEncounter()).thenReturn(encounter);
+		when(obs.getConcept()).thenReturn(concept);
+
+		when(encounter.getObs()).thenReturn(new HashSet<>(singletonList(obs)));
 	}
-	
-	public Order value() {
-		return order;
+
+	public Encounter value() {
+		return encounter;
 	}
 }

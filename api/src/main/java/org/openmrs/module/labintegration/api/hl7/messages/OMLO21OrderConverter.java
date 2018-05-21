@@ -3,7 +3,9 @@ package org.openmrs.module.labintegration.api.hl7.messages;
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.v25.message.OML_O21;
 import org.hibernate.exception.DataException;
-import org.openmrs.Order;
+import org.openmrs.Encounter;
+import org.openmrs.Obs;
+import org.openmrs.module.labintegration.api.hl7.ObsSelector;
 import org.openmrs.module.labintegration.api.hl7.OrderConverter;
 import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
 import org.openmrs.module.labintegration.api.hl7.config.LabIntegrationProperties;
@@ -35,21 +37,30 @@ public class OMLO21OrderConverter implements OrderConverter {
 	
 	@Autowired
 	private ObrGenerator obrGenerator;
+
+	@Autowired
+	private ObsSelector obsSelector;
 	
 	@Override
-	public String createMessage(Order order, OrderControl orderControl, HL7Config hl7Config) throws MessageCreationException {
+	public String createMessage(Encounter encounter, OrderControl orderControl, HL7Config hl7Config) throws MessageCreationException {
 		try {
 			OML_O21 message = new OML_O21();
 			message.initQuickstart("OML", "O21", labIntegrationProperties.getHL7ProcessingId());
 
 			mshGenerator.updateMsh(message.getMSH(), hl7Config);
 
-			pidGenerator.updatePid(message.getPATIENT().getPID(), order.getPatient(), hl7Config);
+			pidGenerator.updatePid(message.getPATIENT().getPID(), encounter.getPatient(), hl7Config);
 			
-			OrderIdentifier orderIdentifier = hl7Config.buildOrderIdentifier(order);
-			
-			orcGenerator.updateOrc(message.getORDER().getORC(), order, orderControl.code(), orderIdentifier);
-			obrGenerator.updateObr(message.getORDER().getOBSERVATION_REQUEST().getOBR(), order, orderIdentifier);
+			OrderIdentifier orderIdentifier = hl7Config.buildOrderIdentifier(encounter);
+
+			int i = 0;
+			for (Obs obs : encounter.getObs()) {
+				if (obsSelector.isTestType(obs)) {
+					orcGenerator.updateOrc(message.getORDER(i).getORC(), obs, orderControl.code(), orderIdentifier);
+					obrGenerator.updateObr(message.getORDER(i).getOBSERVATION_REQUEST().getOBR(), obs, orderIdentifier);
+					i++;
+				}
+			}
 			
 			String msg = message.toString();
 
