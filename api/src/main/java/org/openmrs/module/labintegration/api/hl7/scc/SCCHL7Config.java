@@ -1,6 +1,6 @@
 package org.openmrs.module.labintegration.api.hl7.scc;
 
-import org.openmrs.Order;
+import org.openmrs.Encounter;
 import org.openmrs.module.labintegration.api.hl7.config.AbstractHL7Config;
 import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class SCCHL7Config extends AbstractHL7Config {
 	}
 	
 	@Override
-	public OrderIdentifier buildOrderIdentifier(Order order) {
+	public OrderIdentifier buildOrderIdentifier(Encounter encounter) {
 		return orderIdentifier;
 	}
 	

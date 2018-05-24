@@ -1,11 +1,11 @@
 package org.openmrs.module.labintegration.api.hl7.openelis;
 
-import org.openmrs.Order;
+import org.openmrs.Encounter;
 import org.openmrs.module.labintegration.api.hl7.NewOrderException;
 import org.openmrs.module.labintegration.api.hl7.OrderCancellationException;
 import org.openmrs.module.labintegration.api.hl7.OrderSender;
-import org.openmrs.module.labintegration.api.hl7.messages.OMLO21OrderConverter;
 import org.openmrs.module.labintegration.api.hl7.messages.MessageCreationException;
+import org.openmrs.module.labintegration.api.hl7.messages.OMLO21OrderConverter;
 import org.openmrs.module.labintegration.api.hl7.messages.OrderControl;
 import org.openmrs.module.labintegration.api.hl7.messages.ack.AckParser;
 import org.openmrs.module.labintegration.api.hl7.messages.ack.Acknowledgement;
@@ -30,9 +30,9 @@ public class OpenElisOrderSender implements OrderSender {
 	private RestTemplate restTemplate = new RestTemplate();
 	
 	@Override
-	public void sendNewOrder(Order order) throws NewOrderException {
+	public void sendNewOrder(Encounter encounter) throws NewOrderException {
 		try {
-			Acknowledgement ack = sendToOpenElis(order, OrderControl.NEW_ORDER);
+			Acknowledgement ack = sendToOpenElis(encounter, OrderControl.NEW_ORDER);
 			
 			if (!ack.isSuccess()) {
 				String exMsg = String.format("Error code received from OpenELIS - %s: %s.", ack.getErrorCode(),
@@ -49,9 +49,9 @@ public class OpenElisOrderSender implements OrderSender {
 	}
 	
 	@Override
-	public void sendOrderCancellation(Order order) throws OrderCancellationException {
+	public void sendOrderCancellation(Encounter encounter) throws OrderCancellationException {
 		try {
-			Acknowledgement ack = sendToOpenElis(order, OrderControl.CANCEL_ORDER);
+			Acknowledgement ack = sendToOpenElis(encounter, OrderControl.CANCEL_ORDER);
 			
 			if (!ack.isSuccess()) {
 				String exMsg = String.format("Error code received from OpenELIS - %s: %s.", ack.getErrorCode(),
@@ -72,10 +72,10 @@ public class OpenElisOrderSender implements OrderSender {
 		return config.isOpenElisConfigured();
 	}
 	
-	private Acknowledgement sendToOpenElis(Order order, OrderControl orderControl) throws MessageCreationException,
+	private Acknowledgement sendToOpenElis(Encounter encounter, OrderControl orderControl) throws MessageCreationException,
 	        InvalidAckException {
-		String msg = orderConverter.createMessage(order, orderControl, config);
-		
+		String msg = orderConverter.createMessage(encounter, orderControl, config);
+
 		ResponseEntity<String> response = restTemplate.postForEntity(config.getOpenElisUrl(), msg, String.class);
 		
 		return ackParser.parse(response.getBody());
