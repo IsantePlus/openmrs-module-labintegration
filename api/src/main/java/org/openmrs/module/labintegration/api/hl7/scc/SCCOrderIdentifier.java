@@ -43,7 +43,8 @@ public class SCCOrderIdentifier extends OrderIdentifier {
 		obr.getSpecimenActionCode().setValue(DEFAULT_ACTION_CODE);
 	}
 
-	protected void updateUniversalServiceID(OBR obr, Obs obs) throws DataTypeException {
+	@Override
+	public void updateUniversalServiceID(OBR obr, Obs obs) throws DataTypeException {
 		String encounterType = obs.getEncounter().getEncounterType().getName();
 		String encounterUuid = obs.getEncounter().getUuid();
 		String encounterLocationUuid = obs.getEncounter().getLocation().getUuid();
