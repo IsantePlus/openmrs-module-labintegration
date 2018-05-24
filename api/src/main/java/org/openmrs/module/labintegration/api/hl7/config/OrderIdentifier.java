@@ -15,6 +15,8 @@ public abstract class OrderIdentifier {
 	public abstract void updateORC(ORC orc, Obs obs) throws HL7Exception;
 	
 	public abstract void updateOBR(OBR obr, Obs obs) throws HL7Exception;
+
+	public abstract void updateUniversalServiceID(OBR obr, Obs obs) throws DataTypeException;
 	
 	protected void updateOrderTypeID(ORC orc, Obs obs) throws DataTypeException {
 		String conceptCode = ConceptUtil.getLoincCode(obs.getConcept());
@@ -24,18 +26,4 @@ public abstract class OrderIdentifier {
 
 		orc.getOrderType().getIdentifier().setValue(conceptCode);
 	}
-	
-	protected void updateUniversalServiceID(OBR obr, Obs obs) throws DataTypeException {
-		String encounterType = obs.getEncounter().getEncounterType().getName();
-		String encounterUuid = obs.getEncounter().getUuid();
-
-		if (StringUtils.isBlank(encounterType) || StringUtils.isBlank(encounterUuid)) {
-			throw new IllegalStateException("Encounter type and encounter UUID are mandatory");
-		}
-
-		String identifier = encounterType + ID_SEPARATOR + encounterUuid;
-
-		obr.getUniversalServiceIdentifier().getIdentifier().setValue(identifier);
-	}
-
 }

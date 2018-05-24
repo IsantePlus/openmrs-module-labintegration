@@ -4,6 +4,7 @@ import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.v25.segment.OBR;
 import ca.uhn.hl7v2.model.v25.segment.ORC;
+import org.apache.commons.lang3.StringUtils;
 import org.openmrs.Obs;
 import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
 
@@ -18,4 +19,19 @@ public class OpenElisOrderIdentifier extends OrderIdentifier {
 	public void updateOBR(OBR obr, Obs obs) throws DataTypeException {
 		updateUniversalServiceID(obr, obs);
 	}
+
+	@Override
+	public void updateUniversalServiceID(OBR obr, Obs obs) throws DataTypeException {
+		String encounterType = obs.getEncounter().getEncounterType().getName();
+		String encounterUuid = obs.getEncounter().getUuid();
+
+		if (StringUtils.isBlank(encounterType) || StringUtils.isBlank(encounterUuid)) {
+			throw new IllegalStateException("Encounter type and encounter UUID are mandatory");
+		}
+
+		String identifier = encounterType + ID_SEPARATOR + encounterUuid;
+
+		obr.getUniversalServiceIdentifier().getIdentifier().setValue(identifier);
+	}
+
 }
