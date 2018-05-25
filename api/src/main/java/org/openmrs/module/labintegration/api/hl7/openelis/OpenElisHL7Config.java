@@ -51,11 +51,11 @@ public class OpenElisHL7Config extends AbstractHL7Config {
 	public String getSendingFacilityNamespaceID() {
 		return null;
 	}
-	
-	@Override
-	public String getBillingNumberTypeUuid() {
-		return null;
-	}
+
+    @Override
+    public boolean isBillingNumberNeeded() {
+	    return false;
+    }
 
 	@Override
 	public String getPatientDateOfBirthFormat() {

@@ -50,7 +50,7 @@ public class ORMO01OrderConverter implements OrderConverter {
 			
 			message.initQuickstart("ORM", "O01", labIntegrationProperties.getHL7ProcessingId());
 			mshGenerator.updateMsh(message.getMSH(), hl7Config);
-			pidGenerator.updatePid(message.getPATIENT().getPID(), encounter.getPatient(), hl7Config);
+			pidGenerator.updatePid(message.getPATIENT().getPID(), encounter, hl7Config);
 			pv1Generator.updatePv1(message.getPATIENT().getPATIENT_VISIT().getPV1(), hl7Config, encounter);
 
 			OrderIdentifier orderIdentifier = hl7Config.buildOrderIdentifier(encounter);
