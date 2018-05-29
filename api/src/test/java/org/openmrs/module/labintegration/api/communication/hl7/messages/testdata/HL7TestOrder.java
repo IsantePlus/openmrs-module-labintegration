@@ -9,6 +9,7 @@ import org.openmrs.Encounter;
 import org.openmrs.EncounterProvider;
 import org.openmrs.EncounterType;
 import org.openmrs.Obs;
+import org.openmrs.Location;
 import org.openmrs.Patient;
 import org.openmrs.Provider;
 
@@ -81,6 +82,10 @@ public class HL7TestOrder {
 		when(encounter.getEncounterProviders()).thenReturn(new HashSet<>(singletonList(encProvider)));
 
 		when(encounter.getEncounterDatetime()).thenReturn(getScheduledDate());
+
+		Location location = new Location();
+		location.setUuid("LOCATION-UUID");
+		when(encounter.getLocation()).thenReturn(location);
 
 		return encounter;
 	}
