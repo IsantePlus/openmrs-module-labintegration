@@ -8,29 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum OrderDestination {
-	SCC("SCC"),
-	OPEN_ELIS("OpenELIS");
+    SCC("SCC"),
+    OPEN_ELIS("OpenELIS");
 
-	public static final String ORDER_DESTINATION_CONCEPT_UUID = "160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    public static final String ORDER_DESTINATION_CONCEPT_UUID = "160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 
-	private String name;
-	
-	OrderDestination(String text) {
-		this.name = text;
-	}
-	
-	public String getName() {
-		return this.name;
-	}
-	
-	public static OrderDestination fromString(String text) {
-		for (OrderDestination b : OrderDestination.values()) {
-			if (b.name.equalsIgnoreCase(text)) {
-				return b;
-			}
-		}
-		return null;
-	}
+    private String name;
+
+    OrderDestination(String text) {
+        this.name = text;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public static OrderDestination fromString(String text) {
+        for (OrderDestination b : OrderDestination.values()) {
+            if (b.name.equalsIgnoreCase(text)) {
+                return b;
+            }
+        }
+        return null;
+    }
 
     public static List<OrderDestination> getOrderDestinations(Encounter encounter) {
         List<OrderDestination> destinations = new ArrayList<>();
@@ -44,7 +44,7 @@ public enum OrderDestination {
         return destinations;
     }
 
-	public static boolean searchForExistence(Encounter encounter, OrderDestination... ods) {
+    public static boolean searchForExistence(Encounter encounter, OrderDestination... ods) {
         List<OrderDestination> orderDestinations = OrderDestination.getOrderDestinations(encounter);
         for (OrderDestination od : orderDestinations) {
             for (OrderDestination searchedOd : ods) {
