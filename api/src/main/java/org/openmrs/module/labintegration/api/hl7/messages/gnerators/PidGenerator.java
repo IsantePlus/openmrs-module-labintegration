@@ -2,6 +2,7 @@ package org.openmrs.module.labintegration.api.hl7.messages.gnerators;
 
 import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.v25.segment.PID;
+import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
 import org.openmrs.module.labintegration.api.hl7.messages.MessageCreationException;
@@ -38,9 +39,10 @@ public class PidGenerator {
 	@Autowired
 	private RegistrationDataHelper registrationObsHelper;
 	
-	public void updatePid(PID pid, Patient patient, HL7Config hl7Config) throws DataTypeException, MessageCreationException {
+	public void updatePid(PID pid, Encounter encounter, HL7Config hl7Config) throws DataTypeException, MessageCreationException {
+		Patient patient = encounter.getPatient();
 		idHelper.updateIdNumber(pid, patient, hl7Config);
-		billingNumberHelper.updateBillingNumber(pid, patient, hl7Config);
+		billingNumberHelper.updateBillingNumber(pid, encounter, hl7Config);
 		
 		nameHelper.updateNames(pid, patient);
 		motherNameHelper.updateMotherName(pid, patient, hl7Config);

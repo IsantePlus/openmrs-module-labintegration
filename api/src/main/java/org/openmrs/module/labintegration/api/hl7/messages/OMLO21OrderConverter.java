@@ -49,7 +49,7 @@ public class OMLO21OrderConverter implements OrderConverter {
 
 			mshGenerator.updateMsh(message.getMSH(), hl7Config);
 
-			pidGenerator.updatePid(message.getPATIENT().getPID(), encounter.getPatient(), hl7Config);
+			pidGenerator.updatePid(message.getPATIENT().getPID(), encounter, hl7Config);
 			
 			OrderIdentifier orderIdentifier = hl7Config.buildOrderIdentifier(encounter);
 
