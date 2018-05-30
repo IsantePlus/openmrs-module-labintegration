@@ -11,6 +11,9 @@ import org.openmrs.module.labintegration.api.hl7.messages.ack.AckParser;
 import org.openmrs.module.labintegration.api.hl7.messages.ack.Acknowledgement;
 import org.openmrs.module.labintegration.api.hl7.messages.ack.InvalidAckException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -76,7 +79,11 @@ public class OpenElisOrderSender implements OrderSender {
 	        InvalidAckException {
 		String msg = orderConverter.createMessage(encounter, orderControl, config);
 
-		ResponseEntity<String> response = restTemplate.postForEntity(config.getOpenElisUrl(), msg, String.class);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.parseMediaType("application/hl7-v2"));
+		HttpEntity<String> request = new HttpEntity<>(msg, headers);
+
+		ResponseEntity<String> response = restTemplate.postForEntity(config.getOpenElisUrl(), request, String.class);
 		
 		return ackParser.parse(response.getBody());
 	}
