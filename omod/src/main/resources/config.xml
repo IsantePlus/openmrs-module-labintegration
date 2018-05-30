@@ -83,7 +83,7 @@
 	</globalProperty>
 	<globalProperty>
 		<property>@MODULE_ID@.hl7.regForm.typeUuid</property>
-		<defaultValue>873f968a-73a8-4f9c-ac78-9f4778b751b6m</defaultValue>
+		<defaultValue>873f968a-73a8-4f9c-ac78-9f4778b751b6</defaultValue>
 		<description>
 			The UUID of the registration form.
 		</description>
