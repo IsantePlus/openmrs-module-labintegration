@@ -15,7 +15,7 @@ import java.io.IOException;
 
 import static org.openmrs.module.labintegration.api.hl7.messages.util.OruR01Util.changeMessageVersionFrom251To25;
 
-@Component
+@Component("OruRO1Receiver")
 public class OruRo1Receiver {
 
     @Autowired

@@ -54,6 +54,7 @@ public class OpenMrsAlertCreator implements AlertCreator {
         String text = String.format("Lab: %s  received for %s test for patient %s", status,
                 concept.getName().getName(), patient.getPersonName().toString());
         Alert alert = new Alert(text, users);
+        alert.setCreator(users.get(0));
         alertService.saveAlert(alert);
     }
 }

@@ -1,5 +1,6 @@
 package org.openmrs.module.labintegration.api.hl7.openelis;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openmrs.Encounter;
 import org.openmrs.module.labintegration.PropertiesUtil;
 import org.openmrs.module.labintegration.api.hl7.config.AbstractHL7Config;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-@Component
+@Component("OpenElisHL7Config")
 public class OpenElisHL7Config extends AbstractHL7Config {
 
     private static final String RECEIVING_APP = "labintegration.openElis.receivingApplication";
@@ -20,6 +21,8 @@ public class OpenElisHL7Config extends AbstractHL7Config {
     private static final String PID_TYPE_UUID = "labintegration.openElis.pidTypeUuid";
 
     private static final String OPENELIS_URL = "labintegration.openElis.url";
+
+    private static final String OPENELIS_INBOUND_HOST = "labintegration.openElis.inboundHost";
 
     private static final String DEFAULT_RECEIVING_APP = "OpenELIS";
 
@@ -65,6 +68,17 @@ public class OpenElisHL7Config extends AbstractHL7Config {
     @Override
     public String getAdmitDateFormat() {
         return null;
+    }
+
+    public String getOpenelisInboundHost() {
+        String inboundHost = getPropertySource().getProperty(OPENELIS_INBOUND_HOST, null);
+        if (StringUtils.isBlank(inboundHost)) {
+            URI uri = getOpenElisUrl();
+            return uri.getHost();
+        } else {
+            return inboundHost;
+        }
+
     }
 
     public URI getOpenElisUrl() {

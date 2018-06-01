@@ -124,6 +124,14 @@
 		<property>@MODULE_ID@.openElis.url</property>
 		<description>
 			The URL to the OpenELIS endpoint that accepts HL7 message posts.
+		</description>`
+	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.openElis.inboundHost</property>
+		<description>
+			The host of OpenELIS used that has to match when receiving inbound messages. If not set,
+			the value will be retrieved from the OpenELIS url. Use this if the host from the outbound url
+			does not match the IP in OpenELIS inbound messages.
 		</description>
 	</globalProperty>
 	<globalProperty>
@@ -168,12 +176,12 @@
 	-->
 
 	<!-- Servlets -->
-	<!-- Accessed through the url /pageContext()/moduleServlet/<moduleId>/<servlet-name>
+	<!-- Accessed through the url /pageContext()/moduleServlet/<moduleId>/<servlet-name> -->
 	<servlet>
-		<servlet-name>formDownload</servlet-name>
-		<servlet-class>@MODULE_PACKAGE@.web.FormDownloadServlet</servlet-class>
+		<servlet-name>result</servlet-name>
+		<servlet-class>@MODULE_PACKAGE@.web.ResultServlet</servlet-class>
 	</servlet>
-	-->
+
 	<!-- /Servlets -->
 
 
