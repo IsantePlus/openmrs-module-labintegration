@@ -26,7 +26,10 @@ import org.openmrs.ConceptAnswer;
 import org.openmrs.ConceptName;
 import org.openmrs.ConceptProposal;
 import org.openmrs.Encounter;
+import org.openmrs.EncounterProvider;
 import org.openmrs.Obs;
+import org.openmrs.Person;
+import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.hl7.HL7Constants;
 import org.openmrs.module.labintegration.api.alerts.AlertCreator;
@@ -153,6 +156,8 @@ public class OruR01Handler implements Application {
 				OBX obx = orderObs.getOBSERVATION(j).getOBX();
 				LOGGER.debug("Parsing observation");
 				Obs obs = parseObs(encounter, obx, messageControlId);
+				voidPreviousObs(encounter, obs);
+
 				LOGGER.debug("Finished creating observations");
 				if (obs != null) {
 					// set this obs on the encounter object that we will be saving later
@@ -369,7 +374,35 @@ public class OruR01Handler implements Application {
 		
 		return obs;
 	}
-	
+
+	private void voidPreviousObs(Encounter encounter, Obs newObs) {
+		for (Obs obs : encounter.getObs()) {
+			if (obs.getConcept().getId().equals(newObs.getConcept().getId())
+				&& obs.getId() != null) {
+				obs.setVoided(true);
+				obs.setDateVoided(new Date());
+				obs.setVoidReason("New result arrived from OpenELIS");
+				obs.setVoidedBy(getUserForEncounter(encounter));
+
+				Obs group = obs.getObsGroup();
+				if (group != null) {
+					group.addGroupMember(newObs);
+				}
+			}
+		}
+	}
+
+	private User getUserForEncounter(Encounter encounter) {
+		for (EncounterProvider encProvider : encounter.getEncounterProviders()) {
+			Person person = encProvider.getProvider().getPerson();
+			List<User> users = Context.getUserService().getUsersByPerson(person, false);
+			if (!users.isEmpty()) {
+				return users.get(0);
+			}
+		}
+		return null;
+	}
+
 	private boolean isConceptProposal(String identifier) {
 		return OpenmrsUtil.nullSafeEquals(identifier, OpenmrsConstants.PROPOSED_CONCEPT_IDENTIFIER);
 	}
