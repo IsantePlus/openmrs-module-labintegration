@@ -4,7 +4,6 @@ import org.apache.commons.lang.StringUtils;
 import org.openmrs.Encounter;
 import org.openmrs.module.labintegration.PropertiesUtil;
 import org.openmrs.module.labintegration.api.LabIntegrationService;
-import org.openmrs.module.labintegration.api.hl7.NewOrderException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.AfterReturningAdvice;
@@ -36,7 +35,7 @@ public class SaveEncounterAfterAdvice implements AfterReturningAdvice {
 				LOGGER.info("Order encounter occurred {}", encounter.getUuid());
 				try {
 					labIntegrationService.doOrder(encounter);
-				} catch (NewOrderException e) {
+				} catch (Exception e) {
 					// TODO
 					LOGGER.error("Unable to sed order messages", e);
 				}
