@@ -11,6 +11,12 @@
     <!-- LOINC -->
     <concept concept_id="678" retired="0" date_created="2004-01-01 00:00:00" is_set="0"
              datatype_id="1"/>
+
+
+    <concept concept_id="1271" retired="0" date_created="2004-01-01 00:00:00" is_set="0"
+             datatype_id="1"/>
+
+
     <concept_numeric concept_id="678" precise="2"/>
     
     <concept_reference_source concept_source_id="6" name="LOINC" retired="0"

@@ -8,8 +8,8 @@ import org.openmrs.ConceptSource;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterProvider;
 import org.openmrs.EncounterType;
-import org.openmrs.Obs;
 import org.openmrs.Location;
+import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.Provider;
 
@@ -102,7 +102,10 @@ public class HL7TestOrder {
 		
 		ConceptReferenceTerm otherTerm = new ConceptReferenceTerm(otherSource, "XXXX", "other name");
 		ConceptMap otherMapping = new ConceptMap(otherTerm, new ConceptMapType());
-		
+
+		Concept topConcept = new Concept();
+		topConcept.setId(1271);
+
 		Concept concept = new Concept();
 		concept.addConceptMapping(otherMapping);
 		concept.addConceptMapping(loincMapping);
@@ -110,7 +113,8 @@ public class HL7TestOrder {
 
 		Obs obs = mock(Obs.class);
 		when(obs.getEncounter()).thenReturn(encounter);
-		when(obs.getConcept()).thenReturn(concept);
+		when(obs.getConcept()).thenReturn(topConcept);
+		when(obs.getValueCoded()).thenReturn(concept);
 
 		when(encounter.getObs()).thenReturn(new HashSet<>(singletonList(obs)));
 	}
