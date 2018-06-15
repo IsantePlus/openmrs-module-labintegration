@@ -35,5 +35,228 @@
        <addForeignKeyConstraint constraintName="labintegration_item_owner_fk" baseTableName="labintegration_item" baseColumnNames="owner"  referencedTableName="users"
                                 referencedColumnNames="user_id" />
    </changeSet> -->
+    <changeSet id="labintegration-2018-06-13-16-50" author="Arek Lalo">
+        <sql>
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '95701', 1, NOW(), '0', '7b1408eb-fe06-4d98-9aea-d0323541a3a1');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163426', LAST_INSERT_ID(), '2', NOW(), 1, '531f7fed-f7b5-4fb9-9e39-fe6aa4a62ec2');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '92168', 1, NOW(), '0', '541268c8-ba98-42d2-8b93-d21b39df85d2');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163433', LAST_INSERT_ID(), '2', NOW(), 1, '97367847-55ae-4856-ad29-a76fa3e96a30');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '95994', 1, NOW(), '0', '5d650c53-ba55-4aa6-bda7-a1e35249718e');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163434', LAST_INSERT_ID(), '2', NOW(), 1, 'd2b6804d-e125-452d-a67e-13ab029fba52');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '99304', 1, NOW(), '0', '46e508e1-b1c0-4ec1-a659-3ab5c1bd7451');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163652', LAST_INSERT_ID(), '2', NOW(), 1, '2d222223-d9e6-44a2-90f7-df5559ccfa93');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '90705', 1, NOW(), '0', 'e56ab34f-6f7b-448a-8b08-f0cfdd258ef7');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163653', LAST_INSERT_ID(), '2', NOW(), 1, 'fe6b9d28-afbb-4ec8-965a-38b25f0a3920');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '91329', 1, NOW(), '0', 'e54bec9a-491d-4de4-a68a-0408b8d69ce2');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163654', LAST_INSERT_ID(), '2', NOW(), 1, 'd343036c-e600-42fa-bf22-91430daa370b');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '97089', 1, NOW(), '0', 'dad1db12-9375-4cda-b92b-08f5725a268f');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163655', LAST_INSERT_ID(), '2', NOW(), 1, 'a21175b4-b7fe-4de4-9824-1254412271c1');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '96601', 1, NOW(), '0', '0340a6c4-1906-4744-b865-f5ad295a0d35');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('162097', LAST_INSERT_ID(), '2', NOW(), 1, '7c198f7b-285c-455f-a4d1-32ea228cf084');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '95644', 1, NOW(), '0', 'db64dbfd-14c0-46b8-a0f8-871b6d7c250a');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('160910', LAST_INSERT_ID(), '2', NOW(), 1, 'e7ea2364-13ce-4b7c-bcf1-b0f08d3ac70f');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '93389', 1, NOW(), '0', '6449601a-9bf4-4a8e-9afe-77969027b71d');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('162098', LAST_INSERT_ID(), '2', NOW(), 1, '1f692547-5123-493b-b516-e93a2f59b259');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '98838', 1, NOW(), '0', '855fb210-629e-41c6-b6fe-1890c12e958d');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163656', LAST_INSERT_ID(), '2', NOW(), 1, 'dde1d646-a74b-4d84-bfe3-cfd4527d268a');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '96894', 1, NOW(), '0', 'eff3f023-1b88-45be-9a5e-b9ae2f0ae2b8');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('162100', LAST_INSERT_ID(), '2', NOW(), 1, 'c1f42fed-0ab1-420c-88b9-6c34d5742665');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '90681', 1, NOW(), '0', '6705f8c8-1133-4c9d-9ed8-c60d2448669d');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('127778', LAST_INSERT_ID(), '2', NOW(), 1, 'da935e3a-8ba1-4c7b-94d9-cd6eb7c09186');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '95971', 1, NOW(), '0', '08a319fc-2b9d-4baf-b308-05a2ed44c867');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163668', LAST_INSERT_ID(), '2', NOW(), 1, 'd0ef1b91-3ef8-4818-aa94-3688bab1f8b9');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '94414', 1, NOW(), '0', 'a76cbaa8-320d-4038-8d82-4bb973f3f235');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163669', LAST_INSERT_ID(), '2', NOW(), 1, 'f16f7ea2-86a3-4d78-87dc-1b712157fe3c');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '97984', 1, NOW(), '0', 'e6fa4adb-9f89-4b1a-b393-504d9d1d9184');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163670', LAST_INSERT_ID(), '2', NOW(), 1, 'd1ca182c-0e9a-4ceb-a614-04b460895462');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '96038', 1, NOW(), '0', 'fa106fb1-d1e7-4506-9527-36f055b948f3');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163674', LAST_INSERT_ID(), '2', NOW(), 1, 'abd19960-ca05-4fb3-8b6b-34a24413c9d1');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '90209', 1, NOW(), '0', '93cf0195-637b-4852-b268-f29a1a5bfd4b');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1874', LAST_INSERT_ID(), '2', NOW(), 1, 'c11917a7-7efb-442f-8ea6-dfcc707a1f98');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '99817', 1, NOW(), '0', '4841c10d-d596-4ebf-a136-43ca8aacc934');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1160', LAST_INSERT_ID(), '2', NOW(), 1, '93a30b31-7bdf-48c0-ad57-dd853ee653b5');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '90852', 1, NOW(), '0', 'cc3a42b6-2f93-42a7-9476-ac2f5d70de9b');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1499', LAST_INSERT_ID(), '2', NOW(), 1, '9728ea6a-1296-4c36-a9ab-eea1437b77e4');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '92440', 1, NOW(), '0', '0c86390a-8aab-4ff7-986d-67e3e8d7e870');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1408', LAST_INSERT_ID(), '2', NOW(), 1, '9a2ab377-1ec2-4cf6-a7ce-f355bd2b550f');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '94460', 1, NOW(), '0', '1b463770-7e6c-4263-bd60-3e688771106b');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163688', LAST_INSERT_ID(), '2', NOW(), 1, '69975b6d-382e-435b-b16c-9a22d78375da');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '95549', 1, NOW(), '0', 'cad8f781-49ed-483c-b644-283135d730a6');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('123505', LAST_INSERT_ID(), '2', NOW(), 1, '07a2904b-e344-4204-886b-be04eda6f7dd');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '94448', 1, NOW(), '0', 'f3b409f4-26dd-4a03-a15d-76fa8c1566db');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('162065', LAST_INSERT_ID(), '2', NOW(), 1, 'aaf8a5a8-c45d-43fc-a4c6-e224ba27325a');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '97002', 1, NOW(), '0', '87c6470b-7463-41c9-abe0-9df82a39ce51');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1077', LAST_INSERT_ID(), '2', NOW(), 1, '644dc624-b641-43be-8646-1dabd92775de');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '95073', 1, NOW(), '0', 'bbfe9ef4-64b6-4297-b264-e30d4d535d74');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('160909', LAST_INSERT_ID(), '2', NOW(), 1, '02c525b6-1065-46d4-9d7c-88ad63b638d0');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '92098', 1, NOW(), '0', '52e08fab-7a1c-4dee-8003-2363d3f05ae6');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163639', LAST_INSERT_ID(), '2', NOW(), 1, 'a4da13c0-c1d9-467c-a65e-d09a58422777');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '99596', 1, NOW(), '0', '70a3328e-a143-4607-9666-bf1f9ad87735');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('161887', LAST_INSERT_ID(), '2', NOW(), 1, '3dd530a6-f365-4c77-9986-66640f11006c');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '99729', 1, NOW(), '0', 'bf6a18a9-8da1-459d-8117-6a76e5923799');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163638', LAST_INSERT_ID(), '2', NOW(), 1, 'e3e5b172-6430-48ac-8f97-b50765432a79');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '99854', 1, NOW(), '0', '67fec1d8-b84f-4324-bde5-e2b26df38da4');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163637', LAST_INSERT_ID(), '2', NOW(), 1, '7376f85d-2bd4-4731-8112-2dcfde342fd7');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '93380', 1, NOW(), '0', 'bf2ba12f-e45d-4c15-932f-3ba89a1f3b24');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163636', LAST_INSERT_ID(), '2', NOW(), 1, '0b44c46b-1314-434f-ad35-ad8d7465727c');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '93221', 1, NOW(), '0', '973ea91d-0e55-494b-8c13-a780441680c0');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('116611', LAST_INSERT_ID(), '2', NOW(), 1, '2af7d0ef-ae7c-4f95-a845-a666482aa38b');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '91684', 1, NOW(), '0', '25095a60-ea3d-4447-a811-5569c8b252cb');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163635', LAST_INSERT_ID(), '2', NOW(), 1, '77b98e7e-fc53-4162-b4ac-6fc2d4144dd1');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '95760', 1, NOW(), '0', '348f8868-ea4a-4acb-a986-79c87bee0b64');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('161565', LAST_INSERT_ID(), '2', NOW(), 1, '833d61f3-380b-4e91-93be-36422d710e00');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '96967', 1, NOW(), '0', 'eb295094-b741-4a1e-a4b3-a96e376bb0fc');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('114412', LAST_INSERT_ID(), '2', NOW(), 1, '562474c5-feae-4fe7-81d0-b52b397b4141');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '97608', 1, NOW(), '0', '4a120ea3-6005-40d4-94d6-53a0f40fb8f6');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1304', LAST_INSERT_ID(), '2', NOW(), 1, 'efaaca40-faf3-48a2-a723-0252be08ac9a');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '90028', 1, NOW(), '0', 'a6920603-29a5-4ae8-9d99-154131cac971');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163628', LAST_INSERT_ID(), '2', NOW(), 1, '4f5cebc1-3c78-40f7-844a-8a6de7c5b6c2');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '91444', 1, NOW(), '0', 'd4b9916d-5eb1-4071-a530-5da16b0d3c88');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('159983', LAST_INSERT_ID(), '2', NOW(), 1, '9d04248b-e1aa-4522-ae78-136cb7030238');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '93298', 1, NOW(), '0', '3f088532-6ef6-4c16-98c0-c16b917a23e3');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('159984', LAST_INSERT_ID(), '2', NOW(), 1, 'bc57ba07-fae8-4af5-adbc-03a84b00cfb0');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '94100', 1, NOW(), '0', 'c18083bb-faa9-48c1-8ec8-38653ca8bf9e');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('159956', LAST_INSERT_ID(), '2', NOW(), 1, 'fb0b89e8-787b-451e-9896-770c7263c064');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '90300', 1, NOW(), '0', 'eaefb141-16db-4523-b0b7-d99d1f8b9919');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('159958', LAST_INSERT_ID(), '2', NOW(), 1, '08b21bca-a5c9-41d7-8fa2-cbe1c33c43b1');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '96522', 1, NOW(), '0', 'd89945ec-4637-4d1b-9e24-76a4451e0720');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163611', LAST_INSERT_ID(), '2', NOW(), 1, 'bb49af10-c756-441f-a329-0e119d1318d9');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '97218', 1, NOW(), '0', '9affc93d-61cd-4bf3-a37a-e77859571964');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('162816', LAST_INSERT_ID(), '2', NOW(), 1, 'ced7a0a4-6cf3-4439-8ee9-6efbd1cc54b5');
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES ('6', '92507', 1, NOW(), '0', '86aa6cb5-17b0-4ac4-8c2c-a77b158b3ee9');
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('717', LAST_INSERT_ID(), '2', NOW(), 1, 'c2ce50c2-28f7-4098-b1a9-de334703f4ba');
+        </sql>
+    </changeSet>
 
 </databaseChangeLog>
