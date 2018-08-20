@@ -259,4 +259,300 @@
         </sql>
     </changeSet>
 
+    <changeSet id="labintegration-2018-08-14-15-00" author="wbulawa">
+        <sql>
+
+            set @admin = (select users.user_id from(
+                select user_id, system_id FROM users where system_id = 'admin') as users);
+
+            set @loinc = (select loincs.concept_source_id from(
+                select concept_source_id, `name` FROM concept_reference_source where `name` = 'LOINC') as loincs);
+
+            set @map_type = (select map_types .concept_map_type_id from(
+                select concept_map_type_id, `name` FROM concept_map_type where `name` = 'NARROWER-THAN') as map_types);
+
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '45323-3', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163630', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '12964-3', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163699', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '26505-8', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1336', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '26478-8', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1338', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '26485-3', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1339', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '26450-7', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1340', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '30180-4', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1341', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '3183-1', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('161436', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '40088-7', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('161481', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '30086-3', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163429', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '34531-4', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('161233', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '20605-2', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('657', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '58410-2', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163700', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '24359-2', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163701', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '11067-6', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163702', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '2858-9', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('159646', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '35249-2', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('159643', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '14334-7', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163592', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '35214-6', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('159828', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '25668-5', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163703', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '25665-1', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163704', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '11039-5', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('161501', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '24326-1', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('5473', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '47531-9', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('161458', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '6565-6', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163648', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '44245-9', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163649', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '44244-2', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163651', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '44092-5', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163605', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '44242-6', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163604', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '630-4', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('161486', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '586-8', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163675', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '657-7', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163678', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '45337-3', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163679', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '5778-6', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('162106', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '5794-3', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('162096', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '25145-4', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('160735', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '25148-8', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('725', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '25155-3', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('74167', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '25149-6', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('72695', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '32145-5', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('722', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '25150-4', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('72703', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '5801-6', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('79241', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '24365-9', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163697', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '40745-2', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('161428', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '76772-3', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1643', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '539-7', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('159981', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '23537-4', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163631', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '647-8', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1495', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '2839-9', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('161159', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '2110-5', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1945', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '16945-8', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('908', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '57720-5', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1300', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '5371-0', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('161478', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '23930-1', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('306', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '5126-8', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('161527', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '29541-0', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1305', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '33634-7', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('767', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '48175-4', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('78280', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '33717-0', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('885', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '17849-1', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1327', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '14577-1', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('160232', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '62853-7', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('159644', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '13969-1', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('159653', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '10839-9', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('159654', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '62855-2', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('163594', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '606-4', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('159648', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '32167-9', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('162101', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '20454-5', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1875', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '20507-0', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('1619', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+            INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
+            VALUES (@loinc, '9837-6', @admin, NOW(), '0', UUID());
+            INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
+            VALUES ('844', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
+
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>
