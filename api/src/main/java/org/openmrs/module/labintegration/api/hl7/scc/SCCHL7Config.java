@@ -6,6 +6,9 @@ import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Component
 public class SCCHL7Config extends AbstractHL7Config {
 	
@@ -18,6 +21,14 @@ public class SCCHL7Config extends AbstractHL7Config {
 	private static final String PATIENT_DATE_OF_BIRTH_FORMAT = "yyyyMMdd[HHmm]";
 
 	private static final String ADMIT_DATE_FORMAT = "yyyyMMdd";
+
+	private Map<String, String> lnspCodeMapping;
+
+	public SCCHL7Config() {
+		lnspCodeMapping = new HashMap<>();
+		lnspCodeMapping.put("25836-8", "63cbd0ac-7b4d-477a-910d-8e75168275bf");
+		lnspCodeMapping.put("9837-6", "4f318d58-7647-47e2-92dd-7b568aa26360");
+	}
 
 	@Autowired
 	private SCCOrderIdentifier orderIdentifier;
@@ -60,5 +71,13 @@ public class SCCHL7Config extends AbstractHL7Config {
 	@Override
 	public String getAdmitDateFormat() {
 		return ADMIT_DATE_FORMAT;
+	}
+
+	public String mapConceptToLnspTest(String code) {
+		String result = "";
+		if (this.lnspCodeMapping.containsKey(code)) {
+			result = this.lnspCodeMapping.get(code);
+		}
+		return result;
 	}
 }
