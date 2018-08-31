@@ -62,6 +62,17 @@ public final class EncounterUtil {
 		
 		return null;
 	}
+
+	public static Obs findObsByConceptUuid(Encounter encounter, String uuid) {
+		for (Obs obs : encounter.getObs()) {
+			Concept question = obs.getConcept();
+			if (question != null && question.getUuid().equalsIgnoreCase(uuid)) {
+				return obs;
+			}
+		}
+
+		return null;
+	}
 	
 	private static Integer getConceptId(Obs obs) {
 		Concept concept = obs.getConcept();
