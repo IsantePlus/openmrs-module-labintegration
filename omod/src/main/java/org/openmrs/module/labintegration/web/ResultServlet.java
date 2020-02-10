@@ -70,7 +70,7 @@ public class ResultServlet extends HttpServlet {
     private boolean allowMsg(HttpServletRequest req) {
         OpenElisHL7Config config = Context.getRegisteredComponent("OpenElisHL7Config", OpenElisHL7Config.class);
 
-        String expectedHost = config.getOpenelisInboundHost();
+        String expectedHost = config.getOpenElisInboundHost();
 
         return StringUtils.equals(req.getRemoteAddr(), expectedHost);
     }

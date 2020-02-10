@@ -70,7 +70,7 @@ public class OpenElisHL7Config extends AbstractHL7Config {
         return null;
     }
 
-    public String getOpenelisInboundHost() {
+    public String getOpenElisInboundHost() {
         String inboundHost = getPropertySource().getProperty(OPENELIS_INBOUND_HOST, null);
         if (StringUtils.isBlank(inboundHost)) {
             URI uri = getOpenElisUrl();

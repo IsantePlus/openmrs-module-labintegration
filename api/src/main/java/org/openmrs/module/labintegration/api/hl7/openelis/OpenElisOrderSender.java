@@ -1,90 +1,129 @@
 package org.openmrs.module.labintegration.api.hl7.openelis;
 
+import java.util.stream.Collectors;
+
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.rest.api.MethodOutcome;
+import ca.uhn.fhir.rest.client.api.IGenericClient;
+import org.hl7.fhir.r4.model.OperationOutcome;
+import org.hl7.fhir.r4.model.Task;
 import org.openmrs.Encounter;
+import org.openmrs.module.fhir2.api.FhirTaskService;
 import org.openmrs.module.labintegration.api.hl7.NewOrderException;
 import org.openmrs.module.labintegration.api.hl7.OrderCancellationException;
 import org.openmrs.module.labintegration.api.hl7.OrderSender;
-import org.openmrs.module.labintegration.api.hl7.messages.MessageCreationException;
-import org.openmrs.module.labintegration.api.hl7.messages.OMLO21OrderConverter;
-import org.openmrs.module.labintegration.api.hl7.messages.OrderControl;
-import org.openmrs.module.labintegration.api.hl7.messages.ack.AckParser;
-import org.openmrs.module.labintegration.api.hl7.messages.ack.Acknowledgement;
-import org.openmrs.module.labintegration.api.hl7.messages.ack.InvalidAckException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 @Component
 public class OpenElisOrderSender implements OrderSender {
-	
+
+	@Autowired
+	private FhirTaskService taskService;
+
 	@Autowired
 	private OpenElisHL7Config config;
-	
+
 	@Autowired
-	private OMLO21OrderConverter orderConverter;
-	
+	private FhirContext fhirContext;
+
 	@Autowired
-	private AckParser ackParser;
-	
-	private RestTemplate restTemplate = new RestTemplate();
-	
+	private TaskFactory taskFactory;
+
 	@Override
 	public void sendNewOrder(Encounter encounter) throws NewOrderException {
+		Task request;
 		try {
-			Acknowledgement ack = sendToOpenElis(encounter, OrderControl.NEW_ORDER);
-			
-			if (!ack.isSuccess()) {
-				String exMsg = String.format("Error code received from OpenELIS - %s: %s.", ack.getErrorCode(),
-				    ack.getErrorDiagnosticsInformation());
-				throw new OpenElisNewOrderException(exMsg);
+			 request = taskFactory.createTask(encounter);
+		} catch (TaskCreationException e) {
+			throw new OpenElisNewOrderException("Error creating order in OpenELIS for encounter " + encounter, e);
+		}
+
+		IGenericClient client = getClient();
+		MethodOutcome outcome = client.create().resource(request).encodedJson().execute();
+
+		if (outcome == null) {
+			throw new OpenElisNewOrderException("Could not determine status of request for encounter " + encounter);
+		} else {
+			OperationOutcome operationOutcome = (OperationOutcome) outcome.getOperationOutcome();
+			if (hasErrorMessage(operationOutcome)) {
+				throw new OpenElisNewOrderException(
+						"Error creating order in OpenELIS for encounter "
+								+ encounter
+								+ ":\n"
+								+ operationOutcome.getIssue().stream().map(this::operationOutcomeToMessage)
+										.collect(Collectors.joining("\n")));
+
 			}
 		}
-		catch (MessageCreationException ex) {
-			throw new OpenElisNewOrderException("Error creating HL7 message for OpenELIS new order", ex);
-		}
-		catch (InvalidAckException ex) {
-			throw new OpenElisNewOrderException("Unable to parse ACK from OpenELIS", ex);
-		}
+
+		taskService.saveTask(request);
 	}
-	
+
 	@Override
 	public void sendOrderCancellation(Encounter encounter) throws OrderCancellationException {
-		try {
-			Acknowledgement ack = sendToOpenElis(encounter, OrderControl.CANCEL_ORDER);
-			
-			if (!ack.isSuccess()) {
-				String exMsg = String.format("Error code received from OpenELIS - %s: %s.", ack.getErrorCode(),
-				    ack.getErrorDiagnosticsInformation());
-				throw new OpenElisOrderCancellationException(exMsg);
+		Task existingRequest = taskFactory.getTask(encounter);
+		existingRequest.setStatus(Task.TaskStatus.CANCELLED);
+
+		Task updateRequest = new Task();
+		updateRequest.setId(existingRequest.getId());
+		updateRequest.setStatus(Task.TaskStatus.CANCELLED);
+
+		IGenericClient client = getClient();
+		MethodOutcome outcome = client.update().resource(existingRequest).encodedJson().execute();
+
+		if (outcome == null) {
+			throw new OpenElisOrderCancellationException("Could not determine status of request for encounter " + encounter);
+		} else {
+			OperationOutcome operationOutcome = (OperationOutcome) outcome.getOperationOutcome();
+			if (hasErrorMessage(operationOutcome)) {
+				throw new OpenElisOrderCancellationException(
+						"Error cancelling order in OpenELIS for encounter "
+								+ encounter
+								+ ":\n"
+								+ operationOutcome.getIssue().stream().map(this::operationOutcomeToMessage)
+										.collect(Collectors.joining("\n")));
 			}
 		}
-		catch (MessageCreationException ex) {
-			throw new OpenElisOrderCancellationException("Error creating HL7 message for OpenELIS order cancellation", ex);
-		}
-		catch (InvalidAckException ex) {
-			throw new OpenElisOrderCancellationException("Unable to parse ACK from OpenELIS", ex);
-		}
+
+
+		taskService.saveTask(existingRequest);
 	}
-	
+
 	@Override
 	public boolean isEnabled() {
 		return config.isOpenElisConfigured();
 	}
-	
-	private Acknowledgement sendToOpenElis(Encounter encounter, OrderControl orderControl) throws MessageCreationException,
-	        InvalidAckException {
-		String msg = orderConverter.createMessage(encounter, orderControl, config);
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.parseMediaType("application/hl7-v2"));
-		HttpEntity<String> request = new HttpEntity<>(msg, headers);
+	private IGenericClient getClient() {
+		return fhirContext.newRestfulGenericClient(config.getOpenElisUrl().toString());
+	}
 
-		ResponseEntity<String> response = restTemplate.postForEntity(config.getOpenElisUrl(), request, String.class);
-		
-		return ackParser.parse(response.getBody());
+	private boolean hasErrorMessage(OperationOutcome operationOutcome) {
+		return operationOutcome.getIssue().stream().anyMatch(c ->
+			c.hasSeverity() && c.getSeverity().ordinal() < OperationOutcome.IssueSeverity.WARNING.ordinal()
+		);
+	}
+
+	private String operationOutcomeToMessage(OperationOutcome.OperationOutcomeIssueComponent component) {
+		StringBuilder sb = new StringBuilder();
+
+		if (component.hasSeverity() && component.getSeverity() != OperationOutcome.IssueSeverity.INFORMATION) {
+			sb.append(component.getSeverity().getDisplay()).append(": ");
+		}
+
+		if (component.hasCode()) {
+			sb.append(component.getCode()).append(" - ");
+		}
+
+		if (component.hasExpression()) {
+			sb.append(component.getExpression()).append(" - ");
+		}
+
+		if (component.hasDetails()) {
+			sb.append(component.getDetails());
+		}
+
+		return sb.toString();
 	}
 }

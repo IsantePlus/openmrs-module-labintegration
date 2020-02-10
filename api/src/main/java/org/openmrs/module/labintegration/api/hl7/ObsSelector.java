@@ -13,7 +13,7 @@ import java.util.Set;
 @Component
 public class ObsSelector {
 
-    private static final int TESTS_ORDERED_CONCEPT_ID = 1271;
+    public static final int TESTS_ORDERED_CONCEPT_ID = 1271;
 
     private Set<Integer> conceptIds = new HashSet<>();
 
