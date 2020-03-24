@@ -34,8 +34,11 @@
        </createTable>
        <addForeignKeyConstraint constraintName="labintegration_item_owner_fk" baseTableName="labintegration_item" baseColumnNames="owner"  referencedTableName="users"
                                 referencedColumnNames="user_id" />
-   </changeSet> -->
+   </changeSet>
     <changeSet id="labintegration-2018-06-13-16-50" author="Arek Lalo">
+        <preConditions onError="WARN" onFail="WARN">
+            <sqlCheck expectedResult="1">select count(*) from concept where concept_id=163426;</sqlCheck>
+        </preConditions>
         <sql>
             INSERT INTO concept_reference_term(concept_source_id, `code`, creator, date_created, retired, uuid)
             VALUES ('6', '95701', 1, NOW(), '0', '7b1408eb-fe06-4d98-9aea-d0323541a3a1');
@@ -260,6 +263,9 @@
     </changeSet>
 
     <changeSet id="labintegration-2018-08-14-15-00" author="wbulawa">
+        <preConditions onError="CONTINUE" onFail="CONTINUE">
+            <sqlCheck expectedResult="1">select count(*) from concept_reference_source where `name` = 'LOINC'</sqlCheck>
+        </preConditions>
         <sql>
 
             set @admin = (select users.user_id from(
@@ -551,8 +557,9 @@
             VALUES (@loinc, '9837-6', @admin, NOW(), '0', UUID());
             INSERT INTO concept_reference_map (concept_id, concept_reference_term_id, concept_map_type_id, date_created, creator, uuid)
             VALUES ('844', LAST_INSERT_ID(), @map_type, NOW(), @admin, UUID());
-
         </sql>
     </changeSet>
 
+
+-->
 </databaseChangeLog>
