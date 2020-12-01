@@ -1,4 +1,4 @@
-MSH|^!\&|iSantePlus||OpenELIS||20180330150703.345+{time_offset}00||OML^O21^OML_O21|2018033015070300000|D|2.5.1
-PID||1004X^^^^^2|||Doe^Joe^Terry|Janine|19870211101500+{time_offset}00|M|||Trou coucou^1ère L'Arbre^Anse Rouge^Artibonite^^HTI^^Anba Morne Porte|||||^Separe|^Vaudou||||||Birth City
+MSH|^!\~|iSantePlus||OpenELIS||20180330150703.345-0800||OML^O21^OML_O21|2018033015070300000|D|2.5.1
+PID||1004X^^^^^2|||Doe^Joe^Terry|Janine|19870211101500-0800|M|||Trou coucou^1ère L'Arbre^Anse Rouge^Artibonite^^HTI^^Anba Morne Porte|||||^Separe|^Vaudou||||||Birth City
 ORC|NW|PROVIDER_ID|||||||||||||||||||||||||||10081-8
-OBR||||Vitals;549c78dc-31da-11e8-acac-c3add5b19973||20180325082533.4+{time_offset}00
+OBR||||Vitals;549c78dc-31da-11e8-acac-c3add5b19973||20180325082533.4-0800
