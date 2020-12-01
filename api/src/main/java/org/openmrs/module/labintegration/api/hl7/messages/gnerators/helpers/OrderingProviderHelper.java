@@ -20,7 +20,7 @@ public class OrderingProviderHelper {
 		orc.insertOrderingProvider(quantity);
 
 		XCN orderingProvider = orc.getOrderingProvider(quantity);
-		providerInformationHelper.updateProviderInformation(orderingProvider, ProviderHelper.getProvider(obs));
+		providerInformationHelper.updateProviderInformation(orderingProvider, ProviderHelper.getProvider(obs), obs.getEncounter());
 
 		orc.getOrderingProvider()[quantity] = orderingProvider;
 	}
@@ -30,7 +30,7 @@ public class OrderingProviderHelper {
 		obr.insertOrderingProvider(quantity);
 
 		XCN orderingProvider = obr.getOrderingProvider(quantity);
-		providerInformationHelper.updateProviderInformation(orderingProvider, ProviderHelper.getProvider(obs));
+		providerInformationHelper.updateProviderInformation(orderingProvider, ProviderHelper.getProvider(obs), obs.getEncounter());
 
 		obr.getOrderingProvider()[quantity] = orderingProvider;
 	}

@@ -4,7 +4,6 @@ import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.v25.segment.OBR;
 import ca.uhn.hl7v2.model.v25.segment.ORC;
-import org.apache.commons.lang3.StringUtils;
 import org.openmrs.Obs;
 import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.helpers.LnspCodeHelper;
@@ -40,17 +39,8 @@ public class SCCOrderIdentifier extends OrderIdentifier {
 
 	@Override
 	public void updatePlacerOrderNumber(ORC orc, Obs obs) throws DataTypeException {
-		String encounterType = obs.getEncounter().getEncounterType().getName();
-		String encounterUuid = obs.getEncounter().getUuid();
 		String encounterLocationUuid = obs.getEncounter().getLocation().getUuid();
-
-		if (StringUtils.isBlank(encounterType) || StringUtils.isBlank(encounterUuid)) {
-			throw new IllegalStateException("Encounter type and encounter UUID are mandatory");
-		}
-
-		String identifier = encounterLocationUuid + ID_SEPARATOR + encounterType + ID_SEPARATOR + encounterUuid;
-
-		orc.getPlacerOrderNumber().getEntityIdentifier().setValue(identifier);
+		orc.getPlacerOrderNumber().getEntityIdentifier().setValue(encounterLocationUuid);
 	}
 
 	@Override
@@ -59,6 +49,9 @@ public class SCCOrderIdentifier extends OrderIdentifier {
 
 		orderingProviderHelper.updateOrderingProvider(obr, obs);
 		quantityTimingHelper.updateQuantityTiming(obr, obs);
+		
+		String encounterLocationUuid = obs.getEncounter().getLocation().getUuid();
+		obr.getPlacerOrderNumber().getEntityIdentifier().setValue(encounterLocationUuid);
 
 		obr.getSpecimenActionCode().setValue(DEFAULT_ACTION_CODE);
 	}
