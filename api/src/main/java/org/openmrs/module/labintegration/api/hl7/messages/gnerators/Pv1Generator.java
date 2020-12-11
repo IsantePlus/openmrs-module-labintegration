@@ -43,7 +43,7 @@ public class Pv1Generator {
 
 		Provider doctor = encounter.getEncounterProviders().iterator().next().getProvider();
 		XCN orderingProvider = pv1.getAttendingDoctor(quantity);
-		providerInformationHelper.updateProviderInformation(orderingProvider, doctor);
+		providerInformationHelper.updateProviderInformation(orderingProvider, doctor, encounter);
 		
 		pv1.getAttendingDoctor()[quantity] = orderingProvider;
 	}

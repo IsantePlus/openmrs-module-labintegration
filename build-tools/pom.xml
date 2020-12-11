@@ -4,4 +4,21 @@
     <artifactId>build-tools</artifactId>
     <version>1.0</version>
     <name>Build Tools</name>
+    <profiles>
+        <profile>
+            <id>github-packages</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <version>2.7</version>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
