@@ -25,8 +25,7 @@ jobs:
           servers: |
             [{
                 "id": "github-packages",
-                "username": "${{ secrets.USERNAME }}",
-                "password": "${{ secrets.TOKEN }}"
+                "password": "${{ secrets.GITHUB_TOKEN }}"
             }]
           githubServer: false
       - name: Publish package
