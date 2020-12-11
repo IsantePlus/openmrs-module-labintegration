@@ -12,8 +12,7 @@ jobs:
         with:
           java-version: 1.8
           server-id: github-packages # Value of the distributionManagement/repository/id field of the pom.xml
-          server-password: ${{ secrets.TOKEN }} # env variable for token in deploy
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          server-password: ${{ secrets.GITHUB_TOKEN }} # env variable for token in deploy
       - name: Cache Maven packages
         uses: actions/cache@v2
         with:
@@ -23,4 +22,4 @@ jobs:
       - name: Publish package
         run: mvn -pl '!build-tools' -DskipTests -Dfindbugs.skip=true -Dpmd.skip=true -Dcpd.skip=true -B deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
