@@ -143,13 +143,13 @@
             <distributionManagement>
                 <!-- Deploy to Github Packages -->
                 <repository>
-                    <id>github-packages</id>
+                    <id>github</id>
                     <name>Github iSantePlus Packages</name>
                     <url>https://maven.pkg.github.com/isanteplus/isanteplus-packages</url>
                     <uniqueVersion>false</uniqueVersion>
                 </repository>
                 <snapshotRepository>
-                    <id>github-packages</id>
+                    <id>github</id>
                     <name>Github iSantePlus Packages</name>
                     <url>https://maven.pkg.github.com/isanteplus/isanteplus-packages</url>
                     <uniqueVersion>true</uniqueVersion>
@@ -158,7 +158,7 @@
             <repositories>
                 <!-- Use the Github Packages Repo first when looking up dependencies -->
                 <repository>
-                    <id>github-packages</id>
+                    <id>github</id>
                     <name>Github iSantePlus Packages</name>
                     <url>https://maven.pkg.github.com/isanteplus/isanteplus-packages</url>
                 </repository>

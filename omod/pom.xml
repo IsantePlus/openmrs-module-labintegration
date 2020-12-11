@@ -63,7 +63,7 @@
                                 <configuration>
                                     <url>https://maven.pkg.github.com/isanteplus/isanteplus-packages</url>
                                     <file>target/${project.parent.artifactId}-${project.version}.omod</file>
-                                    <repositoryId>github-packages</repositoryId>
+                                    <repositoryId>github</repositoryId>
                                     <pomFile>pom.xml</pomFile>
                                     <packaging>omod</packaging>
                                 </configuration>

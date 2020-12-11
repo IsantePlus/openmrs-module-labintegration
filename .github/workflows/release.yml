@@ -28,7 +28,6 @@ jobs:
                 "username": "pmanko",
                 "password": "${{ secrets.GITHUB_TOKEN }}"
             }]
-          githubServer: false
       - name: Publish package
         run: mvn -P github-packages -pl '!build-tools' -DskipTests -Dfindbugs.skip=true -Dpmd.skip=true -Dcpd.skip=true -B deploy
         env:
