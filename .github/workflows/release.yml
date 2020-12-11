@@ -18,6 +18,6 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Publish package
-        run: mvn -pl '!build-tools' -DskipTests -Dfindbugs.skip=true -Dpmd.failOnViolation=false -Dpmd.skip=true -B package deploy
+        run: mvn -pl '!build-tools' -DskipTests -Dfindbugs.skip=true -Dpmd.skip=true -Dcpd.skip=true -B package deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
