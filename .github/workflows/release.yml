@@ -2,6 +2,7 @@ name: Publish package to GitHub Packages
 on:
   release:
     types: [created]
+  push:
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -24,11 +25,11 @@ jobs:
           servers: |
             [{
                 "id": "github-packages",
-                "username": "pmanko",
-                "password": "${{ secrets.GITHUB_TOKEN }}"
+                "username": "${{ secrets.RELEASE_USERNAME }}",
+                "password": "${{ secrets.RELEASE_TOKEN }}"
             }]
           githubServer: false
       - name: Publish package
         run: mvn -P github-packages -pl '!build-tools' -DskipTests -Dfindbugs.skip=true -Dpmd.skip=true -Dcpd.skip=true -B deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
