@@ -25,6 +25,7 @@ jobs:
           servers: |
             [{
                 "id": "github-packages",
+                "username": "${{ env.GITHUB_ACTOR }}",
                 "password": "${{ secrets.GITHUB_TOKEN }}"
             }]
           githubServer: false
