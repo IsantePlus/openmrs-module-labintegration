@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.openmrs.module</groupId>
         <artifactId>labintegration</artifactId>
-        <version>2.0.5</version>
+        <version>2.0.8</version>
     </parent>
 
     <artifactId>labintegration-omod</artifactId>
@@ -16,7 +16,7 @@
         <dependency>
             <groupId>org.openmrs.module</groupId>
             <artifactId>labintegration-api</artifactId>
-            <version>2.0.5</version>
+            <version>2.0.8</version>
         </dependency>
         <dependency>
             <groupId>org.openmrs.web</groupId>
@@ -64,8 +64,10 @@
                                     <url>https://maven.pkg.github.com/isanteplus/isanteplus-packages</url>
                                     <file>target/${project.parent.artifactId}-${project.version}.omod</file>
                                     <repositoryId>github-packages</repositoryId>
-                                    <pomFile>pom.xml</pomFile>
                                     <packaging>omod</packaging>
+                                    <generatePom>false</generatePom>
+                                    <artifactId>${project.parent.artifactId}</artifactId>
+                                    <version>${project.version}</version>
                                 </configuration>
                             </execution>
                         </executions>
