@@ -12,8 +12,18 @@ jobs:
         with:
           java-version: 1.8
           server-id: github-packages # Value of the distributionManagement/repository/id field of the pom.xml
-          server-password: ${{ secrets.GITHUB_TOKEN }} # env variable for token in deploy
+          server-username: pmanko
+          server-password: ${{ secrets.TOKEN }} # env variable for token in deploy
+      - uses: s4u/maven-settings-action@v2.2.0
+        with:
+          servers: |
+            [{
+                "id": "github-packages",
+                "username": "${{ secrets.USERNAME }}",
+                "password": "${{ secrets.TOKEN }}"
+            }]
+          githubServer: false
       - name: Publish package
         run: mvn -P github-packages -pl '!build-tools' -DskipTests -Dfindbugs.skip=true -Dpmd.skip=true -Dcpd.skip=true -B deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
