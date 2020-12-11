@@ -25,7 +25,7 @@ jobs:
           servers: |
             [{
                 "id": "github-packages",
-                "username": "${{ env.GITHUB_ACTOR }}",
+                "username": "iSantePlus",
                 "password": "${{ secrets.GITHUB_TOKEN }}"
             }]
           githubServer: false
