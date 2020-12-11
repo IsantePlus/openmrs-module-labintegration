@@ -11,6 +11,6 @@ jobs:
         with:
           java-version: 1.8
       - name: Publish package
-        run: mvn -pl '!build-tools' -B deploy
+        run: mvn -pl '!build-tools' -B -DskipTests -Dpmd.skip=true deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
