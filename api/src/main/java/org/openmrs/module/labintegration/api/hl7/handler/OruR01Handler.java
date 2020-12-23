@@ -130,12 +130,14 @@ public class OruR01Handler implements Application {
 		LOGGER.debug("Patient result {}", patientResult.toString());
 		LOGGER.debug("# Observation results returned {}", numObr);
 		PV1 pv1 = patientResult.getPATIENT().getVISIT().getPV1();
-		LOGGER.debug("PV1 Time {}",pv1.getAdmitDateTime().getTime());
-		LOGGER.debug("Location {}",pv1.getAssignedPatientLocation().getPointOfCare().getValue());
-		LOGGER.debug("Alternate Visit Id - ID {}",pv1.getAlternateVisitID().getIDNumber().getValue());
-		LOGGER.debug("Alternate Visit Id - Check digit {}",pv1.getAlternateVisitID().getCx2_CheckDigit().getValue());
-		LOGGER.debug("Alternate Visit Id - Assigning Authority {}",pv1.getAlternateVisitID().getCx4_AssigningAuthority().getNamespaceID().getValue());
-		LOGGER.debug("Alternate Visit Id - Identifier type code {}",pv1.getAlternateVisitID().getCx5_IdentifierTypeCode().getValue());
+		LOGGER.debug("PV1 Time {}", pv1.getAdmitDateTime().getTime());
+		LOGGER.debug("Location {}", pv1.getAssignedPatientLocation().getPointOfCare().getValue());
+		LOGGER.debug("Alternate Visit Id - ID {}", pv1.getAlternateVisitID().getIDNumber().getValue());
+		LOGGER.debug("Alternate Visit Id - Check digit {}", pv1.getAlternateVisitID().getCx2_CheckDigit().getValue());
+		LOGGER.debug("Alternate Visit Id - Assigning Authority {}", pv1.getAlternateVisitID()
+			.getCx4_AssigningAuthority().getNamespaceID().getValue());
+		LOGGER.debug("Alternate Visit Id - Identifier type code {}", pv1.getAlternateVisitID()
+			.getCx5_IdentifierTypeCode().getValue());
 		for (int i = 0; i < numObr; i++) {
 			
 			LOGGER.debug("Processing OBR {}", i);

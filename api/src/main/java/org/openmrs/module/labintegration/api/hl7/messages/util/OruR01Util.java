@@ -44,8 +44,8 @@ public final class OruR01Util {
 	
 	public static String getUuidFromPV1Segment(PV1 pv1) {
 		try {
-			String segment50_5 = pv1.getAlternateVisitID().getCx5_IdentifierTypeCode().getValue();
-			Matcher matcher = ONLY_UUID.matcher(segment50_5);
+			String segment505 = pv1.getAlternateVisitID().getCx5_IdentifierTypeCode().getValue();
+			Matcher matcher = ONLY_UUID.matcher(segment505);
 
 			if (matcher.find()) {
 				return matcher.group();
