@@ -1,26 +1,11 @@
 package org.openmrs.module.labintegration.api.hl7.handler;
 
-import ca.uhn.hl7v2.HL7Exception;
-import ca.uhn.hl7v2.app.Application;
-import ca.uhn.hl7v2.app.ApplicationException;
-import ca.uhn.hl7v2.model.Message;
-import ca.uhn.hl7v2.model.Type;
-import ca.uhn.hl7v2.model.Varies;
-import ca.uhn.hl7v2.model.v25.datatype.CE;
-import ca.uhn.hl7v2.model.v25.datatype.DTM;
-import ca.uhn.hl7v2.model.v25.datatype.FT;
-import ca.uhn.hl7v2.model.v25.datatype.ID;
-import ca.uhn.hl7v2.model.v25.datatype.NM;
-import ca.uhn.hl7v2.model.v25.datatype.ST;
-import ca.uhn.hl7v2.model.v25.datatype.TS;
-import ca.uhn.hl7v2.model.v25.datatype.TX;
-import ca.uhn.hl7v2.model.v25.group.ORU_R01_OBSERVATION;
-import ca.uhn.hl7v2.model.v25.group.ORU_R01_ORDER_OBSERVATION;
-import ca.uhn.hl7v2.model.v25.group.ORU_R01_PATIENT_RESULT;
-import ca.uhn.hl7v2.model.v25.message.ORU_R01;
-import ca.uhn.hl7v2.model.v25.segment.MSH;
-import ca.uhn.hl7v2.model.v25.segment.OBR;
-import ca.uhn.hl7v2.model.v25.segment.OBX;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+
 import org.openmrs.Concept;
 import org.openmrs.ConceptAnswer;
 import org.openmrs.ConceptName;
@@ -39,13 +24,32 @@ import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import ca.uhn.hl7v2.HL7Exception;
+import ca.uhn.hl7v2.app.Application;
+import ca.uhn.hl7v2.app.ApplicationException;
+import ca.uhn.hl7v2.model.Message;
+import ca.uhn.hl7v2.model.Type;
+import ca.uhn.hl7v2.model.Varies;
+import ca.uhn.hl7v2.model.v25.datatype.CE;
+import ca.uhn.hl7v2.model.v25.datatype.DTM;
+import ca.uhn.hl7v2.model.v25.datatype.FT;
+import ca.uhn.hl7v2.model.v25.datatype.ID;
+import ca.uhn.hl7v2.model.v25.datatype.NM;
+import ca.uhn.hl7v2.model.v25.datatype.SN;
+import ca.uhn.hl7v2.model.v25.datatype.ST;
+import ca.uhn.hl7v2.model.v25.datatype.TS;
+import ca.uhn.hl7v2.model.v25.datatype.TX;
+import ca.uhn.hl7v2.model.v25.group.ORU_R01_OBSERVATION;
+import ca.uhn.hl7v2.model.v25.group.ORU_R01_ORDER_OBSERVATION;
+import ca.uhn.hl7v2.model.v25.group.ORU_R01_PATIENT_RESULT;
+import ca.uhn.hl7v2.model.v25.message.ORU_R01;
+import ca.uhn.hl7v2.model.v25.segment.MSH;
+import ca.uhn.hl7v2.model.v25.segment.OBR;
+import ca.uhn.hl7v2.model.v25.segment.OBX;
+import ca.uhn.hl7v2.model.v25.segment.PV1;
 
 @SuppressWarnings("PMD.CyclomaticComplexity")
 public class OruR01Handler implements Application {
@@ -74,7 +78,7 @@ public class OruR01Handler implements Application {
 			throw new ApplicationException(Context.getMessageSourceService().getMessage("ORUR01.error.invalidMessage"));
 		}
 		
-		LOGGER.debug("Processing ORU_R01 message");
+		LOGGER.debug("Processing ORU_R01 message in the LAB Integration module");
 		
 		Message response;
 		try {
@@ -123,6 +127,17 @@ public class OruR01Handler implements Application {
 		
 		ORU_R01_PATIENT_RESULT patientResult = message.getPATIENT_RESULT();
 		int numObr = patientResult.getORDER_OBSERVATIONReps();
+		LOGGER.debug("Patient result {}", patientResult.toString());
+		LOGGER.debug("# Observation results returned {}", numObr);
+		PV1 pv1 = patientResult.getPATIENT().getVISIT().getPV1();
+		LOGGER.debug("PV1 Time {}", pv1.getAdmitDateTime().getTime());
+		LOGGER.debug("Location {}", pv1.getAssignedPatientLocation().getPointOfCare().getValue());
+		LOGGER.debug("Alternate Visit Id - ID {}", pv1.getAlternateVisitID().getIDNumber().getValue());
+		LOGGER.debug("Alternate Visit Id - Check digit {}", pv1.getAlternateVisitID().getCx2_CheckDigit().getValue());
+		LOGGER.debug("Alternate Visit Id - Assigning Authority {}", pv1.getAlternateVisitID()
+			.getCx4_AssigningAuthority().getNamespaceID().getValue());
+		LOGGER.debug("Alternate Visit Id - Identifier type code {}", pv1.getAlternateVisitID()
+			.getCx5_IdentifierTypeCode().getValue());
 		for (int i = 0; i < numObr; i++) {
 			
 			LOGGER.debug("Processing OBR {}", i);
@@ -130,7 +145,6 @@ public class OruR01Handler implements Application {
 			
 			ORU_R01_ORDER_OBSERVATION orderObs = patientResult.getORDER_OBSERVATION(i);
 			OBR obr = orderObs.getOBR();
-			
 			// OBR values
 			//ID observationResultStatus = obr.getResultStatus();
 			
@@ -139,10 +153,12 @@ public class OruR01Handler implements Application {
 				    new Object[] { messageControlId }, null));
 			}
 
-			String encounterId = OruR01Util.getUuidFromOBRSegment4(obr);
+			String encounterId = OruR01Util.getUuidFromPV1Segment(pv1);
+			LOGGER.debug("Encounter UUID {}", encounterId);
 			// Get the encounter
 			Encounter encounter = Context.getEncounterService().getEncounterByUuid(encounterId);
 			if (encounter == null) {
+				LOGGER.debug("Unable to fetch Encounter for UUID {}", encounterId);
 				throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.InvalidEncounter",
 				    new Object[] { messageControlId }, null));
 			}
@@ -156,10 +172,10 @@ public class OruR01Handler implements Application {
 				OBX obx = orderObs.getOBSERVATION(j).getOBX();
 				LOGGER.debug("Parsing observation");
 				Obs obs = parseObs(encounter, obx, messageControlId);
-				voidPreviousObs(encounter, obs);
 
 				LOGGER.debug("Finished creating observations");
 				if (obs != null) {
+					voidPreviousObs(encounter, obs);
 					// set this obs on the encounter object that we will be saving later
 					encounter.addObs(obs);
 					createAlert(encounter, obs, message);
@@ -258,8 +274,16 @@ public class OruR01Handler implements Application {
 		LOGGER.debug(" timestamp = {}", datetime);
 		if (datetime == null) {
 			datetime = encounter.getEncounterDatetime();
+		}		
+		
+		// Conditional statement to discard results with LOINC 25836-8 && OBX[3,4] == LBLOG. 
+		// It typically comes as an additional result that accompanies Viral Load results.
+		LOGGER.debug("Observation identifier {}", obx.getObservationIdentifier().getCe1_Identifier().getValue());
+		LOGGER.debug("Observation alternative identifier {}", obx.getObservationIdentifier().getCe4_AlternateIdentifier().getValue());
+		if (("25836-8").equals(obx.getObservationIdentifier().getCe1_Identifier().getValue()) 
+				&& ("LBLOG").equals(obx.getObservationIdentifier().getCe4_AlternateIdentifier().getValue())) {
+			return null;
 		}
-
 		//Search concept
 		//Concept conceptQuestion = Context.getConceptService().getConcept(labIntegrationConfig.getLabOrderConceptCode());
 		//Get obs
@@ -294,57 +318,13 @@ public class OruR01Handler implements Application {
 		Type obx5 = values[0].getData();
 		if ("NM".equals(dataType)) {
 			String value = ((NM) obx5).getValue();
-			if (value == null || value.length() == 0) {
-				LOGGER.warn("Not creating null valued obs for concept {}", concept);
-				return null;
-			} else if ("0".equals(value) || "1".equals(value)) {
-				concept = concept.hydrate(concept.getConceptId().toString());
-				obs.setConcept(concept);
-				if (concept.getDatatype().isBoolean()) {
-					obs.setValueBoolean("1".equals(value));
-				} else if (concept.getDatatype().isNumeric()) {
-					try {
-						obs.setValueNumeric(Double.valueOf(value));
-					}
-					catch (NumberFormatException e) {
-						throw new HL7Exception(Context.getMessageSourceService().getMessage(
-						    "ORUR01.error.notnumericConcept",
-						    new Object[] { value, concept.getConceptId(), conceptName.getName(), uid }, null), e);
-					}
-				} else if (concept.getDatatype().isCoded()) {
-					Concept answer = "1".equals(value) ? Context.getConceptService().getTrueConcept() : Context
-					        .getConceptService().getFalseConcept();
-					boolean isValidAnswer = false;
-					Collection<ConceptAnswer> conceptAnswers = concept.getAnswers();
-					if (conceptAnswers != null && !conceptAnswers.isEmpty()) {
-						for (ConceptAnswer conceptAnswer : conceptAnswers) {
-							if (conceptAnswer.getAnswerConcept().getId().equals(answer.getId())) {
-								obs.setValueCoded(answer);
-								isValidAnswer = true;
-								break;
-							}
-						}
-					}
-					// Answer the boolean answer concept was't found
-					if (!isValidAnswer) {
-						throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.invalidAnswer",
-						    new Object[] { answer.toString(), uid }, null));
-					}
-				} else {
-					// Throw this exception to make sure that the handler doesn't silently ignore bad hl7 message
-					throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.CannotSetBoolean",
-					    new Object[] { obs.getConcept().getConceptId() }, null));
-				}
-			} else {
-				try {
-					obs.setValueNumeric(Double.valueOf(value));
-				}
-				catch (NumberFormatException ex) {
-					throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.notnumericConcept",
-					    new Object[] { value, concept.getConceptId(), conceptName.getName(), uid }, null), ex);
-				}
-			}
-		} else if ("CE".equals(dataType)) {
+			return processNumericValue(value, obs, concept, uid, conceptName);
+
+		} else if ("SN".equals(dataType)) {
+			String value = ((SN) obx5).getNum1().getValue();
+			return processNumericValue(value, obs, concept, uid, conceptName);
+		}
+		else if ("CE".equals(dataType)) {
 			CE value = (CE) obx5;
 			String valueIdentifier = value.getIdentifier().getValue();
 			String valueName = value.getText().getValue();
@@ -370,6 +350,62 @@ public class OruR01Handler implements Application {
 			// Unsupported data type
 			throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.UpsupportedObsType",
 			    new Object[] { dataType }, null));
+		}
+		
+		return obs;
+	}
+
+	private Obs processNumericValue(String value, Obs obs, Concept concept, String uid, ConceptName conceptName)
+			throws NoSuchMessageException, HL7Exception {
+		if (value == null || value.length() == 0) {
+			LOGGER.warn("Not creating null valued obs for concept {}", concept);
+			return null;
+		} else if ("0".equals(value) || "1".equals(value)) {
+			concept = concept.hydrate(concept.getConceptId().toString());
+			obs.setConcept(concept);
+			if (concept.getDatatype().isBoolean()) {
+				obs.setValueBoolean("1".equals(value));
+			} else if (concept.getDatatype().isNumeric()) {
+				try {
+					obs.setValueNumeric(Double.valueOf(value));
+				}
+				catch (NumberFormatException e) {
+					throw new HL7Exception(Context.getMessageSourceService().getMessage(
+					    "ORUR01.error.notnumericConcept",
+					    new Object[] { value, concept.getConceptId(), conceptName.getName(), uid }, null), e);
+				}
+			} else if (concept.getDatatype().isCoded()) {
+				Concept answer = "1".equals(value) ? Context.getConceptService().getTrueConcept() : Context
+				        .getConceptService().getFalseConcept();
+				boolean isValidAnswer = false;
+				Collection<ConceptAnswer> conceptAnswers = concept.getAnswers();
+				if (conceptAnswers != null && !conceptAnswers.isEmpty()) {
+					for (ConceptAnswer conceptAnswer : conceptAnswers) {
+						if (conceptAnswer.getAnswerConcept().getId().equals(answer.getId())) {
+							obs.setValueCoded(answer);
+							isValidAnswer = true;
+							break;
+						}
+					}
+				}
+				// Answer the boolean answer concept was't found
+				if (!isValidAnswer) {
+					throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.invalidAnswer",
+					    new Object[] { answer.toString(), uid }, null));
+				}
+			} else {
+				// Throw this exception to make sure that the handler doesn't silently ignore bad hl7 message
+				throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.CannotSetBoolean",
+				    new Object[] { obs.getConcept().getConceptId() }, null));
+			}
+		} else {
+			try {
+				obs.setValueNumeric(Double.valueOf(value));
+			}
+			catch (NumberFormatException ex) {
+				throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.notnumericConcept",
+				    new Object[] { value, concept.getConceptId(), conceptName.getName(), uid }, null), ex);
+			}
 		}
 		
 		return obs;
