@@ -355,7 +355,8 @@ public class OruR01Handler implements Application {
 		return obs;
 	}
 
-	private Obs processNumericValue(String value, Obs obs, Concept concept, String uid, ConceptName conceptName) throws NoSuchMessageException, HL7Exception {
+	private Obs processNumericValue(String value, Obs obs, Concept concept, String uid, ConceptName conceptName)
+			throws NoSuchMessageException, HL7Exception {
 		if (value == null || value.length() == 0) {
 			LOGGER.warn("Not creating null valued obs for concept {}", concept);
 			return null;
