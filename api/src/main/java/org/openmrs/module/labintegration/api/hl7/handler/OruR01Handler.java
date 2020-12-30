@@ -368,15 +368,16 @@ public class OruR01Handler implements Application {
 			} else if (concept.getDatatype().isNumeric()) {
 				try {
 					obs.setValueNumeric(Double.valueOf(value));
-				}
-				catch (NumberFormatException e) {
-					throw new HL7Exception(Context.getMessageSourceService().getMessage(
-					    "ORUR01.error.notnumericConcept",
-					    new Object[] { value, concept.getConceptId(), conceptName.getName(), uid }, null), e);
+				} catch (NumberFormatException e) {
+					throw new HL7Exception(
+							Context.getMessageSourceService().getMessage("ORUR01.error.notnumericConcept",
+									new Object[] { value, concept.getConceptId(), conceptName.getName(), uid }, 
+									null),
+							e);
 				}
 			} else if (concept.getDatatype().isCoded()) {
-				Concept answer = "1".equals(value) ? Context.getConceptService().getTrueConcept() : Context
-				        .getConceptService().getFalseConcept();
+				Concept answer = "1".equals(value) ? Context.getConceptService().getTrueConcept()
+						: Context.getConceptService().getFalseConcept();
 				boolean isValidAnswer = false;
 				Collection<ConceptAnswer> conceptAnswers = concept.getAnswers();
 				if (conceptAnswers != null && !conceptAnswers.isEmpty()) {
@@ -391,23 +392,23 @@ public class OruR01Handler implements Application {
 				// Answer the boolean answer concept was't found
 				if (!isValidAnswer) {
 					throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.invalidAnswer",
-					    new Object[] { answer.toString(), uid }, null));
+							new Object[] { answer.toString(), uid }, null));
 				}
 			} else {
-				// Throw this exception to make sure that the handler doesn't silently ignore bad hl7 message
+				// Throw this exception to make sure that the handler doesn't silently ignore
+				// bad hl7 message
 				throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.CannotSetBoolean",
-				    new Object[] { obs.getConcept().getConceptId() }, null));
+						new Object[] { obs.getConcept().getConceptId() }, null));
 			}
 		} else {
 			try {
 				obs.setValueNumeric(Double.valueOf(value));
-			}
-			catch (NumberFormatException ex) {
+			} catch (NumberFormatException ex) {
 				throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.notnumericConcept",
-				    new Object[] { value, concept.getConceptId(), conceptName.getName(), uid }, null), ex);
+						new Object[] { value, concept.getConceptId(), conceptName.getName(), uid }, null), ex);
 			}
 		}
-		
+
 		return obs;
 	}
 
