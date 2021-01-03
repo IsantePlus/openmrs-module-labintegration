@@ -28,6 +28,7 @@ public class Pv1Generator {
 		updateAttendingDoctor(pv1, encounter);
 		
 		assignedPatientLocationHelper.updateAssignedPatientLocation(pv1, hl7Config, encounter);
+		assignedPatientLocationHelper.assignedAlternativeVisitId(pv1, hl7Config, encounter);
 
 		if (hl7Config.getAdmitDateFormat() != null) {
 			DateFormat df = new SimpleDateFormat(hl7Config.getAdmitDateFormat());
@@ -44,7 +45,6 @@ public class Pv1Generator {
 		Provider doctor = encounter.getEncounterProviders().iterator().next().getProvider();
 		XCN orderingProvider = pv1.getAttendingDoctor(quantity);
 		providerInformationHelper.updateProviderInformation(orderingProvider, doctor, encounter);
-		
 		pv1.getAttendingDoctor()[quantity] = orderingProvider;
 	}
 }

@@ -18,7 +18,7 @@ public class SCCHL7Config extends AbstractHL7Config {
 	
 	private static final String DEFAULT_PID_TYPE_UUID = "05a29f94-c0ed-11e2-94be-8c13b969e334";
 
-	private static final String PATIENT_DATE_OF_BIRTH_FORMAT = "yyyyMMdd[HHmm]";
+	private static final String PATIENT_DATE_OF_BIRTH_FORMAT = "yyyyMMdd";
 
 	private static final String ADMIT_DATE_FORMAT = "yyyyMMdd";
 

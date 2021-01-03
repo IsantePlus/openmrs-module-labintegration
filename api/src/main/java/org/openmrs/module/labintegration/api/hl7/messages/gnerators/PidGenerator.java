@@ -41,7 +41,9 @@ public class PidGenerator {
 	
 	public void updatePid(PID pid, Encounter encounter, HL7Config hl7Config) throws DataTypeException, MessageCreationException {
 		Patient patient = encounter.getPatient();
-		idHelper.updateIdNumber(pid, patient, hl7Config);
+		// add encounter on updateIdNumber
+		idHelper.updateIdNumber(pid, patient, hl7Config, encounter);
+		//idHelper.updateIdNumber(pid, patient, hl7Config);
 		billingNumberHelper.updateBillingNumber(pid, encounter, hl7Config);
 		
 		nameHelper.updateNames(pid, patient);

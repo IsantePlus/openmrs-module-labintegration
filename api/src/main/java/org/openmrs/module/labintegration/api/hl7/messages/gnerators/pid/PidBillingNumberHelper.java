@@ -14,7 +14,8 @@ public class PidBillingNumberHelper {
 		        .setValue(hl7Config.getSendingFacilityNamespaceID());
 
 		if (hl7Config.isBillingNumberNeeded()) {
-			pid.getPatientAccountNumber().getCheckDigit().setValue(encounter.getUuid());
+			/*Change encounter uuid to ID*/
+			pid.getPatientAccountNumber().getIDNumber().setValue(encounter.getId().toString());
 		}
 	}
 }

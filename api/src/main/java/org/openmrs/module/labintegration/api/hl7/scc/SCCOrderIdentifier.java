@@ -4,6 +4,8 @@ import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.v25.segment.OBR;
 import ca.uhn.hl7v2.model.v25.segment.ORC;
+import org.openmrs.Encounter;
+import org.openmrs.LocationAttribute;
 import org.openmrs.Obs;
 import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.helpers.LnspCodeHelper;
@@ -11,6 +13,8 @@ import org.openmrs.module.labintegration.api.hl7.messages.gnerators.helpers.Orde
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.helpers.QuantityTimingHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.text.SimpleDateFormat;
 
 @Component
 public class SCCOrderIdentifier extends OrderIdentifier {
@@ -26,21 +30,43 @@ public class SCCOrderIdentifier extends OrderIdentifier {
 	@Autowired
 	private LnspCodeHelper lnspCodeHelper;
 
+	private static final String DATE_FORMAT = "yyyyMMddHHmmss";
+
 	@Override
 	public void updateORC(ORC orc, Obs obs) throws HL7Exception {
+		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 		updateOrderTypeID(orc, obs);
 		updatePlacerOrderNumber(orc, obs);
 
 		orderingProviderHelper.updateOrderingProvider(orc, obs);
 		quantityTimingHelper.updateQuantityTiming(orc, obs);
 
-		orc.getDateTimeOfTransaction().getTime().setValue(obs.getEncounter().getEncounterDatetime());
+		orc.getDateTimeOfTransaction().getTime().setValue(dateFormat.format(obs.getEncounter().getEncounterDatetime()));
 	}
 
 	@Override
 	public void updatePlacerOrderNumber(ORC orc, Obs obs) throws DataTypeException {
-		String encounterLocationUuid = obs.getEncounter().getLocation().getUuid();
-		orc.getPlacerOrderNumber().getEntityIdentifier().setValue(encounterLocationUuid);
+
+		//added site code to Placer Order number: site code + encounter id
+
+		Encounter encounter = obs.getEncounter();
+
+		String siteCode = "";
+		String uuid = "0e52924e-4ebb-40ba-9b83-b198b532653b";
+
+		for (LocationAttribute locationAttribute : encounter.getLocation().getAttributes()) {
+
+			if (locationAttribute.getAttributeType().getUuid().equals(uuid)) {
+				siteCode = locationAttribute.getValueReference();
+			}
+		}
+
+		Integer  encounterId = obs.getEncounter().getEncounterId();
+		orc.getPlacerOrderNumber().getEntityIdentifier().setValue(siteCode + encounterId);
+
+	/*	Integer  encounterLocationUuid = obs.getEncounter().getLocation().getId();
+		orc.getPlacerOrderNumber().getEntityIdentifier().setValue(encounterLocationUuid.toString()); */
+
 	}
 
 	@Override
@@ -52,6 +78,24 @@ public class SCCOrderIdentifier extends OrderIdentifier {
 		
 		String encounterLocationUuid = obs.getEncounter().getLocation().getUuid();
 		obr.getPlacerOrderNumber().getEntityIdentifier().setValue(encounterLocationUuid);
+
+		Encounter encounter = obs.getEncounter();
+
+		String siteCode = "";
+		String uuid = "0e52924e-4ebb-40ba-9b83-b198b532653b";
+
+		for (LocationAttribute locationAttribute : encounter.getLocation().getAttributes()) {
+
+			if (locationAttribute.getAttributeType().getUuid().equals(uuid)) {
+				siteCode = locationAttribute.getValueReference();
+			}
+		}
+
+		Integer  encounterId = obs.getEncounter().getEncounterId();
+		obr.getPlacerOrderNumber().getEntityIdentifier().setValue(siteCode + encounterId);
+
+		/*Integer encounterLocationUuid = obs.getEncounter().getLocation().getId();
+		obr.getPlacerOrderNumber().getEntityIdentifier().setValue(encounterLocationUuid.toString());*/
 
 		obr.getSpecimenActionCode().setValue(DEFAULT_ACTION_CODE);
 	}
