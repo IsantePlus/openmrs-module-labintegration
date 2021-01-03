@@ -13,3 +13,6 @@ target
 /target/*
 
 id_file
+
+# Mac OSX
+.DS_Store

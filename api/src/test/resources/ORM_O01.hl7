@@ -1,5 +1,5 @@
-MSH|^!\&||LNSP|||20180330150703.345+{time_offset}00||ORM^O01^ORM_O01|2018033015070300000|D|2.5
+MSH|^!\~||LNSP|||20180330150703.345-0800||ORM^O01^ORM_O01|2018033015070300000|D|2.5
 PID||1004X^^^^^2|||Doe^Joe^Terry|Janine|19870211[1015]|M|||Trou coucou^1ère L'Arbre^Anse Rouge^Artibonite^^HTI^^Anba Morne Porte|||||^Separe|^Vaudou|^549c78dc-31da-11e8-acac-c3add5b19973^^^^LNSP|||||Birth City
-PV1|||2||||PROVIDER_ID^Fami&von^Prov^Ider^^a^dr|||||||||||||||||||||||||||||||||||||20180325
-ORC|NW|LOCATION-UUID;Vitals;549c78dc-31da-11e8-acac-c3add5b19973|||||^^^20180325082533.4+{time_offset}00||20180325082533.4+{time_offset}00|||PROVIDER_ID^Fami&von^Prov^Ider^^a^dr|||||||||||||||||10081-8
-OBR||||||20180325082533.4+{time_offset}00|||||O|||||PROVIDER_ID^Fami&von^Prov^Ider^^a^dr|||||||||||^^^20180325082533.4+{time_offset}00
+PV1|||2||||^Fami~von^Prov^Ider^^a^dr|||||||||||||||||||||||||||||||||||||20180325
+ORC|NW|LOCATION-UUID|||||^^^20180325082533.4-0800||20180325082533.4-0800|||^Fami~von^Prov^Ider^^a^dr|||||||||||||||||10081-8
+OBR||LOCATION-UUID||||20180325082533.4-0800|||||O|||||^Fami~von^Prov^Ider^^a^dr|||||||||||^^^20180325082533.4-0800

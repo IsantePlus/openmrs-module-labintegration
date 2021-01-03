@@ -16,8 +16,10 @@ public class MshGenerator {
 	
 	private static final String FIELD_SEPARATOR = "|";
 	
+
 	private static final String ENCODING_CHARS = "^~\\&";
 	private static final String DATE_FORMAT = "yyyyMMddHHmmss";
+
 	@Autowired
 	private DateSource dateSource;
 	

@@ -66,6 +66,7 @@ public class SCCOrderIdentifier extends OrderIdentifier {
 
 	/*	Integer  encounterLocationUuid = obs.getEncounter().getLocation().getId();
 		orc.getPlacerOrderNumber().getEntityIdentifier().setValue(encounterLocationUuid.toString()); */
+
 	}
 
 	@Override
@@ -74,6 +75,9 @@ public class SCCOrderIdentifier extends OrderIdentifier {
 
 		orderingProviderHelper.updateOrderingProvider(obr, obs);
 		quantityTimingHelper.updateQuantityTiming(obr, obs);
+		
+		String encounterLocationUuid = obs.getEncounter().getLocation().getUuid();
+		obr.getPlacerOrderNumber().getEntityIdentifier().setValue(encounterLocationUuid);
 
 		Encounter encounter = obs.getEncounter();
 
