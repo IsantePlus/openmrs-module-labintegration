@@ -16,8 +16,7 @@ public class MessageControlIdSource {
 	
 	public String generateId(Date date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-		return dateFormat.format(date);
-		//return dateFormat.format(date) + rollingNumber();
+		return dateFormat.format(date) + rollingNumber();
 	}
 	
 	public synchronized String rollingNumber() {
