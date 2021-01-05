@@ -8,7 +8,6 @@ import org.openmrs.module.labintegration.api.hl7.messages.gnerators.msh.MessageC
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Component
@@ -16,10 +15,8 @@ public class MshGenerator {
 	
 	private static final String FIELD_SEPARATOR = "|";
 	
-
-	private static final String ENCODING_CHARS = "^~\\&";
-	private static final String DATE_FORMAT = "yyyyMMddHHmmss";
-
+	private static final String ENCODING_CHARS = "^!\\~";
+	
 	@Autowired
 	private DateSource dateSource;
 	
@@ -27,13 +24,12 @@ public class MshGenerator {
 	private MessageControlIdSource controlIdSource;
 	
 	public void updateMsh(MSH msh, HL7Config hl7Config) throws DataTypeException {
-		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 		Date msgDate = dateSource.now();
 		
 		msh.getFieldSeparator().setValue(FIELD_SEPARATOR);
 		msh.getEncodingCharacters().setValue(ENCODING_CHARS);
 		
-		msh.getDateTimeOfMessage().getTime().setValue(dateFormat.format(msgDate));
+		msh.getDateTimeOfMessage().getTime().setValue(msgDate);
 		msh.getMessageControlID().setValue(controlIdSource.generateId(msgDate));
 		
 		msh.getReceivingApplication().getNamespaceID().setValue(hl7Config.getReceivingApplication());
