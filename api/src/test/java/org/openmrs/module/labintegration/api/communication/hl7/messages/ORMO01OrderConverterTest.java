@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
+import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.Provider;
 import org.openmrs.api.PatientService;
@@ -55,8 +56,10 @@ public class ORMO01OrderConverterTest extends AbstractOrderConverterTest {
 		Patient patient = patientService.getPatient(PATIENT_ID);
 		Provider provider = providerService.getProvider(PROVIDER_ID);
 		HL7TestOrder order = new HL7TestOrder(patient, provider);
-		
-		String msg = orderConverter.createMessage(order.value(), OrderControl.NEW_ORDER, scchl7Config);
+
+		Encounter e = order.value();
+
+		String msg = orderConverter.createMessage(e, OrderControl.NEW_ORDER, scchl7Config);
 		
 		String expected = HL7TestMsgUtil.readMsg(EXPECTED_FILE);
 		assertEquals(expected, msg);

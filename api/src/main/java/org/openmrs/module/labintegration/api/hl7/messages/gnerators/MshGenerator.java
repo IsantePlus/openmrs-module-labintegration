@@ -15,19 +15,17 @@ import java.util.Date;
 public class MshGenerator {
 	
 	private static final String FIELD_SEPARATOR = "|";
-	
-
 	private static final String ENCODING_CHARS = "^~\\&";
-	private static final String DATE_FORMAT = "yyyyMMddHHmmss";
 
 	@Autowired
 	private DateSource dateSource;
 	
 	@Autowired
 	private MessageControlIdSource controlIdSource;
+
 	
 	public void updateMsh(MSH msh, HL7Config hl7Config) throws DataTypeException {
-		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+		SimpleDateFormat dateFormat = new SimpleDateFormat(hl7Config.getDefaultDateFormat());
 		Date msgDate = dateSource.now();
 		
 		msh.getFieldSeparator().setValue(FIELD_SEPARATOR);

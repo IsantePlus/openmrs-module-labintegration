@@ -2,6 +2,8 @@ package org.openmrs.module.labintegration.api.hl7.config;
 
 import org.openmrs.Concept;
 import org.openmrs.EncounterType;
+import org.openmrs.api.APIException;
+import org.openmrs.module.labintegration.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +23,9 @@ public abstract class AbstractHL7Config implements HL7Config {
 	private static final String BIRTHPLACE_GROUP_CONCEPT = "labintegration.hl7.regForm.birthPlaceGroup";
 	
 	private static final String BIRTHPLACE_CITY_CONCEPT = "labintegration.hl7.regForm.birthPlaceCity";
-	
+
+	private static final String DEFAULT_DATE = "labintegration.hl7.dateFormat";
+
 	private static final String DEFAULT_MOTHER_NAME_ATTR_NAME = "First Name of Mother";
 	
 	private static final String DEFAULT_PHONE_NUM_ATTR_NAME = "Telephone Number";
@@ -80,5 +84,13 @@ public abstract class AbstractHL7Config implements HL7Config {
 	
 	protected LabModulePropertySource getPropertySource() {
 		return propertySource;
+	}
+
+	public String getDefaultDateFormat() {
+		try {
+			return PropertiesUtil.getGlobalProperty(DEFAULT_DATE);
+		} catch (APIException e) {
+			return "yyyyMMddHHmmss";
+		}
 	}
 }

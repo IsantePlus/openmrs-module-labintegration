@@ -156,6 +156,14 @@
 			UUID of the Patient Identifier Type for the SCC.
 		</description>
 	</globalProperty>
+
+	<globalProperty>
+		<property>@MODULE_ID@.hl7.dateFormat</property>
+		<description>
+			Default date format for messages
+		</description>
+		<defaultValue>yyyyMMddHHmmss</defaultValue>
+	</globalProperty>
 	<!-- Required Global Properties -->
 
 	<!--
