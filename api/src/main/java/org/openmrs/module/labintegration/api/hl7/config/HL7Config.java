@@ -34,4 +34,6 @@ public interface HL7Config {
     String getPatientDateOfBirthFormat();
 
     String getAdmitDateFormat();
+
+    String getDefaultDateFormat();
 }

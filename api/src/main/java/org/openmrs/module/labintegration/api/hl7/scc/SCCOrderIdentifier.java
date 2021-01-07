@@ -7,6 +7,7 @@ import ca.uhn.hl7v2.model.v25.segment.ORC;
 import org.openmrs.Encounter;
 import org.openmrs.LocationAttribute;
 import org.openmrs.Obs;
+import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
 import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.helpers.LnspCodeHelper;
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.helpers.OrderingProviderHelper;
@@ -30,11 +31,12 @@ public class SCCOrderIdentifier extends OrderIdentifier {
 	@Autowired
 	private LnspCodeHelper lnspCodeHelper;
 
-	private static final String DATE_FORMAT = "yyyyMMddHHmmss";
+	@Autowired
+	private HL7Config hl7Config;
 
 	@Override
 	public void updateORC(ORC orc, Obs obs) throws HL7Exception {
-		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+		SimpleDateFormat dateFormat = new SimpleDateFormat(hl7Config.getDefaultDateFormat());
 		updateOrderTypeID(orc, obs);
 		updatePlacerOrderNumber(orc, obs);
 

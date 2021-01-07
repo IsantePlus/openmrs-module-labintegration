@@ -35,7 +35,7 @@ public class PidIdHelper {
 		// old patientID from the legacy system iSante
 		PatientIdentifier patientID = PatientUtil.getPatientIdentifier(patient, uuidiSanteId);
 
-		if(patientID != null){
+		if (patientID != null) {
 			pid.getPatientID().getIDNumber().setValue(patientID.getId().toString());
 		} else {
 			pid.getPatientID().getIDNumber().setValue(siteCode + id.getId().toString());

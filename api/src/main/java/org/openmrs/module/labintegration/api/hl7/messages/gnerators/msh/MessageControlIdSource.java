@@ -1,5 +1,7 @@
 package org.openmrs.module.labintegration.api.hl7.messages.gnerators.msh;
 
+import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
+import org.openmrs.module.labintegration.api.hl7.scc.SCCHL7Config;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -7,17 +9,16 @@ import java.util.Date;
 
 @Component
 public class MessageControlIdSource {
-	
+
 	private static final int RESET_BOUNDARY = 99999;
-	
-	private static final String DATE_FORMAT = "yyyyMMddHHmmss";
-	
+
 	private int rollingNumber;
+
+	private HL7Config hl7Config = new SCCHL7Config();
 	
 	public String generateId(Date date) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-		return dateFormat.format(date);
-		//return dateFormat.format(date) + rollingNumber();
+		SimpleDateFormat dateFormat = new SimpleDateFormat(hl7Config.getDefaultDateFormat());
+		return dateFormat.format(date) + rollingNumber();
 	}
 	
 	public synchronized String rollingNumber() {

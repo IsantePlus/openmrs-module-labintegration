@@ -4,12 +4,14 @@ import org.openmrs.Encounter;
 import org.openmrs.module.labintegration.api.hl7.config.AbstractHL7Config;
 import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@Primary
 public class SCCHL7Config extends AbstractHL7Config {
 	
 	private static final String SENDING_FACILITY_NAMESPACE_ID = "LNSP";
@@ -80,4 +82,6 @@ public class SCCHL7Config extends AbstractHL7Config {
 		}
 		return result;
 	}
+
+
 }
