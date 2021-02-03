@@ -59,6 +59,8 @@ public class ORMO01OrderConverterTest extends AbstractOrderConverterTest {
 
 		Encounter e = order.value();
 
+		e.getEncounterType().setUuid("abcdefg1234567");
+
 		String msg = orderConverter.createMessage(e, OrderControl.NEW_ORDER, scchl7Config);
 		
 		String expected = HL7TestMsgUtil.readMsg(EXPECTED_FILE);
