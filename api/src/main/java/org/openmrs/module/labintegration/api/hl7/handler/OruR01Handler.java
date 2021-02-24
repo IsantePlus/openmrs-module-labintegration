@@ -33,6 +33,7 @@ import ca.uhn.hl7v2.app.ApplicationException;
 import ca.uhn.hl7v2.model.Message;
 import ca.uhn.hl7v2.model.Type;
 import ca.uhn.hl7v2.model.Varies;
+import ca.uhn.hl7v2.model.primitive.AbstractTextPrimitive;
 import ca.uhn.hl7v2.model.v25.datatype.CE;
 import ca.uhn.hl7v2.model.v25.datatype.DTM;
 import ca.uhn.hl7v2.model.v25.datatype.FT;
@@ -54,6 +55,11 @@ import ca.uhn.hl7v2.model.v25.segment.PV1;
 @SuppressWarnings("PMD.CyclomaticComplexity")
 public class OruR01Handler implements Application {
 	
+	/**
+	 *
+	 */
+	private static final String DEFAULT_NUMERIC_VALUE = "868";
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(OruR01Handler.class);
 	
 	private static final String MESSAGE_VERSION = "2.5";
@@ -339,13 +345,48 @@ public class OruR01Handler implements Application {
 				obs.setValueCoded(getConcept(value, uid));
 				obs.setValueCodedName(getConceptName(value));
 			}
-		} else if ("TX".equals(dataType)) {
-			TX value = (TX) obx5;
+		} else if ("TX".equals(dataType) || "ST".equals(dataType) || "FT".equals(dataType)) {
+			AbstractTextPrimitive value = null;
+			switch (dataType) {
+				case "TX":
+					value = (TX) obx5;
+					
+					break;
+				
+				case "ST":
+					value = (ST) obx5;
+					
+					break;
+					
+				case "FT":
+					value = (FT) obx5;
+					
+					break;
+								
+				default:
+					break;
+			}
 			if (value == null || value.getValue() == null || value.getValue().trim().length() == 0) {
 				LOGGER.warn("Not creating null valued obs for concept " + concept);
 				return null;
 			}
-			obs.setValueText(value.getValue());
+			
+			// The exemption to the logic for saving Text results as obs.ValueText applies to VL results only. 
+			// If no numeric values are provided (i.e result is "indetectable"), then set the default minimum value (i.e. 868 at the time of writing this code)
+			// TODO: Make this logic a configurable one via Global Configurations
+			try {
+				Double.parseDouble(value.getValue());
+				obs = processNumericValue(value.getValue(), obs, concept, uid, conceptName);
+			} catch (Exception e) {
+				if (concept.isNumeric()) {
+					LOGGER.info(value.getValue());
+					obs = processNumericValue(DEFAULT_NUMERIC_VALUE, obs, concept, uid, conceptName);
+				} else {
+					obs.setValueText(value.getValue());
+				}
+	
+			}
+
 		} else {
 			// Unsupported data type
 			throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.UpsupportedObsType",
