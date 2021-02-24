@@ -33,6 +33,7 @@ import ca.uhn.hl7v2.app.ApplicationException;
 import ca.uhn.hl7v2.model.Message;
 import ca.uhn.hl7v2.model.Type;
 import ca.uhn.hl7v2.model.Varies;
+import ca.uhn.hl7v2.model.primitive.AbstractTextPrimitive;
 import ca.uhn.hl7v2.model.v25.datatype.CE;
 import ca.uhn.hl7v2.model.v25.datatype.DTM;
 import ca.uhn.hl7v2.model.v25.datatype.FT;
@@ -339,8 +340,27 @@ public class OruR01Handler implements Application {
 				obs.setValueCoded(getConcept(value, uid));
 				obs.setValueCodedName(getConceptName(value));
 			}
-		} else if ("TX".equals(dataType)) {
-			TX value = (TX) obx5;
+		} else if ("TX".equals(dataType) || "ST".equals(dataType) || "FT".equals(dataType)) {
+			AbstractTextPrimitive value = null;
+			switch (dataType) {
+				case "TX":
+					value = (TX) obx5;
+					
+					break;
+				
+				case "ST":
+					value = (ST) obx5;
+					
+					break;
+					
+				case "FT":
+					value = (FT) obx5;
+					
+					break;
+								
+				default:
+					break;
+			}
 			if (value == null || value.getValue() == null || value.getValue().trim().length() == 0) {
 				LOGGER.warn("Not creating null valued obs for concept " + concept);
 				return null;
