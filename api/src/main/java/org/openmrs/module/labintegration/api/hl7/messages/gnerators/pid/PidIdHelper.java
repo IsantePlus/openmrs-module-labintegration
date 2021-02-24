@@ -35,13 +35,13 @@ public class PidIdHelper {
 		for (PatientIdentifier identifier : patient.getIdentifiers()) {
 			if (StringUtils.equals(identifier.getIdentifierType().getUuid(), uuidiSanteId)) {
 				isanteIdentifier = identifier;
-				pid.getPatientID().getIDNumber().setValue(isanteIdentifier.getId().toString());
+				pid.getPatientID().getIDNumber().setValue(isanteIdentifier.toString());
 				break;
 			}
 		}
 
 		if (isanteIdentifier == null) {
-			pid.getPatientID().getIDNumber().setValue(siteCode + id.getId().toString());
+			pid.getPatientID().getIDNumber().setValue(siteCode + patient.getPatientId().toString());
 		}
 
 
