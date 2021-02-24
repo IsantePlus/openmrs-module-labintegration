@@ -36,12 +36,15 @@ public class PidIdHelper {
 			if (StringUtils.equals(identifier.getIdentifierType().getUuid(), uuidiSanteId)) {
 				isanteIdentifier = identifier;
 				pid.getPatientID().getIDNumber().setValue(isanteIdentifier.toString());
+
 				break;
 			}
 		}
 
 		if (isanteIdentifier == null) {
+
 			pid.getPatientID().getIDNumber().setValue(siteCode + patient.getPatientId().toString());
+
 		}
 
 
