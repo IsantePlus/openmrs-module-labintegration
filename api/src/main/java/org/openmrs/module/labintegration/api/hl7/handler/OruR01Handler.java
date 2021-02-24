@@ -55,6 +55,11 @@ import ca.uhn.hl7v2.model.v25.segment.PV1;
 @SuppressWarnings("PMD.CyclomaticComplexity")
 public class OruR01Handler implements Application {
 	
+	/**
+	 *
+	 */
+	private static final String DEFAULT_NUMERIC_VALUE = "868";
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(OruR01Handler.class);
 	
 	private static final String MESSAGE_VERSION = "2.5";
@@ -365,7 +370,23 @@ public class OruR01Handler implements Application {
 				LOGGER.warn("Not creating null valued obs for concept " + concept);
 				return null;
 			}
-			obs.setValueText(value.getValue());
+			
+			// The exemption to the logic for saving Text results as obs.ValueText applies to VL results only. 
+			// If no numeric values are provided (i.e result is "indetectable"), then set the default minimum value (i.e. 868 at the time of writing this code)
+			// TODO: Make this logic a configurable one via Global Configurations
+			try {
+				Double.parseDouble(value.getValue());
+				obs = processNumericValue(value.getValue(), obs, concept, uid, conceptName);
+			} catch (Exception e) {
+				if (concept.isNumeric()) {
+					LOGGER.info(value.getValue());
+					obs = processNumericValue(DEFAULT_NUMERIC_VALUE, obs, concept, uid, conceptName);
+				} else {
+					obs.setValueText(value.getValue());
+				}
+	
+			}
+
 		} else {
 			// Unsupported data type
 			throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.UpsupportedObsType",
