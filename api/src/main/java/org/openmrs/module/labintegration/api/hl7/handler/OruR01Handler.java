@@ -377,7 +377,7 @@ public class OruR01Handler implements Application {
 			try {
 				Double.parseDouble(value.getValue());
 				obs = processNumericValue(value.getValue(), obs, concept, uid, conceptName);
-			} catch (Exception e) {
+			} catch (NumberFormatException e) {
 				if (concept.isNumeric()) {
 					LOGGER.info(value.getValue());
 					obs = processNumericValue(DEFAULT_NUMERIC_VALUE, obs, concept, uid, conceptName);
