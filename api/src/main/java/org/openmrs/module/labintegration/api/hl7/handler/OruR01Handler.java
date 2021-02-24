@@ -58,7 +58,7 @@ public class OruR01Handler implements Application {
 	/**
 	 *
 	 */
-	private static final String DEFAULT_NUMERIC_VALUE = "868";
+	private static final String DEFAULT_NUMERIC_VALUE = "838";
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(OruR01Handler.class);
 	
@@ -373,7 +373,7 @@ public class OruR01Handler implements Application {
 			
 			// The exemption to the logic for saving Text results as obs.ValueText applies to VL results only. 
 			// If no numeric values are provided (i.e result is "indetectable"), then set the default minimum 
-			// value (i.e. 868 at the time of writing this code)
+			// value (i.e. 838 at the time of writing this code)
 			// TODO: Make this logic a configurable one via Global Configurations
 			try {
 				Double val = Double.parseDouble(value.getValue());
