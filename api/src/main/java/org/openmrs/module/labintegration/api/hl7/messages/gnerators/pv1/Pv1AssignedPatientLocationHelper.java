@@ -27,10 +27,7 @@ public class Pv1AssignedPatientLocationHelper {
 				siteCode = locationAttribute.getValueReference();
 			}
 		}
-		
-		PatientIdentifier id = PatientUtil
-		        .getPatientIdentifier(encounter.getPatient(), hl7Config.getPatientIdentifierTypeUuid());
-		
+
 		if (siteCode != null) {
 			pv1.getAssignedPatientLocation().getPl1_PointOfCare().setValue(siteCode);
 		}
