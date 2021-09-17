@@ -30,6 +30,7 @@ public class SCCHL7Config extends AbstractHL7Config {
 		lnspCodeMapping = new HashMap<>();
 		lnspCodeMapping.put("25836-8", "63cbd0ac-7b4d-477a-910d-8e75168275bf");
 		lnspCodeMapping.put("9837-6", "4f318d58-7647-47e2-92dd-7b568aa26360");
+		lnspCodeMapping.put("44871-2", "63cbd0ac-7b4d-477a-910d-8e75168275bf");
 	}
 
 	@Autowired
