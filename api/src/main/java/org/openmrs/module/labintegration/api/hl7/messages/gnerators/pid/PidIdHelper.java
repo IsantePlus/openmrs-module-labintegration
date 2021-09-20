@@ -44,6 +44,7 @@ public class PidIdHelper {
 		if (isanteIdentifier == null) {
 
 			pid.getPatientID().getIDNumber().setValue(siteCode + patient.getPatientId().toString());
+			// pid.getPatientID().getIDNumber().setValue(patient.getUuid());
 
 		}
 

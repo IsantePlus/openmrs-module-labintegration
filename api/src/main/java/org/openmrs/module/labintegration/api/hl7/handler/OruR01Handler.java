@@ -282,12 +282,12 @@ public class OruR01Handler implements Application {
 			datetime = encounter.getEncounterDatetime();
 		}		
 		
-		// Conditional statement to discard results with LOINC 25836-8 && OBX[3,4] == LBLOG. 
+		// Conditional statement to discard results with LOINC 25836-8 && OBX[3,4] == LPLOG.
 		// It typically comes as an additional result that accompanies Viral Load results.
 		LOGGER.debug("Observation identifier {}", obx.getObservationIdentifier().getCe1_Identifier().getValue());
 		LOGGER.debug("Observation alternative identifier {}", obx.getObservationIdentifier().getCe4_AlternateIdentifier().getValue());
-		if (("25836-8").equals(obx.getObservationIdentifier().getCe1_Identifier().getValue()) 
-				&& ("LBLOG").equals(obx.getObservationIdentifier().getCe4_AlternateIdentifier().getValue())) {
+		if (("25836-8").equals(obx.getObservationIdentifier().getIdentifier().getValue())
+				&& ("LPLOG").equals(obx.getObservationIdentifier().getAlternateIdentifier().getValue())) {
 			return null;
 		}
 		//Search concept

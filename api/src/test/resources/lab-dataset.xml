@@ -16,9 +16,13 @@
     <concept concept_id="1271" retired="0" date_created="2004-01-01 00:00:00" is_set="0"
              datatype_id="1"/>
 
+    <concept concept_id="856" retired="0" date_created="2004-01-01 00:00:00" is_set="0"
+             datatype_id="1"/>
 
     <concept_numeric concept_id="678" precise="2"/>
-    
+
+    <concept_numeric concept_id="856" precise="2"/>
+
     <concept_reference_source concept_source_id="6" name="LOINC" retired="0"
                               date_created="2010-04-25 11:14:13" creator="1"/>
     <concept_reference_term concept_reference_term_id="138097" creator="1" date_created="2011-01-22 00:00:00"
@@ -27,7 +31,12 @@
     <concept_reference_map concept_reference_term_id="138097" concept_map_id="138097"
                            concept_id="678" concept_map_type_id="2" uuid="138097ABBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
                            creator="1" date_created="2011-01-22 17:12:55"/>
-
+    <concept_reference_term concept_reference_term_id="138098" creator="1" date_created="2011-01-22 00:00:00"
+                            concept_source_id="6" code="25836-8" uuid="B5E6AC3A-E46F-4E70-B9ED-3799BB824090"
+                            retired="0"/>
+    <concept_reference_map concept_reference_term_id="138098" concept_map_id="138098"
+                           concept_id="856" concept_map_type_id="2" uuid="138098ABBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+                           creator="1" date_created="2011-01-22 17:12:55"/>
     <!-- Civil Status -->
     <concept concept_id="1054" retired="0" date_created="2005-01-06 00:00:00" is_set="0"/>
 
@@ -171,6 +180,7 @@
                patient_id="10" encounter_type="22"
                encounter_datetime="2018-03-28 17:16:07"
                creator="1" date_created="2005-01-06 00:00:00" voided="0"
+               location_id="2"
                uuid="549c78dc-31da-11e8-acac-c3add5b19973"/>
 
 
