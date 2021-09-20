@@ -13,7 +13,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Pv1AssignedPatientLocationHelper {
-	
+
+	private static final String ECID_UUID = "f54ed6b9-f5b9-4fd5-a588-8f7561a78401";
+
 	public void updateAssignedPatientLocation(PV1 pv1, HL7Config hl7Config, Encounter encounter) throws DataTypeException,
 	        MessageCreationException {
 
@@ -48,21 +50,24 @@ public class Pv1AssignedPatientLocationHelper {
 			}
 		}
 
-		PatientIdentifier id = PatientUtil
-				.getPatientIdentifier(encounter.getPatient(), hl7Config.getPatientIdentifierTypeUuid());
-		pv1.getAlternateVisitID().getIDNumber().setValue(id.getIdentifier());
+		try {
+			PatientIdentifier id = PatientUtil
+					.getPatientIdentifier(encounter.getPatient(), ECID_UUID);
+			pv1.getAlternateVisitID().getIDNumber().setValue(id.getIdentifier());
+			if (id.getLocation() != null) {
+				pv1.getAssignedPatientLocation().getPl1_PointOfCare().setValue(siteCode);
+			}
+		} catch (MessageCreationException ex) {
+			pv1.getAlternateVisitID().getIDNumber().setValue(encounter.getPatient().getUuid());
+			pv1.getAssignedPatientLocation().getPl1_PointOfCare().setValue(siteCode);
+		}
 
 		// get encounter type uuid and encounter uuid
 		pv1.getAlternateVisitID().getCheckDigit().setValue(encounter.getEncounterType().getUuid());
 		pv1.getAlternateVisitID().getIdentifierTypeCode().setValue(encounter.getUuid());
 
 		//get location location uuid 'To be tested'
-			pv1.getAlternateVisitID().getAssigningAuthority().parse(encounter.getLocation().getUuid());
+		pv1.getAlternateVisitID().getAssigningAuthority().parse(encounter.getLocation().getUuid());
 
-
-		if (id.getLocation() != null) {
-			pv1.getAssignedPatientLocation().getPl1_PointOfCare().setValue(siteCode);
-			//pv1.getAssignedPatientLocation().getPl1_PointOfCare().setValue(String.valueOf(id.getLocation().getLocationId()));
-		}
 	}
 }
