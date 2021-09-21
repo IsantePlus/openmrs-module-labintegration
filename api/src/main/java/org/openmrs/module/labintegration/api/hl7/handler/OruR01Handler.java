@@ -1,10 +1,6 @@
 package org.openmrs.module.labintegration.api.hl7.handler;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import org.openmrs.Concept;
 import org.openmrs.ConceptAnswer;
@@ -286,8 +282,9 @@ public class OruR01Handler implements Application {
 		// It typically comes as an additional result that accompanies Viral Load results.
 		LOGGER.debug("Observation identifier {}", obx.getObservationIdentifier().getCe1_Identifier().getValue());
 		LOGGER.debug("Observation alternative identifier {}", obx.getObservationIdentifier().getCe4_AlternateIdentifier().getValue());
+		String[] obxIdentifiersToReject = {"LPLOG", "LBLOG"};
 		if (("25836-8").equals(obx.getObservationIdentifier().getIdentifier().getValue())
-				&& ("LPLOG").equals(obx.getObservationIdentifier().getAlternateIdentifier().getValue())) {
+				&& Arrays.asList(obxIdentifiersToReject).contains((obx.getObservationIdentifier().getAlternateIdentifier().getValue()))) {
 			return null;
 		}
 		//Search concept
