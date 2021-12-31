@@ -1,16 +1,22 @@
 package org.openmrs.module.labintegration.api.hl7.handler;
 
-import java.util.*;
-
-import org.openmrs.Concept;
-import org.openmrs.ConceptAnswer;
-import org.openmrs.ConceptName;
-import org.openmrs.ConceptProposal;
-import org.openmrs.Encounter;
-import org.openmrs.EncounterProvider;
-import org.openmrs.Obs;
-import org.openmrs.Person;
-import org.openmrs.User;
+import ca.uhn.hl7v2.HL7Exception;
+import ca.uhn.hl7v2.app.Application;
+import ca.uhn.hl7v2.app.ApplicationException;
+import ca.uhn.hl7v2.model.Message;
+import ca.uhn.hl7v2.model.Type;
+import ca.uhn.hl7v2.model.Varies;
+import ca.uhn.hl7v2.model.primitive.AbstractTextPrimitive;
+import ca.uhn.hl7v2.model.v25.datatype.*;
+import ca.uhn.hl7v2.model.v25.group.ORU_R01_OBSERVATION;
+import ca.uhn.hl7v2.model.v25.group.ORU_R01_ORDER_OBSERVATION;
+import ca.uhn.hl7v2.model.v25.group.ORU_R01_PATIENT_RESULT;
+import ca.uhn.hl7v2.model.v25.message.ORU_R01;
+import ca.uhn.hl7v2.model.v25.segment.MSH;
+import ca.uhn.hl7v2.model.v25.segment.OBR;
+import ca.uhn.hl7v2.model.v25.segment.OBX;
+import ca.uhn.hl7v2.model.v25.segment.PV1;
+import org.openmrs.*;
 import org.openmrs.api.context.Context;
 import org.openmrs.hl7.HL7Constants;
 import org.openmrs.module.labintegration.api.alerts.AlertCreator;
@@ -23,30 +29,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.util.StringUtils;
 
-import ca.uhn.hl7v2.HL7Exception;
-import ca.uhn.hl7v2.app.Application;
-import ca.uhn.hl7v2.app.ApplicationException;
-import ca.uhn.hl7v2.model.Message;
-import ca.uhn.hl7v2.model.Type;
-import ca.uhn.hl7v2.model.Varies;
-import ca.uhn.hl7v2.model.primitive.AbstractTextPrimitive;
-import ca.uhn.hl7v2.model.v25.datatype.CE;
-import ca.uhn.hl7v2.model.v25.datatype.DTM;
-import ca.uhn.hl7v2.model.v25.datatype.FT;
-import ca.uhn.hl7v2.model.v25.datatype.ID;
-import ca.uhn.hl7v2.model.v25.datatype.NM;
-import ca.uhn.hl7v2.model.v25.datatype.SN;
-import ca.uhn.hl7v2.model.v25.datatype.ST;
-import ca.uhn.hl7v2.model.v25.datatype.TS;
-import ca.uhn.hl7v2.model.v25.datatype.TX;
-import ca.uhn.hl7v2.model.v25.group.ORU_R01_OBSERVATION;
-import ca.uhn.hl7v2.model.v25.group.ORU_R01_ORDER_OBSERVATION;
-import ca.uhn.hl7v2.model.v25.group.ORU_R01_PATIENT_RESULT;
-import ca.uhn.hl7v2.model.v25.message.ORU_R01;
-import ca.uhn.hl7v2.model.v25.segment.MSH;
-import ca.uhn.hl7v2.model.v25.segment.OBR;
-import ca.uhn.hl7v2.model.v25.segment.OBX;
-import ca.uhn.hl7v2.model.v25.segment.PV1;
+import java.util.*;
 
 @SuppressWarnings("PMD.CyclomaticComplexity")
 public class OruR01Handler implements Application {
@@ -55,6 +38,8 @@ public class OruR01Handler implements Application {
 	 *
 	 */
 	private static final String DEFAULT_NUMERIC_VALUE = "838";
+	private static final String DETECTED_CODED_VALUE = "1301";
+	private static final String NOT_DETECTED_CODED_VALUE = "1302";
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(OruR01Handler.class);
 	
@@ -256,28 +241,28 @@ public class OruR01Handler implements Application {
 	 * Creates the Obs from the OBX message
 	 */
 	private Obs parseObs(Encounter encounter, OBX obx, String uid) throws HL7Exception {
-		
+
 		LOGGER.debug("parsing observation: {}", obx);
 		Varies[] values = obx.getObservationValue();
 		if (values == null || values.length < 1) {
 			return null;
 		}
-		
+
 		String dataType = values[0].getName();
 		LOGGER.debug(" datatype = {}", dataType);
 
 		Concept concept = getConcept(obx.getObservationIdentifier(), uid);
 		LOGGER.debug(" concept = {}", concept);
-		
+
 		ConceptName conceptName = getConceptName(obx.getObservationIdentifier());
 		LOGGER.debug(" concept-name = {}", conceptName);
-		
+
 		Date datetime = getDatetime(obx);
 		LOGGER.debug(" timestamp = {}", datetime);
 		if (datetime == null) {
 			datetime = encounter.getEncounterDatetime();
-		}		
-		
+		}
+
 		// Conditional statement to discard results with LOINC 25836-8 && OBX[3,4] == LPLOG.
 		// It typically comes as an additional result that accompanies Viral Load results.
 		LOGGER.debug("Observation identifier {}", obx.getObservationIdentifier().getCe1_Identifier().getValue());
@@ -301,7 +286,7 @@ public class OruR01Handler implements Application {
 		obs.setLocation(encounter.getLocation());
 		obs.setCreator(encounter.getCreator());
 		obs.setDateCreated(encounter.getDateCreated());
-		
+
 		// Set comments if there are any
 		ORU_R01_OBSERVATION parent = (ORU_R01_OBSERVATION) obx.getParent();
 		// Iterate over all OBX NTEs
@@ -317,7 +302,7 @@ public class OruR01Handler implements Application {
 		if (StringUtils.hasText(comments)) {
 			obs.setComment(comments);
 		}
-		
+
 		Type obx5 = values[0].getData();
 		if ("NM".equals(dataType)) {
 			String value = ((NM) obx5).getValue();
@@ -347,19 +332,19 @@ public class OruR01Handler implements Application {
 			switch (dataType) {
 				case "TX":
 					value = (TX) obx5;
-					
+
 					break;
-				
+
 				case "ST":
 					value = (ST) obx5;
-					
+
 					break;
-					
+
 				case "FT":
 					value = (FT) obx5;
-					
+
 					break;
-								
+
 				default:
 					break;
 			}
@@ -367,11 +352,33 @@ public class OruR01Handler implements Application {
 				LOGGER.warn("Not creating null valued obs for concept " + concept);
 				return null;
 			}
-			
-			// The exemption to the logic for saving Text results as obs.ValueText applies to VL results only. 
-			// If no numeric values are provided (i.e result is "indetectable"), then set the default minimum 
+
+			// The exemption to the logic for saving Text results as obs.ValueText applies to VL results only.
+			// If no numeric values are provided (i.e result is "indetectable"), then set the default minimum
 			// value (i.e. 838 at the time of writing this code)
+			// added mapping for PCR result when we receive Detecte 1301 will  be send to the system, Non-Detecte will send  1302
 			// TODO: Make this logic a configurable one via Global Configurations
+
+			Double val = null;
+			try {
+				val = Double.parseDouble(value.getValue());
+				obs = processNumericValue(val.toString(), obs, concept, uid, conceptName);
+			} catch (NumberFormatException e) {
+				if (concept.getDatatype().isNumeric()) {
+					LOGGER.info(value.getValue());
+					obs = processNumericValue(DEFAULT_NUMERIC_VALUE, obs, concept, uid, conceptName);
+				} else if (concept.getDatatype().isCoded() && val.toString() == "Détecté") {
+					LOGGER.info(value.getValue());
+					obs = processNumericValue(DETECTED_CODED_VALUE, obs, concept, uid, conceptName);
+				} else if (concept.getDatatype().isCoded() && val.toString() == "Non-Détecté") {
+					LOGGER.info(value.getValue());
+					obs = processNumericValue(NOT_DETECTED_CODED_VALUE, obs, concept, uid, conceptName);
+				} else {
+					obs.setValueText(value.getValue());
+				}
+
+			}
+			/*
 			try {
 				Double val = Double.parseDouble(value.getValue());
 				obs = processNumericValue(val.toString(), obs, concept, uid, conceptName);
@@ -382,8 +389,9 @@ public class OruR01Handler implements Application {
 				} else {
 					obs.setValueText(value.getValue());
 				}
-	
+
 			}
+			*/
 
 		} else {
 			// Unsupported data type
