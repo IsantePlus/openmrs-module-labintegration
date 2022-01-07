@@ -229,7 +229,18 @@ public class OruR01Handler implements Application {
 	protected Concept getConcept(String hl7ConceptId, String codingSystem, String uid) throws HL7Exception {
 		if (codingSystem == null || HL7Constants.HL7_LOCAL_CONCEPT.equals(codingSystem)) {
 			// the concept is local
-			Integer conceptId = Integer.valueOf(hl7ConceptId);
+			Integer conceptId = null;
+			try {
+				conceptId = Integer.valueOf(hl7ConceptId);
+			} catch (NumberFormatException e) {
+				 if (hl7ConceptId.equals("D??tect??")) {
+					LOGGER.info("this is the value text 2 : "+ hl7ConceptId);
+					conceptId = Integer.valueOf(DETECTED_CODED_VALUE);
+					} else if (hl7ConceptId.equals("Non-D??tect??")) {
+					LOGGER.info("this is the value text 3 : "+ hl7ConceptId);
+					conceptId = Integer.valueOf(NOT_DETECTED_CODED_VALUE);
+					} 
+				}
 			return Context.getConceptService().getConcept(conceptId);
 		} else {
 			// the concept is not local, look it up in our mapping
@@ -324,8 +335,10 @@ public class OruR01Handler implements Application {
 					throw new HL7Exception(Context.getMessageSourceService().getMessage("Hl7.proposed.concept.name.empty"));
 				}
 			} else {
+								
 				obs.setValueCoded(getConcept(value, uid));
 				obs.setValueCodedName(getConceptName(value));
+				
 			}
 		} else if ("TX".equals(dataType) || "ST".equals(dataType) || "FT".equals(dataType)) {
 			AbstractTextPrimitive value = null;
@@ -359,32 +372,7 @@ public class OruR01Handler implements Application {
 			// added mapping for PCR result when we receive Detecte 1301 will  be send to the system, Non-Detecte will send  1302
 			// TODO: Make this logic a configurable one via Global Configurations
 
-			Double val = null;
-			String valString="";
-			try {
-				val = Double.parseDouble(value.getValue());
-				valString=val.toString();
-				obs = processNumericValue(val.toString(), obs, concept, uid, conceptName);
-			} catch (NumberFormatException e) {
-				if (concept.getDatatype().isNumeric()) {
-					LOGGER.info(value.getValue());
-					LOGGER.info("this is the value text 1 : "+ valString);
-					obs = processNumericValue(DEFAULT_NUMERIC_VALUE, obs, concept, uid, conceptName);
-				} else if (concept.getDatatype().isCoded() && valString.equals("D??tect??")) {
-					LOGGER.info("this is the value text 2 : "+ valString);
-					LOGGER.info(value.getValue());
-					obs = processNumericValue(DETECTED_CODED_VALUE, obs, concept, uid, conceptName);
-				} else if (concept.getDatatype().isCoded() && valString.equals("Non-D??tect??")) {
-					LOGGER.info("this is the value text 3 : "+ valString);
-					LOGGER.info(value.getValue());
-					obs = processNumericValue(NOT_DETECTED_CODED_VALUE, obs, concept, uid, conceptName);
-				} else {
-					LOGGER.info("this is the value text 4 : "+ valString);
-					obs.setValueText(value.getValue());
-				}
-
-			}
-			/*
+			
 			try {
 				Double val = Double.parseDouble(value.getValue());
 				obs = processNumericValue(val.toString(), obs, concept, uid, conceptName);
@@ -397,7 +385,7 @@ public class OruR01Handler implements Application {
 				}
 
 			}
-			*/
+			
 
 		} else {
 			// Unsupported data type
