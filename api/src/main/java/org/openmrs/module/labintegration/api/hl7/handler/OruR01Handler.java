@@ -360,20 +360,26 @@ public class OruR01Handler implements Application {
 			// TODO: Make this logic a configurable one via Global Configurations
 
 			Double val = null;
+			String valString="";
 			try {
 				val = Double.parseDouble(value.getValue());
+				valString=val.toString();
 				obs = processNumericValue(val.toString(), obs, concept, uid, conceptName);
 			} catch (NumberFormatException e) {
 				if (concept.getDatatype().isNumeric()) {
 					LOGGER.info(value.getValue());
+					LOGGER.info("this is the value text 1 : "+ valString);
 					obs = processNumericValue(DEFAULT_NUMERIC_VALUE, obs, concept, uid, conceptName);
-				} else if (concept.getDatatype().isCoded() && val.toString() == "Détecté") {
+				} else if (concept.getDatatype().isCoded() && valString.equals("D??tect??")) {
+					LOGGER.info("this is the value text 2 : "+ valString);
 					LOGGER.info(value.getValue());
 					obs = processNumericValue(DETECTED_CODED_VALUE, obs, concept, uid, conceptName);
-				} else if (concept.getDatatype().isCoded() && val.toString() == "Non-Détecté") {
+				} else if (concept.getDatatype().isCoded() && valString.equals("Non-D??tect??")) {
+					LOGGER.info("this is the value text 3 : "+ valString);
 					LOGGER.info(value.getValue());
 					obs = processNumericValue(NOT_DETECTED_CODED_VALUE, obs, concept, uid, conceptName);
 				} else {
+					LOGGER.info("this is the value text 4 : "+ valString);
 					obs.setValueText(value.getValue());
 				}
 
