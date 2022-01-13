@@ -16,3 +16,5 @@ id_file
 
 # Mac OSX
 .DS_Store
+
+.flattened-pom.xml
