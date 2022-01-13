@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.assertEquals;
 
+@SkipBaseSetup
 public class OMLO21OrderConverterTest extends AbstractOrderConverterTest {
 	
 	private static final String EXPECTED_FILE = "OML_O21.hl7";
@@ -51,7 +52,6 @@ public class OMLO21OrderConverterTest extends AbstractOrderConverterTest {
 	}
 	
 	@Test
-	@SkipBaseSetup
 	public void shouldGenerateMessage() throws Exception {
 		executeDataSet(DATASET);
 		Patient patient = patientService.getPatient(PATIENT_ID);

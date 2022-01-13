@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.assertEquals;
 
+@SkipBaseSetup
 public class ORMO01OrderConverterTest extends AbstractOrderConverterTest {
 	
 	private static final String EXPECTED_FILE = "ORM_O01.hl7";
