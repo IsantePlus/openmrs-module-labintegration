@@ -3,15 +3,12 @@ package org.openmrs.module.labintegration.api.hl7.handler;
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.app.ApplicationException;
 import ca.uhn.hl7v2.model.Message;
-import ca.uhn.hl7v2.model.v25.message.ORU_R01;
 import ca.uhn.hl7v2.parser.PipeParser;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.openmrs.module.labintegration.api.hl7.messages.util.OruR01Util.*;
 
 public class OruR01HandlerTest extends BaseModuleContextSensitiveTest {
