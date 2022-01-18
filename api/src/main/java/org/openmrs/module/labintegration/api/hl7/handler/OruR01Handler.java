@@ -1,5 +1,12 @@
 package org.openmrs.module.labintegration.api.hl7.handler;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.app.Application;
 import ca.uhn.hl7v2.app.ApplicationException;
@@ -7,7 +14,14 @@ import ca.uhn.hl7v2.model.Message;
 import ca.uhn.hl7v2.model.Type;
 import ca.uhn.hl7v2.model.Varies;
 import ca.uhn.hl7v2.model.primitive.AbstractTextPrimitive;
-import ca.uhn.hl7v2.model.v25.datatype.*;
+import ca.uhn.hl7v2.model.v25.datatype.DTM;
+import ca.uhn.hl7v2.model.v25.datatype.FT;
+import ca.uhn.hl7v2.model.v25.datatype.ID;
+import ca.uhn.hl7v2.model.v25.datatype.NM;
+import ca.uhn.hl7v2.model.v25.datatype.SN;
+import ca.uhn.hl7v2.model.v25.datatype.ST;
+import ca.uhn.hl7v2.model.v25.datatype.TS;
+import ca.uhn.hl7v2.model.v25.datatype.TX;
 import ca.uhn.hl7v2.model.v25.group.ORU_R01_OBSERVATION;
 import ca.uhn.hl7v2.model.v25.group.ORU_R01_ORDER_OBSERVATION;
 import ca.uhn.hl7v2.model.v25.group.ORU_R01_PATIENT_RESULT;
@@ -16,7 +30,16 @@ import ca.uhn.hl7v2.model.v25.segment.MSH;
 import ca.uhn.hl7v2.model.v25.segment.OBR;
 import ca.uhn.hl7v2.model.v25.segment.OBX;
 import ca.uhn.hl7v2.model.v25.segment.PV1;
-import org.openmrs.*;
+import ca.uhn.hl7v2.model.v25.datatype.CE;
+import org.openmrs.Concept;
+import org.openmrs.ConceptAnswer;
+import org.openmrs.ConceptName;
+import org.openmrs.ConceptProposal;
+import org.openmrs.Encounter;
+import org.openmrs.EncounterProvider;
+import org.openmrs.Obs;
+import org.openmrs.Person;
+import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.hl7.HL7Constants;
 import org.openmrs.module.labintegration.api.alerts.AlertCreator;
@@ -28,8 +51,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.util.StringUtils;
-
-import java.util.*;
 
 @SuppressWarnings("PMD.CyclomaticComplexity")
 public class OruR01Handler implements Application {
@@ -71,6 +92,8 @@ public class OruR01Handler implements Application {
 		try {
 			ORU_R01 oruR01Massage = (ORU_R01) message;
 			response = processOruR01(oruR01Massage);
+			LOGGER.debug("Finished processing ORU_R01 message");
+			return response;
 		}
 		catch (ClassCastException ex) {
 			LOGGER.warn("Error casting " + message.getClass().getName() + " to ORU_R01", ex);
@@ -81,10 +104,11 @@ public class OruR01Handler implements Application {
 			LOGGER.warn("Error while processing ORU_R01 message", ex);
 			throw new ApplicationException(Context.getMessageSourceService().getMessage("ORUR01.error.WhileProcessing"), ex);
 		}
-		
-		LOGGER.debug("Finished processing ORU_R01 message");
-		
-		return response;
+		catch (Exception e) {
+			LOGGER.error("Could not process message!\n" + e.getMessage());
+		}
+
+		return null;
 	}
 	
 	/**
@@ -152,25 +176,38 @@ public class OruR01Handler implements Application {
 			
 			// Loop over the obs and create each object, adding it to the encounter
 			int numObs = orderObs.getOBSERVATIONReps();
-			for (int j = 0; j < numObs; j++) {
-				LOGGER.debug("Processing OBS {}", j);
-				
-				// OBX values
-				OBX obx = orderObs.getOBSERVATION(j).getOBX();
-				LOGGER.debug("Parsing observation");
-				Obs obs = parseObs(encounter, obx, messageControlId);
+			boolean encounterChanged = false;
 
-				LOGGER.debug("Finished creating observations");
-				if (obs != null) {
-					voidPreviousObs(encounter, obs);
-					// set this obs on the encounter object that we will be saving later
-					encounter.addObs(obs);
-					createAlert(encounter, obs, message);
+			for (int j = 0; j < numObs; j++) {
+				try {
+					LOGGER.debug("Processing OBS {}", j);
+
+					// OBX values
+					OBX obx = orderObs.getOBSERVATION(j).getOBX();
+					LOGGER.debug("Parsing observation");
+					Obs obs = parseObs(encounter, obx, messageControlId);
+
+					LOGGER.debug("Finished creating observation");
+					if (obs != null) {
+						voidPreviousObs(encounter, obs);
+						// set this obs on the encounter object that we will be saving later
+						encounter.addObs(obs);
+						createAlert(encounter, obs, message);
+						encounterChanged = true;
+					}
+				} catch (Exception e) {
+					LOGGER.error("Could not process and add Obs!\n" + e.getMessage());
 				}
 			}
-			
-			LOGGER.debug("Creating the encounter object");
-			Context.getEncounterService().saveEncounter(encounter);
+
+			if (encounterChanged) {
+				LOGGER.debug("Saving Encounter...");
+				try {
+					Context.getEncounterService().saveEncounter(encounter);
+				} catch (Exception e) {
+					LOGGER.error("Could not save encounter!");
+				}
+			}
 		}
 		
 		return message;
@@ -234,10 +271,10 @@ public class OruR01Handler implements Application {
 				conceptId = Integer.valueOf(hl7ConceptId);
 			} catch (NumberFormatException e) {
 				 if (hl7ConceptId.equals("D??tect??")) {
-					LOGGER.info("this is the value text 2 : "+ hl7ConceptId);
+					LOGGER.info("this is the value text 2 : " + hl7ConceptId);
 					conceptId = Integer.valueOf(DETECTED_CODED_VALUE);
 					} else if (hl7ConceptId.equals("Non-D??tect??")) {
-					LOGGER.info("this is the value text 3 : "+ hl7ConceptId);
+					LOGGER.info("this is the value text 3 : " + hl7ConceptId);
 					conceptId = Integer.valueOf(NOT_DETECTED_CODED_VALUE);
 					} 
 				}
@@ -277,17 +314,14 @@ public class OruR01Handler implements Application {
 		// Conditional statement to discard results with LOINC 25836-8 && OBX[3,4] == LPLOG.
 		// It typically comes as an additional result that accompanies Viral Load results.
 		LOGGER.debug("Observation identifier {}", obx.getObservationIdentifier().getCe1_Identifier().getValue());
-		LOGGER.debug("Observation alternative identifier {}", obx.getObservationIdentifier().getCe4_AlternateIdentifier().getValue());
+		LOGGER.debug("Observation alternative identifier {}",
+				obx.getObservationIdentifier().getCe4_AlternateIdentifier().getValue());
 		String[] obxIdentifiersToReject = {"LPLOG", "LBLOG"};
 		if (("25836-8").equals(obx.getObservationIdentifier().getIdentifier().getValue())
-				&& Arrays.asList(obxIdentifiersToReject).contains((obx.getObservationIdentifier().getAlternateIdentifier().getValue()))) {
+				&& Arrays.asList(obxIdentifiersToReject).contains(
+						(obx.getObservationIdentifier().getAlternateIdentifier().getValue()))) {
 			return null;
 		}
-		//Search concept
-		//Concept conceptQuestion = Context.getConceptService().getConcept(labIntegrationConfig.getLabOrderConceptCode());
-		//Get obs
-		//List<Obs> obsList = Context.getObsService().getObservations(null, asList(encounter), asList(conceptQuestion),
-		//asList(concept), null, null, null, null, null, null, null, true);
 
 		Obs obs = new Obs();
 		obs.setPerson(encounter.getPatient());
@@ -574,10 +608,6 @@ public class OruR01Handler implements Application {
 	private MSH getMSH(ORU_R01 message) {
 		return message.getMSH();
 	}
-	
-	//	private ORC getORC(ORU_R01 message) {
-	//		return message.getPATIENT_RESULT().getORDER_OBSERVATION().getORC();
-	//	}
 	
 	private void validateMessageVersion(ORU_R01 message) throws ApplicationException {
 		if (!message.getVersion().equals(MESSAGE_VERSION)) {

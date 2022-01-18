@@ -1,6 +1,6 @@
 Lab Integration Module
 ==========================
-![CI](https://github.com/IsantePlus/openmrs-module-labintegration/workflows/CI/badge.svg?branch=master)
+[![CI](https://github.com/IsantePlus/openmrs-module-labintegration/actions/workflows/ci.yml/badge.svg)](https://github.com/IsantePlus/openmrs-module-labintegration/actions/workflows/ci.yml)
 
 Description
 -----------

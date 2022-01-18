@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Pv1AssignedPatientLocationHelper {
 
-	private static final String ECID_UUID = "f54ed6b9-f5b9-4fd5-a588-8f7561a78401";
+	private static final String ECID_UUID = "05a29f94-c0ed-11e2-94be-8c13b969e334";
 
 	public void updateAssignedPatientLocation(PV1 pv1, HL7Config hl7Config, Encounter encounter) throws DataTypeException,
 	        MessageCreationException {
