@@ -10,23 +10,20 @@ import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.api.EncounterService;
 import org.openmrs.hl7.HL7Service;
+import org.openmrs.module.labintegration.api.communication.hl7.messages.AbstractOrderConverterTest;
 import org.openmrs.module.labintegration.api.hl7.messages.MessageCreationException;
 import org.openmrs.module.labintegration.api.hl7.messages.util.EncounterUtil;
 import org.openmrs.module.labintegration.api.hl7.oru.OruRo1Receiver;
 import org.openmrs.module.labintegration.api.hl7.util.HL7TestMsgUtil;
-import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.context.ContextConfiguration;
 
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@ContextConfiguration(locations = { "classpath*:moduleApplicationContext.xml", "classpath*:applicationContext-service.xml",
-		"classpath*:test-labContext.xml" }, inheritLocations = false)
-public class OruRo1ReceiverTest extends BaseModuleContextSensitiveTest {
+public class OruRo1ReceiverTest extends AbstractOrderConverterTest {
 
 	private static final String DATASET = "lab-dataset.xml";
 

@@ -4,16 +4,13 @@ import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.app.ApplicationException;
 import ca.uhn.hl7v2.model.Message;
 import ca.uhn.hl7v2.parser.PipeParser;
-import org.junit.Before;
 import org.junit.Test;
-import org.openmrs.test.BaseModuleContextSensitiveTest;
-import org.openmrs.test.SkipBaseSetup;
+import org.openmrs.module.labintegration.api.communication.hl7.messages.AbstractOrderConverterTest;
 
 import static org.junit.Assert.assertNotNull;
 import static org.openmrs.module.labintegration.api.hl7.messages.util.OruR01Util.*;
 
-@SkipBaseSetup
-public class OruR01HandlerTest extends BaseModuleContextSensitiveTest {
+public class OruR01HandlerTest extends AbstractOrderConverterTest {
 
 	private static final String DATASET = "lab-dataset.xml";
 

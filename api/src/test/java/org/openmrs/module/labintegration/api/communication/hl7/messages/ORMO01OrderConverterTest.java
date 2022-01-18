@@ -17,12 +17,10 @@ import org.openmrs.module.labintegration.api.hl7.messages.gnerators.MshGenerator
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.msh.MessageControlIdSource;
 import org.openmrs.module.labintegration.api.hl7.scc.SCCHL7Config;
 import org.openmrs.module.labintegration.api.hl7.util.HL7TestMsgUtil;
-import org.openmrs.test.SkipBaseSetup;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.assertEquals;
 
-@SkipBaseSetup
 public class ORMO01OrderConverterTest extends AbstractOrderConverterTest {
 	
 	private static final String EXPECTED_FILE = "ORM_O01.hl7";
@@ -53,7 +51,6 @@ public class ORMO01OrderConverterTest extends AbstractOrderConverterTest {
 	}
 	
 	@Test
-	@SkipBaseSetup
 	public void shouldGenerateMessage() throws Exception {
 		executeDataSet(DATASET);
 		Patient patient = patientService.getPatient(PATIENT_ID);

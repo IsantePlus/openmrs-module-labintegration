@@ -16,12 +16,10 @@ import org.openmrs.module.labintegration.api.hl7.messages.gnerators.MshGenerator
 import org.openmrs.module.labintegration.api.hl7.messages.gnerators.msh.MessageControlIdSource;
 import org.openmrs.module.labintegration.api.hl7.openelis.OpenElisHL7Config;
 import org.openmrs.module.labintegration.api.hl7.util.HL7TestMsgUtil;
-import org.openmrs.test.SkipBaseSetup;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.assertEquals;
 
-@SkipBaseSetup
 public class OMLO21OrderConverterTest extends AbstractOrderConverterTest {
 	
 	private static final String EXPECTED_FILE = "OML_O21.hl7";
