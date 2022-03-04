@@ -51,9 +51,9 @@ public class Pv1AssignedPatientLocationHelper {
 		}
 
 		try {
-			PatientIdentifier id = PatientUtil
-					.getPatientIdentifier(encounter.getPatient(), ECID_UUID);
-			pv1.getAlternateVisitID().getIDNumber().setValue(id.getIdentifier());
+			//PatientIdentifier id = PatientUtil.getPatientIdentifier(encounter.getPatient(), ECID_UUID);
+			//pv1.getAlternateVisitID().getIDNumber().setValue(id.getIdentifier());
+			pv1.getAlternateVisitID().getIDNumber().setValue(encounter.getPatient().getUuid());
 			if (id.getLocation() != null) {
 				pv1.getAssignedPatientLocation().getPl1_PointOfCare().setValue(siteCode);
 			}
