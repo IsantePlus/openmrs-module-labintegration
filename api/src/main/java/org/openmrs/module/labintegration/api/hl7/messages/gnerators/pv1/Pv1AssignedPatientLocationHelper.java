@@ -1,12 +1,10 @@
 package org.openmrs.module.labintegration.api.hl7.messages.gnerators.pv1;
 
-import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.v25.segment.PV1;
 import org.openmrs.Encounter;
 import org.openmrs.LocationAttribute;
 import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
-import org.openmrs.module.labintegration.api.hl7.messages.MessageCreationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
