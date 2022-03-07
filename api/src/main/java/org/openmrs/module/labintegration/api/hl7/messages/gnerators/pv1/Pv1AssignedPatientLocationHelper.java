@@ -5,10 +5,10 @@ import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.v25.segment.PV1;
 import org.openmrs.Encounter;
 import org.openmrs.LocationAttribute;
-import org.openmrs.PatientIdentifier;
+//import org.openmrs.PatientIdentifier;
 import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
 import org.openmrs.module.labintegration.api.hl7.messages.MessageCreationException;
-import org.openmrs.module.labintegration.api.hl7.messages.util.PatientUtil;
+//import org.openmrs.module.labintegration.api.hl7.messages.util.PatientUtil;
 import org.springframework.stereotype.Component;
 
 @Component
