@@ -119,7 +119,8 @@
 
     <!-- Patient -->
     <person person_id="10" gender="M" birthdate="1987-02-11 10:15:00" dead="0"
-        creator="1" date_created="2005-01-06 00:00:00" voided="0"/>
+        creator="1" date_created="2005-01-06 00:00:00" voided="0" uuid="32423someuuid"/>
+
     <patient patient_id="10" creator="1" date_created="2005-01-06 00:00:00" voided="0"/>
 
     <patient_identifier patient_identifier_id="20" patient_id="10" identifier="1004X"
