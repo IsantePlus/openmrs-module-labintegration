@@ -1,5 +1,6 @@
 package org.openmrs.module.labintegration.api.hl7.messages.gnerators.pv1;
 
+import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.v25.segment.PV1;
 import org.openmrs.Encounter;
@@ -53,8 +54,11 @@ public class Pv1AssignedPatientLocationHelper {
 
 			//get location location uuid 'To be tested'
 			pv1.getAlternateVisitID().getAssigningAuthority().parse(encounter.getLocation().getUuid());
-		}
-		catch (Exception ex) {
+		} catch (DataTypeException ex) {
+			LOGGER.error("Could not create PV1 message! \n" + ex.getLocalizedMessage());
+		} catch (HL7Exception ex) {
+			LOGGER.error("Could not create PV1 message! \n" + ex.getLocalizedMessage());
+		} catch (Exception ex) {
 			LOGGER.error("Could not create PV1 message! \n" + ex.getLocalizedMessage());
 		}
 	}
