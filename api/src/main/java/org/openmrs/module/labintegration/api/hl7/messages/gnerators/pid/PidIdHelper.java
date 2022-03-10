@@ -54,5 +54,9 @@ public class PidIdHelper {
 			pid.getPatientID().getAssigningFacility().getNamespaceID()
 					.setValue(siteCode);
 		}
+
+		if (siteCode != null) {
+			pid.getPatientID().getAssigningFacility().getNamespaceID().setValue(siteCode);
+		}
 	}
 }
