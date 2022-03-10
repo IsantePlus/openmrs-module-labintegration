@@ -54,7 +54,7 @@
     </pluginRepositories>
 
     <properties>
-        <revision>2.1.0</revision>
+        <revision>2.1.2</revision>
         <openmrsPlatformVersion>2.0.5</openmrsPlatformVersion>
         <javaCompilerVersion>1.8</javaCompilerVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
