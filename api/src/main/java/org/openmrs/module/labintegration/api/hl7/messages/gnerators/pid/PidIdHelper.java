@@ -19,7 +19,7 @@ public class PidIdHelper {
 	        MessageCreationException {
 
 		String siteCode = "";
-		String uuid = "0e52924e-4ebb-40ba-9b83-b198b532653b";
+		String uuid =    "6242bf19-207e-4076-9d28-9290525b8ed9";	//"0e52924e-4ebb-40ba-9b83-b198b532653b";
 		String uuidiSanteId = "0e0c7cc2-3491-4675-b705-746e372ff346";
 		PatientIdentifier isanteIdentifier = null;
 

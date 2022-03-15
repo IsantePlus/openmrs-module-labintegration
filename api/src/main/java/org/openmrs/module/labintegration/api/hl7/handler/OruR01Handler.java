@@ -10,10 +10,10 @@ import java.util.List;
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.app.Application;
 import ca.uhn.hl7v2.app.ApplicationException;
+import ca.uhn.hl7v2.model.GenericPrimitive;
 import ca.uhn.hl7v2.model.Message;
 import ca.uhn.hl7v2.model.Type;
 import ca.uhn.hl7v2.model.Varies;
-import ca.uhn.hl7v2.model.primitive.AbstractTextPrimitive;
 import ca.uhn.hl7v2.model.v25.datatype.DTM;
 import ca.uhn.hl7v2.model.v25.datatype.FT;
 import ca.uhn.hl7v2.model.v25.datatype.ID;
@@ -21,7 +21,6 @@ import ca.uhn.hl7v2.model.v25.datatype.NM;
 import ca.uhn.hl7v2.model.v25.datatype.SN;
 import ca.uhn.hl7v2.model.v25.datatype.ST;
 import ca.uhn.hl7v2.model.v25.datatype.TS;
-import ca.uhn.hl7v2.model.v25.datatype.TX;
 import ca.uhn.hl7v2.model.v25.group.ORU_R01_OBSERVATION;
 import ca.uhn.hl7v2.model.v25.group.ORU_R01_ORDER_OBSERVATION;
 import ca.uhn.hl7v2.model.v25.group.ORU_R01_PATIENT_RESULT;
@@ -352,7 +351,6 @@ public class OruR01Handler implements Application {
 		if ("NM".equals(dataType)) {
 			String value = ((NM) obx5).getValue();
 			return processNumericValue(value, obs, concept, uid, conceptName);
-
 		} else if ("SN".equals(dataType)) {
 			String value = ((SN) obx5).getNum1().getValue();
 			return processNumericValue(value, obs, concept, uid, conceptName);
@@ -375,27 +373,12 @@ public class OruR01Handler implements Application {
 				
 			}
 		} else if ("TX".equals(dataType) || "ST".equals(dataType) || "FT".equals(dataType)) {
-			AbstractTextPrimitive value = null;
-			switch (dataType) {
-				case "TX":
-					value = (TX) obx5;
-
-					break;
-
-				case "ST":
-					value = (ST) obx5;
-
-					break;
-
-				case "FT":
-					value = (FT) obx5;
-
-					break;
-
-				default:
-					break;
-			}
+			GenericPrimitive value = (GenericPrimitive) values[0].getExtraComponents().getComponent(0).getData();
 			if (value == null || value.getValue() == null || value.getValue().trim().length() == 0) {
+				if (obx5 != null) {
+					obs.setValueText(String.valueOf(obx5));
+					return obs;
+				}
 				LOGGER.warn("Not creating null valued obs for concept " + concept);
 				return null;
 			}
