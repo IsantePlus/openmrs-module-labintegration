@@ -14,7 +14,6 @@ import ca.uhn.hl7v2.model.GenericPrimitive;
 import ca.uhn.hl7v2.model.Message;
 import ca.uhn.hl7v2.model.Type;
 import ca.uhn.hl7v2.model.Varies;
-import ca.uhn.hl7v2.model.primitive.AbstractTextPrimitive;
 import ca.uhn.hl7v2.model.v25.datatype.DTM;
 import ca.uhn.hl7v2.model.v25.datatype.FT;
 import ca.uhn.hl7v2.model.v25.datatype.ID;
@@ -22,7 +21,6 @@ import ca.uhn.hl7v2.model.v25.datatype.NM;
 import ca.uhn.hl7v2.model.v25.datatype.SN;
 import ca.uhn.hl7v2.model.v25.datatype.ST;
 import ca.uhn.hl7v2.model.v25.datatype.TS;
-import ca.uhn.hl7v2.model.v25.datatype.TX;
 import ca.uhn.hl7v2.model.v25.group.ORU_R01_OBSERVATION;
 import ca.uhn.hl7v2.model.v25.group.ORU_R01_ORDER_OBSERVATION;
 import ca.uhn.hl7v2.model.v25.group.ORU_R01_PATIENT_RESULT;
@@ -377,7 +375,7 @@ public class OruR01Handler implements Application {
 		} else if ("TX".equals(dataType) || "ST".equals(dataType) || "FT".equals(dataType)) {
 			GenericPrimitive value = (GenericPrimitive) values[0].getExtraComponents().getComponent(0).getData();
 			if (value == null || value.getValue() == null || value.getValue().trim().length() == 0) {
-				if(obx5 != null){
+				if (obx5 != null) {
 					obs.setValueText(String.valueOf(obx5));
 					return obs;
 				}
