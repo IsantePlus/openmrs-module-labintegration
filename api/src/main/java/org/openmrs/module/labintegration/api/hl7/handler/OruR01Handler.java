@@ -202,6 +202,8 @@ public class OruR01Handler implements Application {
 			if (encounterChanged) {
 				LOGGER.debug("Saving Encounter...");
 				try {
+					//TODO figure out why the encounter will not save
+					encounter.setEncounterDatetime(encounter.getVisit().getStartDatetime());
 					Context.getEncounterService().saveEncounter(encounter);
 				} catch (Exception e) {
 					LOGGER.error("Could not save encounter!");
