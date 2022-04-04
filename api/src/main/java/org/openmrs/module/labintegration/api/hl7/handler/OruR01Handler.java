@@ -202,6 +202,8 @@ public class OruR01Handler implements Application {
 			if (encounterChanged) {
 				LOGGER.debug("Saving Encounter...");
 				try {
+					//TODO figure out why the encounter will not save
+					encounter.setEncounterDatetime(encounter.getVisit().getStartDatetime());
 					Context.getEncounterService().saveEncounter(encounter);
 				} catch (Exception e) {
 					LOGGER.error("Could not save encounter!");
@@ -376,7 +378,11 @@ public class OruR01Handler implements Application {
 			GenericPrimitive value = (GenericPrimitive) values[0].getExtraComponents().getComponent(0).getData();
 			if (value == null || value.getValue() == null || value.getValue().trim().length() == 0) {
 				if (obx5 != null) {
-					obs.setValueText(String.valueOf(obx5));
+					if (org.apache.commons.lang.StringUtils.isNumeric(String.valueOf(obx5))) {
+						obs.setValueText(String.valueOf(obx5));
+					} else if (("voir ci-dessous").equals(((ST) obx5).getValue())) {
+						obs.setValueNumeric(Double.valueOf(DEFAULT_NUMERIC_VALUE));
+					}
 					return obs;
 				}
 				LOGGER.warn("Not creating null valued obs for concept " + concept);
