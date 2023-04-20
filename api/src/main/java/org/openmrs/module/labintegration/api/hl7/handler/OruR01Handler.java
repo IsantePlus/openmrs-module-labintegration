@@ -524,7 +524,6 @@ public class OruR01Handler implements Application {
 	 */
 	private Date getDatetime(OBX obx) throws HL7Exception {
 		TS ts = obx.getDateTimeOfTheAnalysis();
-		//TS ts = obx.getDateTimeOfTheObservation();
 		return getDatetime(ts);
 	}
 	
