@@ -27,7 +27,7 @@ public class HL7TestOrder {
 	
 	public static final String ENC_TYPE_NAME = "Vitals";
 	
-	public static final String CONCEPT_CODE = "10081-8";
+	public static final String CONCEPT_CODE = "44871-2";
 	
 	public static final int SCHEDULED_DATE_MONTH = 2;
 
@@ -107,6 +107,7 @@ public class HL7TestOrder {
 		topConcept.setId(1271);
 
 		Concept concept = new Concept();
+		concept.setUuid("63cbd0ac-7b4d-477a-910d-8e75168275bf");
 		concept.addConceptMapping(otherMapping);
 		concept.addConceptMapping(loincMapping);
 		concept.setId(657);

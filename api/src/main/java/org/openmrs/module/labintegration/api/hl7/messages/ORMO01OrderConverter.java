@@ -57,7 +57,7 @@ public class ORMO01OrderConverter implements OrderConverter {
 
 			int i = 0;
 			for (Obs obs : encounter.getObs()) {
-				if (obsSelector.isTestType(obs)) {
+				if (obsSelector.isValidTestType(obs)) {
 					orcGenerator.updateOrc(message.getORDER(i).getORC(), obs, orderControl.code(), orderIdentifier);
 					obrGenerator.updateObr(message.getORDER(i).getORDER_DETAIL().getOBR(), obs, orderIdentifier);
 					i++;
