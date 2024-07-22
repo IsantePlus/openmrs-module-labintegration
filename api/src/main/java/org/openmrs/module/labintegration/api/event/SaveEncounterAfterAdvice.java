@@ -37,7 +37,7 @@ public class SaveEncounterAfterAdvice implements AfterReturningAdvice {
 					labIntegrationService.doOrder(encounter);
 				} catch (Exception e) {
 					// TODO
-					LOGGER.error("Unable to sed order messages", e);
+					LOGGER.error("Unable to send order messages", e);
 				}
 			}
 		}
