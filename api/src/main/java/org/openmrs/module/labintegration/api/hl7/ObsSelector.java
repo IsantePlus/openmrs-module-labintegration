@@ -34,9 +34,9 @@ public class ObsSelector {
             synchronized (ObsSelector.class) {
                 if (viralLoadConceptId == -1) {
                     ConceptService conceptService = Context.getService(ConceptService.class);
-                    Concept concept = conceptService.getConceptByMapping("CIEL", "856");
+                    Concept concept = conceptService.getConceptByMapping("856", "CIEL");
                     if (concept == null) {
-                        concept = conceptService.getConceptByMapping("LOINC", "25836-8");
+                        concept = conceptService.getConceptByMapping("25836-8", "LOINC");
                     }
 
                     if (concept != null) {
@@ -54,9 +54,9 @@ public class ObsSelector {
             synchronized (ObsSelector.class) {
                 if (earlyInfantDiagnosisConceptId == -1) {
                     ConceptService conceptService = Context.getService(ConceptService.class);
-                    Concept concept = conceptService.getConceptByMapping("CIEL", "844");
+                    Concept concept = conceptService.getConceptByMapping("844", "CIEL");
                     if (concept == null) {
-                        concept = conceptService.getConceptByMapping("LOINC", "44871-2");
+                        concept = conceptService.getConceptByMapping("44871-2", "LOINC");
                     }
 
                     if (concept != null) {
