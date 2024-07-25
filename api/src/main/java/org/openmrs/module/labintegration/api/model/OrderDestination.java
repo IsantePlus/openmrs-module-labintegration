@@ -37,7 +37,10 @@ public enum OrderDestination {
 
         for (Obs obs : encounter.getAllObs()) {
             if (ObjectUtils.equals(obs.getConcept().getUuid(), ORDER_DESTINATION_CONCEPT_UUID)) {
-                destinations.add(OrderDestination.fromString(obs.getValueText()));
+                OrderDestination destination = OrderDestination.fromString(obs.getValueText());
+                if (destination != null) {
+                    destinations.add(destination);
+                }
             }
         }
 

@@ -35,7 +35,7 @@ public class LabIntegrationServiceImpl extends BaseOpenmrsService implements Lab
 				StringUtils.join(orderDestinations, ','));
 
 		for (OrderDestination destination : orderDestinations) {
-			if (!destination.equals(OrderDestination.SCC)) {
+			if (destination.equals(OrderDestination.SCC)) {
 				orderSenderManager.sendOrders(encounter, destination);
 			} else {
 				LOGGER.info("Skipping order not bound for SCC");
