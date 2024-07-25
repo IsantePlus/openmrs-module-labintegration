@@ -57,7 +57,7 @@ public class OruR01Handler implements Application {
 	/**
 	 *
 	 */
-	private static final String DEFAULT_NUMERIC_VALUE = "0";
+	private static final String DEFAULT_NUMERIC_VALUE = "39";
 	private static final String DETECTED_CODED_VALUE = "1301";
 	private static final String NOT_DETECTED_CODED_VALUE = "1302";
 
