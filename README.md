@@ -2,7 +2,6 @@ Lab Integration Module
 ==========================
 [![CI](https://github.com/IsantePlus/openmrs-module-labintegration/actions/workflows/ci.yml/badge.svg)](https://github.com/IsantePlus/openmrs-module-labintegration/actions/workflows/ci.yml)
 
-[![Deploy](https://github.com/IsantePlus/openmrs-module-labintegration/actions/workflows/deploy.yml/badge.svg)](https://github.com/IsantePlus/openmrs-module-labintegration/actions/workflows/deploy.yml)
 
 Description
 -----------
