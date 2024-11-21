@@ -2,6 +2,8 @@ Lab Integration Module
 ==========================
 [![CI](https://github.com/IsantePlus/openmrs-module-labintegration/actions/workflows/ci.yml/badge.svg)](https://github.com/IsantePlus/openmrs-module-labintegration/actions/workflows/ci.yml)
 
+[![Deploy](https://github.com/IsantePlus/openmrs-module-labintegration/actions/workflows/deploy.yml/badge.svg)](https://github.com/IsantePlus/openmrs-module-labintegration/actions/workflows/deploy.yml)
+
 Description
 -----------
 This is a very basic module which can be used as a starting point in creating a new module.
