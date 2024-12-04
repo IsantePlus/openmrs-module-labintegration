@@ -271,10 +271,10 @@ public class OruR01Handler implements Application {
 			try {
 				conceptId = Integer.valueOf(hl7ConceptId);
 			} catch (NumberFormatException e) {
-				 if (hl7ConceptId.equals("D??tect??")) {
+				 if (hl7ConceptId.equals("DÃ©tectÃ©")) {
 					LOGGER.info("this is the value text 2 : " + hl7ConceptId);
 					conceptId = Integer.valueOf(DETECTED_CODED_VALUE);
-					} else if (hl7ConceptId.equals("Non-D??tect??")) {
+					} else if (hl7ConceptId.equals("Non-DÃ©tectÃ©")) {
 					LOGGER.info("this is the value text 3 : " + hl7ConceptId);
 					conceptId = Integer.valueOf(NOT_DETECTED_CODED_VALUE);
 					} 
