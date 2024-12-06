@@ -1,4 +1,4 @@
-package org.openmrs.module.labintegration.api.hl7.messages.gnerators.msh;
+package org.openmrs.module.labintegration.api.hl7.messages.generators.msh;
 
 import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
 import org.openmrs.module.labintegration.api.hl7.scc.SCCHL7Config;

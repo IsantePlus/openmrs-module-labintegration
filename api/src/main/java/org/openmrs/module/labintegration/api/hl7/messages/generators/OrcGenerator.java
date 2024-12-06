@@ -1,4 +1,4 @@
-package org.openmrs.module.labintegration.api.hl7.messages.gnerators;
+package org.openmrs.module.labintegration.api.hl7.messages.generators;
 
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.v25.segment.ORC;

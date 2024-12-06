@@ -1,4 +1,4 @@
-package org.openmrs.module.labintegration.api.hl7.messages.gnerators;
+package org.openmrs.module.labintegration.api.hl7.messages.generators;
 
 import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.v25.segment.PID;
@@ -6,12 +6,12 @@ import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
 import org.openmrs.module.labintegration.api.hl7.messages.MessageCreationException;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pid.PidAddressHelper;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pid.PidBillingNumberHelper;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pid.PidIdHelper;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pid.PidMotherNameHelper;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pid.PidNameHelper;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pid.RegistrationDataHelper;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.pid.PidAddressHelper;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.pid.PidBillingNumberHelper;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.pid.PidIdHelper;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.pid.PidMotherNameHelper;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.pid.PidNameHelper;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.pid.RegistrationDataHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

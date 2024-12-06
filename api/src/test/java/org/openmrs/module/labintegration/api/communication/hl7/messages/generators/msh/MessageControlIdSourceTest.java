@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.msh.MessageControlIdSource;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.msh.MessageControlIdSource;
 
 import java.util.Calendar;
 import java.util.Date;

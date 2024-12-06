@@ -12,8 +12,8 @@ import org.openmrs.module.labintegration.api.communication.hl7.messages.testdata
 import org.openmrs.module.labintegration.api.communication.hl7.messages.utils.OrderConverterTestUtils;
 import org.openmrs.module.labintegration.api.hl7.messages.OMLO21OrderConverter;
 import org.openmrs.module.labintegration.api.hl7.messages.OrderControl;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.MshGenerator;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.msh.MessageControlIdSource;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.MshGenerator;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.msh.MessageControlIdSource;
 import org.openmrs.module.labintegration.api.hl7.openelis.OpenElisHL7Config;
 import org.openmrs.module.labintegration.api.hl7.util.HL7TestMsgUtil;
 import org.springframework.beans.factory.annotation.Autowired;
