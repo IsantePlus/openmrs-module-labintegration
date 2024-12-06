@@ -1,4 +1,4 @@
-package org.openmrs.module.labintegration.api.hl7.messages.gnerators.pv1;
+package org.openmrs.module.labintegration.api.hl7.messages.generators.pv1;
 
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.DataTypeException;

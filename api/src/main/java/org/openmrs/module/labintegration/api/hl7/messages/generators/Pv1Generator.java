@@ -1,4 +1,4 @@
-package org.openmrs.module.labintegration.api.hl7.messages.gnerators;
+package org.openmrs.module.labintegration.api.hl7.messages.generators;
 
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.v25.datatype.XCN;
@@ -7,8 +7,8 @@ import org.openmrs.Encounter;
 import org.openmrs.Provider;
 import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
 import org.openmrs.module.labintegration.api.hl7.messages.MessageCreationException;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.helpers.ProviderInformationHelper;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.pv1.Pv1AssignedPatientLocationHelper;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.helpers.ProviderInformationHelper;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.pv1.Pv1AssignedPatientLocationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
