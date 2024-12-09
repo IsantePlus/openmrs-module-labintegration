@@ -1,6 +1,6 @@
 package org.openmrs.module.labintegration.api.communication.hl7.messages.utils;
 
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.msh.MessageControlIdSource;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.msh.MessageControlIdSource;
 
 import static org.mockito.Mockito.when;
 

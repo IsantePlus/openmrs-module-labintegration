@@ -9,11 +9,11 @@ import org.openmrs.module.labintegration.api.hl7.OrderConverter;
 import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
 import org.openmrs.module.labintegration.api.hl7.config.LabIntegrationProperties;
 import org.openmrs.module.labintegration.api.hl7.config.OrderIdentifier;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.MshGenerator;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.ObrGenerator;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.OrcGenerator;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.PidGenerator;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.Pv1Generator;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.MshGenerator;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.ObrGenerator;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.OrcGenerator;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.PidGenerator;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.Pv1Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

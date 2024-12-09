@@ -1,10 +1,10 @@
-package org.openmrs.module.labintegration.api.hl7.messages.gnerators;
+package org.openmrs.module.labintegration.api.hl7.messages.generators;
 
 import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.v25.segment.MSH;
 import org.openmrs.module.labintegration.api.date.DateSource;
 import org.openmrs.module.labintegration.api.hl7.config.HL7Config;
-import org.openmrs.module.labintegration.api.hl7.messages.gnerators.msh.MessageControlIdSource;
+import org.openmrs.module.labintegration.api.hl7.messages.generators.msh.MessageControlIdSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

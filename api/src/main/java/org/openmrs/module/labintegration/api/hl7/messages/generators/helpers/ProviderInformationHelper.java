@@ -1,4 +1,4 @@
-package org.openmrs.module.labintegration.api.hl7.messages.gnerators.helpers;
+package org.openmrs.module.labintegration.api.hl7.messages.generators.helpers;
 
 import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.v25.datatype.XCN;
