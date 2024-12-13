@@ -195,7 +195,7 @@ public class OruR01Handler implements Application {
 						encounterChanged = true;
 					}
 				} catch (Exception e) {
-					LOGGER.error("Could not process and add Obs!\n" + e.getMessage());
+					LOGGER.error("Could not process and add Obs!: {}", e, e);
 				}
 			}
 
@@ -206,7 +206,7 @@ public class OruR01Handler implements Application {
 					encounter.setEncounterDatetime(encounter.getVisit().getStartDatetime());
 					Context.getEncounterService().saveEncounter(encounter);
 				} catch (Exception e) {
-					LOGGER.error("Could not save encounter!");
+					LOGGER.error("Could not save encounter!", e);
 				}
 			}
 		}
