@@ -50,4 +50,25 @@ public class OruR01HandlerTest extends AbstractOrderConverterTest {
 		Message message1 = oruR01Handler.processMessage(message);
 		assertNotNull(message);
 	}
+
+	@Test
+	public void processMessage_shouldProcessMessageToObs() throws Exception {
+		executeDataSet(DATASET);
+
+		String hl7Message = "MSH|^~\\&|||||20241216090516-0500||ORU^R01|00000000|P|2.5\n" +
+				"PID||33118500^^^^MR^112123|33118500^^^^MR^112123||WASHINGTONN^GLENN||20000601|M||U|^4èME LA MONTAGNE^JEAN RABEL^NRO|||||||^7a732da7-f3a8-40fe-b9eb-c8a058de9497\n" +
+				"PV1||R|11223||||11223^OPAP^PRESTATAIRE^^^^^^^^^^L||||||||||^^^^^^^^^^^^L|||||||||||||||||||||||||||20241216||||||290fb4d0-2ae6-40bd-a058-436acea3d881^f037e97b-471e-4898-a07c-b8e169e0ddc4^^b181ab58-e4fb-4b47-bc69-f0c05dd473cd^7a732da7-f3a8-40fe-b9eb-c8a058de9497\n" +
+				"ORC|RE|11223-53-440|1|C8160001|||^^^202412160558-0500^^R||202412160558|HISTC||11223^OPAP^PRESTATAIRE^^^^^^^^^^L|11223\n" +
+				"OBR|1|11223-53-440|1|f037e97b-471e-4898-a07c-b8e169e0ddc4|||202412160558|||HISTC|N|||202412160600||11223^OPAP^PRESTATAIRE^^^^^^^^^^L||||||202412160905-0500|||F||^^^202412160558-0500^^R|||||||DIG\n" +
+				"OBX|1|CE|44871-2^^LN^LVH2P^ADN VIH-1, PCR-2^L|0|Détecté|||*|||F|||202412160601||DIG|||202412160905";
+		hl7Message = hl7Message.replaceFirst(ORUR01_ORU_R01, ORU_R01);
+		hl7Message = hl7Message.replaceFirst(VERSION_251, VERSION_25);
+		hl7Message = hl7Message.replace("\n", Character.toString((char) 13));
+		hl7Message = hl7Message.replaceAll("\\[[0-9]{4}\\]", "");
+
+		Message message = new PipeParser().parse(hl7Message);
+		OruR01Handler oruR01Handler = new OruR01Handler();
+
+		Message ack = oruR01Handler.processMessage(message);
+	}
 }

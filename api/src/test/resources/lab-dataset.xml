@@ -67,6 +67,14 @@
         concept_id="162929" uuid="278664ABBBBBBBBBBBBBBBBBBBBBBBBBBBBB" concept_map_type_id="1"
         creator="1" date_created="2005-01-06 00:00:00"/>
 
+    <concept_reference_term concept_reference_term_id="278666" creator="1" date_created="2005-01-06 00:00:00"
+                            concept_source_id="6" code="44871-2" uuid=" 3cd1e7d8-0645-4469-bdd2-4c7b607eedc0 "
+                            retired="0"/>
+
+    <concept_reference_map concept_reference_term_id="278666" concept_map_id="278666"
+                           concept_id="856" uuid="278666ABBBBBBBBBBBBBBBBBBBBBBBBBBBBB" concept_map_type_id="1"
+                           creator="1" date_created="2005-01-06 00:00:00"/>
+
     <!-- Birth Place -->
     <concept concept_id="21399" retired="0" date_created="2005-01-06 00:00:00" is_set="1"/>
     <concept concept_id="21400" retired="0" date_created="2005-01-06 00:00:00" is_set="0"/>
@@ -183,6 +191,13 @@
                creator="1" date_created="2005-01-06 00:00:00" voided="0"
                location_id="2"
                uuid="549c78dc-31da-11e8-acac-c3add5b19973"/>
+
+    <encounter encounter_id="22"
+               patient_id="10" encounter_type="22"
+               encounter_datetime="2018-03-28 17:16:07"
+               creator="1" date_created="2005-01-06 00:00:00" voided="0"
+               location_id="2"
+               uuid="7a732da7-f3a8-40fe-b9eb-c8a058de9497"/>
 
 
 </dataset>

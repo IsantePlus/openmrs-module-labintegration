@@ -95,7 +95,7 @@ public class OruR01Handler implements Application {
 			return response;
 		}
 		catch (ClassCastException ex) {
-			LOGGER.warn("Error casting " + message.getClass().getName() + " to ORU_R01", ex);
+            LOGGER.warn("Error casting {} to ORU_R01", message.getClass().getName(), ex);
 			throw new ApplicationException(Context.getMessageSourceService().getMessage("ORUR01.error.invalidMessageType ",
 			    new Object[] { message.getClass().getName() }, null), ex);
 		}
@@ -104,7 +104,7 @@ public class OruR01Handler implements Application {
 			throw new ApplicationException(Context.getMessageSourceService().getMessage("ORUR01.error.WhileProcessing"), ex);
 		}
 		catch (Exception e) {
-			LOGGER.error("Could not process message!\n" + e.getMessage());
+            LOGGER.error("Could not process message! {}", e.getMessage(), e);
 		}
 
 		return null;
@@ -137,7 +137,7 @@ public class OruR01Handler implements Application {
 		
 		ORU_R01_PATIENT_RESULT patientResult = message.getPATIENT_RESULT();
 		int numObr = patientResult.getORDER_OBSERVATIONReps();
-		LOGGER.debug("Patient result {}", patientResult.toString());
+		LOGGER.debug("Patient result {}", patientResult);
 		LOGGER.debug("# Observation results returned {}", numObr);
 		PV1 pv1 = patientResult.getPATIENT().getVISIT().getPV1();
 		LOGGER.debug("PV1 Time {}", pv1.getAdmitDateTime().getTime());
@@ -149,10 +149,8 @@ public class OruR01Handler implements Application {
 		LOGGER.debug("Alternate Visit Id - Identifier type code {}", pv1.getAlternateVisitID()
 			.getCx5_IdentifierTypeCode().getValue());
 		for (int i = 0; i < numObr; i++) {
-			
-			LOGGER.debug("Processing OBR {}", i);
-			LOGGER.debug(" of {}", numObr);
-			
+			LOGGER.debug("Processing OBR {} of {}", i + 1, numObr);
+
 			ORU_R01_ORDER_OBSERVATION orderObs = patientResult.getORDER_OBSERVATION(i);
 			OBR obr = orderObs.getOBR();
 			// OBR values
@@ -271,14 +269,15 @@ public class OruR01Handler implements Application {
 			try {
 				conceptId = Integer.valueOf(hl7ConceptId);
 			} catch (NumberFormatException e) {
-				 if (hl7ConceptId.equals("D??tect??")) {
+				 if (hl7ConceptId.equals("Détecté")) {
 					LOGGER.info("this is the value text 2 : " + hl7ConceptId);
 					conceptId = Integer.valueOf(DETECTED_CODED_VALUE);
-					} else if (hl7ConceptId.equals("Non-D??tect??")) {
+				 } else if (hl7ConceptId.equals("Non-Détecté")) {
 					LOGGER.info("this is the value text 3 : " + hl7ConceptId);
 					conceptId = Integer.valueOf(NOT_DETECTED_CODED_VALUE);
-					} 
-				}
+				 }
+			}
+
 			return Context.getConceptService().getConcept(conceptId);
 		} else {
 			// the concept is not local, look it up in our mapping
