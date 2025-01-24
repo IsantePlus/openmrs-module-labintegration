@@ -367,10 +367,14 @@ public class OruR01Handler implements Application {
 					throw new HL7Exception(Context.getMessageSourceService().getMessage("Hl7.proposed.concept.name.empty"));
 				}
 			} else {
-								
-				obs.setValueCoded(getConcept(value, uid));
+				Concept codedValue = getConcept(value, uid);
+				if (codedValue == null) {
+					LOGGER.error("Could not process coded response {}", uid);
+					return null;
+				}
+
+				obs.setValueCoded(codedValue);
 				obs.setValueCodedName(getConceptName(value));
-				
 			}
 		} else if ("TX".equals(dataType) || "ST".equals(dataType) || "FT".equals(dataType)) {
 			GenericPrimitive value = (GenericPrimitive) values[0].getExtraComponents().getComponent(0).getData();
