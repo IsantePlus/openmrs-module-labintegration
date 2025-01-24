@@ -9,7 +9,6 @@ import java.util.List;
 
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.app.Application;
-import ca.uhn.hl7v2.app.ApplicationException;
 import ca.uhn.hl7v2.model.GenericPrimitive;
 import ca.uhn.hl7v2.model.Message;
 import ca.uhn.hl7v2.model.Type;
@@ -80,9 +79,9 @@ public class OruR01Handler implements Application {
 	 * Processes an ORU R01 event message
 	 */
 	@Override
-	public Message processMessage(Message message) throws ApplicationException, HL7Exception {
+	public Message processMessage(Message message) throws HL7Exception {
 		if (!(message instanceof ORU_R01)) {
-			throw new ApplicationException(Context.getMessageSourceService().getMessage("ORUR01.error.invalidMessage"));
+			throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.invalidMessage"));
 		}
 		
 		LOGGER.debug("Processing ORU_R01 message in the LAB Integration module");
@@ -96,12 +95,12 @@ public class OruR01Handler implements Application {
 		}
 		catch (ClassCastException ex) {
             LOGGER.warn("Error casting {} to ORU_R01", message.getClass().getName(), ex);
-			throw new ApplicationException(Context.getMessageSourceService().getMessage("ORUR01.error.invalidMessageType ",
+			throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.invalidMessageType ",
 			    new Object[] { message.getClass().getName() }, null), ex);
 		}
 		catch (HL7Exception ex) {
 			LOGGER.warn("Error while processing ORU_R01 message", ex);
-			throw new ApplicationException(Context.getMessageSourceService().getMessage("ORUR01.error.WhileProcessing"), ex);
+			throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.WhileProcessing"), ex);
 		}
 		catch (Exception e) {
             LOGGER.error("Could not process message! {}", e.getMessage(), e);
@@ -116,7 +115,7 @@ public class OruR01Handler implements Application {
 	 * @param message the message to process
 	 * @return the processed message
 	 */
-	private Message processOruR01(ORU_R01 message) throws HL7Exception, ApplicationException {
+	private Message processOruR01(ORU_R01 message) throws HL7Exception {
 		
 		validateMessageVersion(message);
 		
@@ -597,9 +596,9 @@ public class OruR01Handler implements Application {
 		return message.getMSH();
 	}
 	
-	private void validateMessageVersion(ORU_R01 message) throws ApplicationException {
+	private void validateMessageVersion(ORU_R01 message) throws HL7Exception {
 		if (!message.getVersion().equals(MESSAGE_VERSION)) {
-			throw new ApplicationException(Context.getMessageSourceService()
+			throw new HL7Exception(Context.getMessageSourceService()
 			        .getMessage("ORUR01.error.invalidMessageVersion"));
 		}
 	}
