@@ -199,5 +199,18 @@
                location_id="2"
                uuid="7a732da7-f3a8-40fe-b9eb-c8a058de9497"/>
 
+    <encounter encounter_id="23"
+               patient_id="10" encounter_type="22"
+               encounter_datetime="2018-03-28 17:16:07"
+               creator="1" date_created="2005-01-06 00:00:00" voided="0"
+               location_id="2"
+               uuid="a26244c2-2319-41d2-b315-87a7d0e39191"/>
+
+    <encounter encounter_id="24"
+               patient_id="10" encounter_type="22"
+               encounter_datetime="2018-03-28 17:16:07"
+               creator="1" date_created="2005-01-06 00:00:00" voided="0"
+               location_id="2"
+               uuid="4e7067cf-e964-46af-9fa6-e15858d3c0fc"/>
 
 </dataset>

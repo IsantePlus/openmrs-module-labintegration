@@ -200,7 +200,9 @@ public class OruR01Handler implements Application {
 				LOGGER.debug("Saving Encounter...");
 				try {
 					//TODO figure out why the encounter will not save
-					encounter.setEncounterDatetime(encounter.getVisit().getStartDatetime());
+					if (encounter.getVisit() != null && encounter.getEncounterDatetime() == null) {
+						encounter.setEncounterDatetime(encounter.getVisit().getStartDatetime());
+					}
 					Context.getEncounterService().saveEncounter(encounter);
 				} catch (Exception e) {
 					LOGGER.error("Could not save encounter!", e);
@@ -384,7 +386,11 @@ public class OruR01Handler implements Application {
 						obs.setValueText(String.valueOf(obx5));
 					} else if (("voir ci-dessous").equals(((ST) obx5).getValue())) {
 						obs.setValueNumeric(Double.valueOf(DEFAULT_NUMERIC_VALUE));
+					} else if ("Annulé Lab".equals(((ST) obx5).getValue())) {
+						// order cancelled by lab, so no result
+						return null;
 					}
+
 					return obs;
 				}
 				LOGGER.warn("Not creating null valued obs for concept " + concept);

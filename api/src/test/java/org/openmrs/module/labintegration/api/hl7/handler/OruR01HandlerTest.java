@@ -71,4 +71,55 @@ public class OruR01HandlerTest extends AbstractOrderConverterTest {
 
 		Message ack = oruR01Handler.processMessage(message);
 	}
+
+	@Test
+	public void processMessage_shouldProcessMessageToObsWithMinimalValue() throws Exception {
+		executeDataSet(DATASET);
+
+		String hl7Message = "MSH|^~\\&|||||20250110110400-0500||ORU^R01|00000076|P|2.5\n" +
+				"PID||b890^^^^MR^111600|b890^^^^MR^111600||IMELDA^ENGRID||20061107|F||U|^7èME MORNE L'HOPITAL^PORT-AU-PRINCE^OST|||||||^a26244c2-2319-41d2-b315-87a7d0e39191\n" +
+				"PV1||R|11100||||11100^HUEH^PRESTATAIRE^^^^^^^^^^L||||||||||^^^^^^^^^^^^L|||||||||||||||||||||||||||20250107||||||b0843976-2f60-4a2a-a7bd-12030531ed82^f037e97b-471e-4898-a07c-b8e169e0ddc4^Indétectable^03a89ca6-0717-455b-a30d-3f55be5b55dd^a26244c2-2319-41d2-b315-87a7d0e39191\n" +
+				"ORC|RE|11100-121-830|1|C9070041|||^^^202501072042-0500^^R||202501072042|HISTC||11100^HUEH^PRESTATAIRE^^^^^^^^^^L|11100\n" +
+				"OBR|1|11100-121-830|1|f037e97b-471e-4898-a07c-b8e169e0ddc4|||202501072042|||HISTC|N|||202501101044||11100^HUEH^PRESTATAIRE^^^^^^^^^^L||||||202501101103-0500|||F||^^^202501072042-0500^^R|||||||JSF\n" +
+				"OBX|1|ST|25836-8^^LN^LBCVA^Copies / ml (CVau)^L|0|voir ci-dessous||||||F|||202501101103||JSF|||202501101103\n" +
+				"NTE|1||Indétectable\n" +
+				"OBX|2|ST|25836-8^^LN^LBLOG^Log (Copies / ml)^L|1|voir ci-dessous||||||F|||202501101103||JSF|||202501101103\n" +
+				"NTE|1||Indétectable\n" +
+				"NTE|2\n" +
+				"NTE|3\n" +
+				"NTE|4\n" +
+				"NTE|5||Commentaire: <1000 copies/ml; patient en suppression virale.\n" +
+				"NTE|6||             Limite de détection du test sur DBS <839 copies/ml.";
+		hl7Message = hl7Message.replaceFirst(ORUR01_ORU_R01, ORU_R01);
+		hl7Message = hl7Message.replaceFirst(VERSION_251, VERSION_25);
+		hl7Message = hl7Message.replace("\n", Character.toString((char) 13));
+		hl7Message = hl7Message.replaceAll("\\[[0-9]{4}\\]", "");
+
+		Message message = new PipeParser().parse(hl7Message);
+		OruR01Handler oruR01Handler = new OruR01Handler();
+
+		Message ack = oruR01Handler.processMessage(message);
+	}
+
+	@Test
+	public void processMessage_shouldProcessMessageToSkipObsForCancelledOrders() throws Exception {
+		executeDataSet(DATASET);
+
+		String hl7Message = "MSH|^~\\&|||||20250124005347-0500||ORU^R01|00000019|P|2.5\n" +
+				"PID||111001992^^^^MR^111600|111001992^^^^MR^111600||ASIMOV^ISAAC||20241217|M||U|^1èRE SANS SOUCI^MOMBIN CROCHU^NRE|||||||^4e7067cf-e964-46af-9fa6-e15858d3c0fc\n" +
+				"PV1||R|11100||||11100^HUEH^PRESTATAIRE^^^^^^^^^^L||||||||||^^^^^^^^^^^^L|||||||||||||||||||||||||||20250123||||||ecad04c3-dcef-4d5d-9075-ddaccab15d08^f037e97b-471e-4898-a07c-b8e169e0ddc4^^03a89ca6-0717-455b-a30d-3f55be5b55dd^4e7067cf-e964-46af-9fa6-e15858d3c0fc\n" +
+				"ORC|RE|11100-224-1988|1|C9230000|||^^^202501230924-0500^^R||202501230924|HISTC||11100^HUEH^PRESTATAIRE^^^^^^^^^^L|11100\n" +
+				"OBR|1|11100-224-1988|1|f037e97b-471e-4898-a07c-b8e169e0ddc4|||202501230924|||HISTC|N|||202501240043||11100^HUEH^PRESTATAIRE^^^^^^^^^^L||||||202501240053-0500|||F||^^^202501230924-0500^^R|||||||JSF\n" +
+				"OBX|1|ST|25836-8^^LN^LBCVR^Copies / ml (CVr)^L|0|Annulé Lab||||||F|||202501240051||JSF|||202501240053\n" +
+				"OBX|2|ST|25836-8^^LN^LBLOG^Log (Copies / ml)^L|1|Annulé Lab||||||F|||202501240051||JSF|||202501240053";
+		hl7Message = hl7Message.replaceFirst(ORUR01_ORU_R01, ORU_R01);
+		hl7Message = hl7Message.replaceFirst(VERSION_251, VERSION_25);
+		hl7Message = hl7Message.replace("\n", Character.toString((char) 13));
+		hl7Message = hl7Message.replaceAll("\\[[0-9]{4}\\]", "");
+
+		Message message = new PipeParser().parse(hl7Message);
+		OruR01Handler oruR01Handler = new OruR01Handler();
+
+		Message ack = oruR01Handler.processMessage(message);
+	}
 }
