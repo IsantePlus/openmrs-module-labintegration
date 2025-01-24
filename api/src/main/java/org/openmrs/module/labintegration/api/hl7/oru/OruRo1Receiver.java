@@ -35,9 +35,7 @@ public class OruRo1Receiver {
             Message res = hl7Service.processHL7Message(oruMessage);
 
             return ackGenerator.generateACK(res);
-        } catch (RuntimeException e) {
-            return ackGenerator.generateACK(message, new HL7Exception(e.getMessage(), e), "AE");
-        } catch (IOException e) {
+        } catch (RuntimeException | IOException e) {
             return ackGenerator.generateACK(message, new HL7Exception(e.getMessage(), e), "AE");
         } catch (HL7Exception e) {
             return ackGenerator.generateACK(message, e, "AE");

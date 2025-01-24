@@ -1,6 +1,8 @@
 package org.openmrs.module.labintegration.api.hl7.messages;
 
-public class MessageCreationException extends Exception {
+import ca.uhn.hl7v2.HL7Exception;
+
+public class MessageCreationException extends HL7Exception {
 	
 	private static final long serialVersionUID = 6508119674472082974L;
 	
