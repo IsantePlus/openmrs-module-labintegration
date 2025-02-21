@@ -102,11 +102,12 @@ public class OruR01Handler implements Application {
 			LOGGER.warn("Error while processing ORU_R01 message", ex);
 			throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.WhileProcessing"), ex);
 		}
-		catch (Exception e) {
-            LOGGER.error("Could not process message! {}", e.getMessage(), e);
+		catch (Exception ex) {
+            LOGGER.error("Could not process message! {}", ex.getMessage(), ex);
+			throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.WhileProcessing"), ex);
+		} finally {
+			Context.clearSession();
 		}
-
-		return null;
 	}
 	
 	/**
