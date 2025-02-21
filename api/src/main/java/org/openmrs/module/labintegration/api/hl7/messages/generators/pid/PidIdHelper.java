@@ -24,49 +24,42 @@ public class PidIdHelper {
 	public void updateIdNumber(PID pid, Patient patient, HL7Config hl7Config, Encounter encounter) throws DataTypeException,
 	        MessageCreationException {
 
-		String siteCode = null;
+		String oldSiteCode = null;
+		String newSiteCode = null;
+		PatientIdentifier isanteIdentifier = null;
+
+		for (LocationAttribute locationAttribute : encounter.getLocation().getAttributes()) {
+			if (locationAttribute.getAttributeType().getUuid().equals(OLD_SITE_CODE_UUID)) {
+				oldSiteCode = locationAttribute.getValueReference();
+			} else if (locationAttribute.getAttributeType().getUuid().equals(NEW_SITE_CODE_UUID)) {
+				newSiteCode = locationAttribute.getValueReference();
+			}
+		}
+
+		String siteCode = oldSiteCode != null ? oldSiteCode : newSiteCode != null ? newSiteCode : "";
 
 		PatientIdentifier id = PatientUtil.getPatientIdentifier(patient, hl7Config.getPatientIdentifierTypeUuid());
 
 		for (PatientIdentifier identifier : patient.getIdentifiers()) {
 			if (StringUtils.equals(identifier.getIdentifierType().getUuid(), ISANTE_ID_UUID)) {
-				pid.getPatientID().getIDNumber().setValue(identifier.toString());
+				isanteIdentifier = identifier;
+				pid.getPatientID().getIDNumber().setValue(isanteIdentifier.toString());
+
 				break;
 			}
 		}
 
-		String oldSiteCode = null;
-		String newSiteCode = null;
-		for (LocationAttribute locationAttribute : encounter.getLocation().getAttributes()) {
-			switch (locationAttribute.getAttributeType().getUuid()) {
-				case OLD_SITE_CODE_UUID:
-					oldSiteCode = locationAttribute.getValueReference();
-					break;
-				case NEW_SITE_CODE_UUID:
-					newSiteCode = locationAttribute.getValueReference();
-					break;
-				default:
-					break;
-			}
-
-			if (oldSiteCode != null) {
-				break;
-			}
-		}
-
-		if (oldSiteCode != null) {
-			siteCode = oldSiteCode;
-		} else if (newSiteCode != null) {
-			siteCode = newSiteCode;
-		}
-
-		// generate identifier
-		if (id == null) {
+		if (isanteIdentifier == null) {
 			pid.getPatientID().getIDNumber().setValue(siteCode + "4" + patient.getPatientId().toString());
 		}
 
-		if (siteCode != null) {
-			pid.getPatientID().getAssigningFacility().getNamespaceID().setValue(siteCode);
+
+
+		if (id.getLocation() != null) {
+			pid.getPatientID().getAssigningFacility().getNamespaceID()
+					.setValue(siteCode);
 		}
-	}
+
+        pid.getPatientID().getAssigningFacility().getNamespaceID().setValue(siteCode);
+    }
 }
