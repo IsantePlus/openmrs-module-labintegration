@@ -370,6 +370,11 @@ public class OruR01Handler implements Application {
 					throw new HL7Exception(Context.getMessageSourceService().getMessage("Hl7.proposed.concept.name.empty"));
 				}
 			} else {
+				if ("Annulé Lab".equalsIgnoreCase(valueName)) {
+					LOGGER.info("Not creating coded result for value cancelled by lab");
+					return null;
+				}
+
 				Concept codedValue = getConcept(value, uid);
 				if (codedValue == null) {
 					LOGGER.error("Could not process coded response {}", uid);

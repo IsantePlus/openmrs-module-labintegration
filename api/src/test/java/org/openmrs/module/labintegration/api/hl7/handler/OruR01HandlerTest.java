@@ -122,4 +122,25 @@ public class OruR01HandlerTest extends AbstractOrderConverterTest {
 
 		Message ack = oruR01Handler.processMessage(message);
 	}
+
+	@Test
+	public void processMessage_shouldProcessMessageToSkipObsForCancelledCodedOrders() throws Exception {
+		executeDataSet(DATASET);
+
+		String hl7Message = "MSH|^~\\&|||||20250124011234-0500||ORU^R01|00000051|P|2.5\n" +
+				"PID||131091227^^^^MR^131109|131091227^^^^MR^131109||BOA^VAL||20241116|M||U|^2èME VARREUX^CROIX-DES-BOUQUETS^OST|||||||^d65fc63e-9c0f-4c6c-b870-5d29410faeb9\n" +
+				"PV1||R|13109||||13109^HFSC^PRESTATAIRE^^^^^^^^^^L||||||||||^^^^^^^^^^^^L|||||||||||||||||||||||||||20250122||||||50c79a2d-e627-49ff-81a0-c3854a22b989^f037e97b-471e-4898-a07c-b8e169e0ddc4^^56684e1c-b23f-4269-8fb3-4dd80018a5e5^d65fc63e-9c0f-4c6c-b870-5d29410faeb9\n" +
+				"ORC|RE|13109-309-2776|1|C9220024|||^^^202501221301-0500^^R||202501221301|HISTC||13109^HFSC^PRESTATAIRE^^^^^^^^^^L|13109\n" +
+				"OBR|1|13109-309-2776|1|f037e97b-471e-4898-a07c-b8e169e0ddc4|||202501221301|||HISTC|N|||202501240105||13109^HFSC^PRESTATAIRE^^^^^^^^^^L||||||202501240112-0500|||F||^^^202501221301-0500^^R|||||||JSF\n" +
+				"OBX|1|CE|44871-2^^LN^LVHCD^ADN VIH-1, PCR-C^L|0|Annulé Lab||||||F|||202501240112||JSF|||202501240112";
+		hl7Message = hl7Message.replaceFirst(ORUR01_ORU_R01, ORU_R01);
+		hl7Message = hl7Message.replaceFirst(VERSION_251, VERSION_25);
+		hl7Message = hl7Message.replace("\n", Character.toString((char) 13));
+		hl7Message = hl7Message.replaceAll("\\[[0-9]{4}\\]", "");
+
+		Message message = new PipeParser().parse(hl7Message);
+		OruR01Handler oruR01Handler = new OruR01Handler();
+
+		Message ack = oruR01Handler.processMessage(message);
+	}
 }

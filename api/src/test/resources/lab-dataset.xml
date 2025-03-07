@@ -213,4 +213,11 @@
                location_id="2"
                uuid="4e7067cf-e964-46af-9fa6-e15858d3c0fc"/>
 
+    <encounter encounter_id="25"
+               patient_id="10" encounter_type="22"
+               encounter_datetime="2018-03-28 17:16:07"
+               creator="1" date_created="2005-01-06 00:00:00" voided="0"
+               location_id="2"
+               uuid="d65fc63e-9c0f-4c6c-b870-5d29410faeb9"/>
+
 </dataset>
