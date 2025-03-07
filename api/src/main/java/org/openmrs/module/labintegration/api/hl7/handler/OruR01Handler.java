@@ -370,7 +370,7 @@ public class OruR01Handler implements Application {
 					throw new HL7Exception(Context.getMessageSourceService().getMessage("Hl7.proposed.concept.name.empty"));
 				}
 			} else {
-				if ("Annulé Lab".equalsIgnoreCase(valueName)) {
+				if ("Annulé Lab".equalsIgnoreCase(valueIdentifier)) {
 					LOGGER.info("Not creating coded result for value cancelled by lab");
 					return null;
 				}
