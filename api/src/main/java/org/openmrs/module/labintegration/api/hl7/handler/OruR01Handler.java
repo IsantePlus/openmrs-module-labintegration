@@ -59,6 +59,7 @@ public class OruR01Handler implements Application {
 	private static final String DEFAULT_NUMERIC_VALUE = "39";
 	private static final String DETECTED_CODED_VALUE = "1301";
 	private static final String NOT_DETECTED_CODED_VALUE = "1302";
+	private static final int TEST_RESULT_FREE_TEXT = 165399;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(OruR01Handler.class);
 	
@@ -371,7 +372,13 @@ public class OruR01Handler implements Application {
 				}
 			} else {
 				if ("Annulé Lab".equalsIgnoreCase(valueIdentifier)) {
-					LOGGER.info("Not creating coded result for value cancelled by lab");
+					Concept freeTextResultConcept = Context.getConceptService().getConcept(TEST_RESULT_FREE_TEXT);
+					if (freeTextResultConcept != null) {
+						obs.setConcept(freeTextResultConcept);
+						obs.setValueText("Annulé Lab. Svp, contactez le LNSP pour plus d'information.");
+						return obs;
+					}
+
 					return null;
 				}
 
@@ -393,7 +400,13 @@ public class OruR01Handler implements Application {
 					} else if (("voir ci-dessous").equals(((ST) obx5).getValue())) {
 						obs.setValueNumeric(Double.valueOf(DEFAULT_NUMERIC_VALUE));
 					} else if ("Annulé Lab".equals(((ST) obx5).getValue())) {
-						// order cancelled by lab, so no result
+						Concept freeTextResultConcept = Context.getConceptService().getConcept(TEST_RESULT_FREE_TEXT);
+						if (freeTextResultConcept != null) {
+							obs.setConcept(freeTextResultConcept);
+							obs.setValueText("Annulé Lab. Svp, contactez le LNSP pour plus d'information.");
+							return obs;
+						}
+
 						return null;
 					}
 
@@ -411,8 +424,8 @@ public class OruR01Handler implements Application {
 
 			
 			try {
-				Double val = Double.parseDouble(value.getValue());
-				obs = processNumericValue(val.toString(), obs, concept, uid, conceptName);
+				double val = Double.parseDouble(value.getValue());
+				obs = processNumericValue(Double.toString(val), obs, concept, uid, conceptName);
 			} catch (NumberFormatException e) {
 				if (concept.isNumeric()) {
 					LOGGER.info(value.getValue());
