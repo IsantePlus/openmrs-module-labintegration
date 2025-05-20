@@ -12,7 +12,7 @@ import java.util.Set;
 @Component
 public class ObsSelector {
 
-    private static final int TESTS_ORDERED_CONCEPT_ID = 1271;
+    public static final int TESTS_ORDERED_CONCEPT_ID = 1271;
     private static volatile int viralLoadConceptId = -1;
     private static volatile int earlyInfantDiagnosisConceptId = -1;
 
@@ -29,7 +29,7 @@ public class ObsSelector {
         );
     }
 
-    private int getViralLoadConceptId() {
+    public int getViralLoadConceptId() {
         if (viralLoadConceptId == -1) {
             synchronized (ObsSelector.class) {
                 if (viralLoadConceptId == -1) {
@@ -49,7 +49,7 @@ public class ObsSelector {
         return viralLoadConceptId;
     }
 
-    private int getEarlyInfantDiagnosisConceptId() {
+    public int getEarlyInfantDiagnosisConceptId() {
         if (earlyInfantDiagnosisConceptId == -1) {
             synchronized (ObsSelector.class) {
                 if (earlyInfantDiagnosisConceptId == -1) {
