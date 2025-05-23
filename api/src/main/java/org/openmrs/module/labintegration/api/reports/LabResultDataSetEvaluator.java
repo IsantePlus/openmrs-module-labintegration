@@ -67,8 +67,7 @@ public class LabResultDataSetEvaluator implements DataSetEvaluator {
 		List<Obs> results = reportService.getLabResults((Date) evalContext.getParameterValue("startDate"),
 		    (Date) evalContext.getParameterValue("endDate"));
 		
-		List<DataSetColumn> columns = Arrays.asList(
-		    new DataSetColumn(COLUMN_NUMBER, MessageUtil.translate(""), String.class),
+		List<DataSetColumn> columns = Arrays.asList(new DataSetColumn("", MessageUtil.translate(""), String.class),
 		    new DataSetColumn(COLUMN_CLINIC_CODE, MessageUtil.translate("labintegration.results.clinic.code"), String.class),
 		    new DataSetColumn(COLUMN_ISANTEPLUS_ID, MessageUtil.translate("labintegration.results.isanteplus.id"),
 		            String.class),

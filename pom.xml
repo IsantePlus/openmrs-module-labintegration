@@ -75,6 +75,7 @@
         <openmrsPlatformVersion>2.0.5</openmrsPlatformVersion>
         <reportingVersion>0.10.6</reportingVersion>
         <calculationVersion>1.1</calculationVersion>
+        <serialization.xstreamVersion>0.2.11</serialization.xstreamVersion>
         <maven.compiler.target>8</maven.compiler.target>
         <maven.compiler.source>8</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
