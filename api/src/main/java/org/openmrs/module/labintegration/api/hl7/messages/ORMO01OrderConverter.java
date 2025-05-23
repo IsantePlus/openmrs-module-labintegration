@@ -30,21 +30,22 @@ public class ORMO01OrderConverter implements OrderConverter {
 	
 	@Autowired
 	private Pv1Generator pv1Generator;
-
+	
 	@Autowired
 	private OrcGenerator orcGenerator;
-
+	
 	@Autowired
 	private ObrGenerator obrGenerator;
-
+	
 	@Autowired
 	private LabIntegrationProperties labIntegrationProperties;
-
+	
 	@Autowired
 	private ObsSelector obsSelector;
 	
 	@Override
-	public String createMessage(Encounter encounter, OrderControl orderControl, HL7Config hl7Config) throws MessageCreationException {
+	public String createMessage(Encounter encounter, OrderControl orderControl, HL7Config hl7Config)
+	        throws MessageCreationException {
 		try {
 			ORM_O01 message = new ORM_O01();
 			
@@ -52,9 +53,9 @@ public class ORMO01OrderConverter implements OrderConverter {
 			mshGenerator.updateMsh(message.getMSH(), hl7Config);
 			pidGenerator.updatePid(message.getPATIENT().getPID(), encounter, hl7Config);
 			pv1Generator.updatePv1(message.getPATIENT().getPATIENT_VISIT().getPV1(), hl7Config, encounter);
-
+			
 			OrderIdentifier orderIdentifier = hl7Config.buildOrderIdentifier(encounter);
-
+			
 			int i = 0;
 			for (Obs obs : encounter.getObs()) {
 				if (obsSelector.isValidTestType(obs)) {

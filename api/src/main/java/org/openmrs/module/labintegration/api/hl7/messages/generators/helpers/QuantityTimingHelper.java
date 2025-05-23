@@ -13,36 +13,37 @@ import java.text.SimpleDateFormat;
 
 @Component
 public class QuantityTimingHelper {
+	
 	private static final String DATE_FORMAT = "yyyyMMddHHmmss";
-
+	
 	@Autowired
 	private HL7Config hl7Config;
-
+	
 	public void updateQuantityTiming(ORC orc, Obs obs) throws HL7Exception {
 		int quantity = orc.getQuantityTimingReps();
 		orc.insertQuantityTiming(quantity);
 		SimpleDateFormat dateFormat = new SimpleDateFormat(hl7Config.getDefaultDateFormat());
-
+		
 		TQ quantityTiming = orc.getQuantityTiming(quantity);
 		quantityTiming.getStartDateTime().getTime().setValue(dateFormat.format(obs.getEncounter().getEncounterDatetime()));
-
+		
 		// TODO
 		//quantityTiming.getPriority().setValue(PriorityMapper.map(order.getUrgency()));
-
+		
 		orc.getQuantityTiming()[quantity] = quantityTiming;
 	}
-
+	
 	public void updateQuantityTiming(OBR obr, Obs obs) throws HL7Exception {
 		int quantity = obr.getQuantityTimingReps();
 		obr.insertQuantityTiming(quantity);
 		SimpleDateFormat dateFormat = new SimpleDateFormat(hl7Config.getDefaultDateFormat());
-
+		
 		TQ quantityTiming = obr.getQuantityTiming(quantity);
 		quantityTiming.getStartDateTime().getTime().setValue(dateFormat.format(obs.getEncounter().getEncounterDatetime()));
-
+		
 		// TODO
 		//quantityTiming.getPriority().setValue(PriorityMapper.map(order.getUrgency()));
-
+		
 		obr.getQuantityTiming()[quantity] = quantityTiming;
 	}
 }

@@ -37,22 +37,23 @@ public class OMLO21OrderConverter implements OrderConverter {
 	
 	@Autowired
 	private ObrGenerator obrGenerator;
-
+	
 	@Autowired
 	private ObsSelector obsSelector;
 	
 	@Override
-	public String createMessage(Encounter encounter, OrderControl orderControl, HL7Config hl7Config) throws MessageCreationException {
+	public String createMessage(Encounter encounter, OrderControl orderControl, HL7Config hl7Config)
+	        throws MessageCreationException {
 		try {
 			OML_O21 message = new OML_O21();
 			message.initQuickstart("OML", "O21", labIntegrationProperties.getHL7ProcessingId());
-
+			
 			mshGenerator.updateMsh(message.getMSH(), hl7Config);
-
+			
 			pidGenerator.updatePid(message.getPATIENT().getPID(), encounter, hl7Config);
 			
 			OrderIdentifier orderIdentifier = hl7Config.buildOrderIdentifier(encounter);
-
+			
 			int i = 0;
 			for (Obs obs : encounter.getObs()) {
 				if (obsSelector.isValidTestType(obs)) {
@@ -63,7 +64,7 @@ public class OMLO21OrderConverter implements OrderConverter {
 			}
 			
 			String msg = message.toString();
-
+			
 			return VersionSwitcher.switchVersion(msg);
 		}
 		catch (IOException e) {

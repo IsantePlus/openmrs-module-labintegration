@@ -12,7 +12,7 @@ public class PidBillingNumberHelper {
 	public void updateBillingNumber(PID pid, Encounter encounter, HL7Config hl7Config) throws DataTypeException {
 		pid.getPatientAccountNumber().getAssigningFacility().getNamespaceID()
 		        .setValue(hl7Config.getSendingFacilityNamespaceID());
-
+		
 		if (hl7Config.isBillingNumberNeeded()) {
 			/*Change encounter uuid to ID*/
 			pid.getPatientAccountNumber().getIDNumber().setValue(encounter.getId().toString());

@@ -10,16 +10,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class VersionUpdater {
-
-    @Autowired
-    @Qualifier("hL7ServiceLabIntegration")
-    private HL7Service hl7Service;
-
-    public ORU_R01 updateFrom25To251(String msg) throws HL7Exception {
-        msg = OruR01Util.changeMessageVersionFrom251To25(msg);
-        Message message = hl7Service.parseHL7String(msg);
-
-        return (ORU_R01) message;
-    }
-
+	
+	@Autowired
+	@Qualifier("hL7ServiceLabIntegration")
+	private HL7Service hl7Service;
+	
+	public ORU_R01 updateFrom25To251(String msg) throws HL7Exception {
+		msg = OruR01Util.changeMessageVersionFrom251To25(msg);
+		Message message = hl7Service.parseHL7String(msg);
+		
+		return (ORU_R01) message;
+	}
+	
 }

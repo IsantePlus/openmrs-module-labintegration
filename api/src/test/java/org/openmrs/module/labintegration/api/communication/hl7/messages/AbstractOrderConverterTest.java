@@ -3,7 +3,6 @@ package org.openmrs.module.labintegration.api.communication.hl7.messages;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.springframework.test.context.ContextConfiguration;
 
-
 @ContextConfiguration(classes = TestConfiguration.class, inheritLocations = false)
 public abstract class AbstractOrderConverterTest extends BaseModuleContextSensitiveTest {
 	

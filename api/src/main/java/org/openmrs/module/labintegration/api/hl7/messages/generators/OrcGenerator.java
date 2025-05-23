@@ -8,11 +8,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OrcGenerator {
-
-	public void updateOrc(ORC orc, Obs obs, String orderControl, OrderIdentifier orderIdentifier)
-	        throws HL7Exception {
+	
+	public void updateOrc(ORC orc, Obs obs, String orderControl, OrderIdentifier orderIdentifier) throws HL7Exception {
 		orc.getOrderControl().setValue(orderControl);
-
+		
 		orderIdentifier.updateORC(orc, obs);
 	}
 }

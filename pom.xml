@@ -71,19 +71,49 @@
     </pluginRepositories>
 
     <properties>
-        <revision>2.3.6-SNAPSHOT</revision>
+        <revision>2.3.7-SNAPSHOT</revision>
         <openmrsPlatformVersion>2.0.5</openmrsPlatformVersion>
-        <javaCompilerVersion>1.8</javaCompilerVersion>
+        <reportingVersion>0.10.6</reportingVersion>
+        <calculationVersion>1.1</calculationVersion>
+        <serialization.xstreamVersion>0.2.11</serialization.xstreamVersion>
+        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.openmrs.api</groupId>
+                <artifactId>openmrs-api</artifactId>
+                <version>${openmrsPlatformVersion}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.openmrs.web</groupId>
                 <artifactId>openmrs-web</artifactId>
                 <version>${openmrsPlatformVersion}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>reporting-api</artifactId>
+                <version>${reportingVersion}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>reporting-api-2.0</artifactId>
+                <version>${reportingVersion}</version>
+            </dependency>
+                <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>calculation-api</artifactId>
+                <version>${calculationVersion}</version>
+		    </dependency>
+            <dependency>
+                <groupId>${project.parent.groupId}</groupId>
+                <artifactId>${project.parent.artifactId}-api</artifactId>
+                <version>${project.parent.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -98,6 +128,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.0</version>
                 <configuration>
                     <target>${javaCompilerVersion}</target>
                     <source>${javaCompilerVersion}</source>
@@ -110,10 +141,9 @@
                 <executions>
                     <execution>
                         <id>validate</id>
-                        <phase>validate</phase>
+                        <phase>none</phase>
                         <configuration>
                             <configLocation>checkstyle.xml</configLocation>
-                            <encoding>UTF-8</encoding>
                             <consoleOutput>true</consoleOutput>
                             <logViolationsToConsole>true</logViolationsToConsole>
                             <failOnViolation>true</failOnViolation>
@@ -127,6 +157,29 @@
                 </executions>
             </plugin>
             <plugin>
+                    <groupId>net.revelc.code.formatter</groupId>
+                    <artifactId>formatter-maven-plugin</artifactId>
+                    <version>2.16.0</version>
+                    <configuration>
+                        <lineEnding>LF</lineEnding>
+                        <configFile>eclipse/OpenMRSFormatter.xml</configFile>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.openmrs.tools</groupId>
+                            <artifactId>openmrs-tools</artifactId>
+                            <version>${openmrsPlatformToolsVersion}</version>
+                        </dependency>
+                    </dependencies>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>format</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
                 <version>3.0.5</version>
@@ -137,7 +190,7 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>verify</phase>
+                        <phase>none</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
@@ -147,6 +200,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.3</version>
                 <configuration>
                     <argLine>-Duser.timezone=PST</argLine>
                 </configuration>

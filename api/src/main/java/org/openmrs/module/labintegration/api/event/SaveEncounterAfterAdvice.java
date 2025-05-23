@@ -24,18 +24,16 @@ public class SaveEncounterAfterAdvice implements AfterReturningAdvice {
 	
 	@Override
 	public void afterReturning(Object savedObject, Method method, Object[] args, Object target) {
-		if (StringUtils.equals(method.getName(), SAVE_ENCOUNTER_METHOD_NAME)
-				&& savedObject != null) {
+		if (StringUtils.equals(method.getName(), SAVE_ENCOUNTER_METHOD_NAME) && savedObject != null) {
 			Encounter encounter = (Encounter) savedObject;
-			LOGGER.info("Invoked saveEncounter method in EncounterService. Saved encounter {}",
-					encounter.getUuid());
+			LOGGER.info("Invoked saveEncounter method in EncounterService. Saved encounter {}", encounter.getUuid());
 			
-			if (StringUtils.equals(PropertiesUtil.getLabOrderEncounterTypeUuid(),
-					encounter.getEncounterType().getUuid())) {
+			if (StringUtils.equals(PropertiesUtil.getLabOrderEncounterTypeUuid(), encounter.getEncounterType().getUuid())) {
 				LOGGER.info("Order encounter occurred {}", encounter.getUuid());
 				try {
 					labIntegrationService.doOrder(encounter);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					// TODO
 					LOGGER.error("Unable to send order messages", e);
 				}

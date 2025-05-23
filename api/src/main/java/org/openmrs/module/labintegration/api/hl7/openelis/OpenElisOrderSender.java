@@ -75,14 +75,14 @@ public class OpenElisOrderSender implements OrderSender {
 		return config.isOpenElisConfigured();
 	}
 	
-	private Acknowledgement sendToOpenElis(Encounter encounter, OrderControl orderControl) throws MessageCreationException,
-	        InvalidAckException {
+	private Acknowledgement sendToOpenElis(Encounter encounter, OrderControl orderControl)
+	        throws MessageCreationException, InvalidAckException {
 		String msg = orderConverter.createMessage(encounter, orderControl, config);
-
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType("application/hl7-v2"));
 		HttpEntity<String> request = new HttpEntity<>(msg, headers);
-
+		
 		ResponseEntity<String> response = restTemplate.postForEntity(config.getOpenElisUrl(), request, String.class);
 		
 		return ackParser.parse(response.getBody());

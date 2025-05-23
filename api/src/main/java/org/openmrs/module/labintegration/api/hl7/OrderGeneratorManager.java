@@ -11,18 +11,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OrderGeneratorManager {
-
-    @Autowired
-    private ORMO01OrderConverter orderConverter;
-
-    @Autowired
-    private SCCHL7Config scchl7Config;
-
-    public String generateORMO01Message(Encounter encounter, OrderDestination destination) throws MessageCreationException {
-        if (destination == OrderDestination.SCC) {
-            return orderConverter.createMessage(encounter, OrderControl.NEW_ORDER, scchl7Config);
-        } else {
-            throw new MessageCreationException("Message destination " + destination + "is not supported.");
-        }
-    }
+	
+	@Autowired
+	private ORMO01OrderConverter orderConverter;
+	
+	@Autowired
+	private SCCHL7Config scchl7Config;
+	
+	public String generateORMO01Message(Encounter encounter, OrderDestination destination) throws MessageCreationException {
+		if (destination == OrderDestination.SCC) {
+			return orderConverter.createMessage(encounter, OrderControl.NEW_ORDER, scchl7Config);
+		} else {
+			throw new MessageCreationException("Message destination " + destination + "is not supported.");
+		}
+	}
 }

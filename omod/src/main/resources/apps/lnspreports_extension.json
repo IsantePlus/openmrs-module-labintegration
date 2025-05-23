@@ -1,0 +1,11 @@
+[
+    {
+        "id" : "${project.parent.artifactId}.lnsp-report",
+        "extensionPointId": "org.openmrs.module.reportingui.reports.overview",
+        "type" : "link",
+        "label" : "labintegration.results.report.name",
+        "url": "reportingui/runReport.page?reportDefinition=100db747-d65d-46d4-96dc-7e66fb672ab2",
+        "order" : 300,
+       "requiredPrivilege": "App: reportingui.reports"
+    }
+]

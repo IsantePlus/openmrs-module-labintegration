@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OrderSenderManager {
-
-    @Autowired
-    private OpenElisOrderSender openElisOrderSender;
-
-    public void sendOrders(Encounter encounter, OrderDestination destination) throws NewOrderException {
-        if (destination == OrderDestination.OPEN_ELIS) {
-            openElisOrderSender.sendNewOrder(encounter);
-        }
-    }
+	
+	@Autowired
+	private OpenElisOrderSender openElisOrderSender;
+	
+	public void sendOrders(Encounter encounter, OrderDestination destination) throws NewOrderException {
+		if (destination == OrderDestination.OPEN_ELIS) {
+			openElisOrderSender.sendNewOrder(encounter);
+		}
+	}
 }

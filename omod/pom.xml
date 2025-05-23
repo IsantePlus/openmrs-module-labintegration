@@ -14,9 +14,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.openmrs.module</groupId>
-            <artifactId>labintegration-api</artifactId>
-            <version>${parent.version}</version>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>${project.parent.artifactId}-api</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openmrs.web</groupId>
@@ -28,6 +28,11 @@
             <artifactId>openmrs-web</artifactId>
             <scope>provided</scope>
             <classifier>tests</classifier>
+        </dependency>
+         <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>reporting-api</artifactId>
+              <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -65,10 +70,10 @@
                                     <file>target/${project.parent.artifactId}-${project.version}.omod</file>
                                     <repositoryId>github-packages</repositoryId>
                                     <packaging>omod</packaging>
+                                    <groupId>${project.parent.groupId}</groupId>
                                     <generatePom>false</generatePom>
                                     <artifactId>${project.parent.artifactId}</artifactId>
                                     <version>${project.version}</version>
-                                    <groupId>${groupId}</groupId>
                                 </configuration>
                             </execution>
                         </executions>

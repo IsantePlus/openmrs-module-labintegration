@@ -12,16 +12,16 @@ import java.text.SimpleDateFormat;
 
 @Component
 public class ObrGenerator {
-
+	
 	@Autowired
 	private HL7Config hl7Config;
-
+	
 	public void updateObr(OBR obr, Obs obs, OrderIdentifier orderIdentifier) throws HL7Exception {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(hl7Config.getDefaultDateFormat());
-
+		
 		//change OBR[6] to OBR[7]
 		obr.getObservationDateTime().getTime().setValue(dateFormat.format(obs.getEncounter().getEncounterDatetime()));
-
+		
 		orderIdentifier.updateOBR(obr, obs);
 	}
 }

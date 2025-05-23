@@ -23,50 +23,50 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ORMO01OrderConverterTest extends AbstractOrderConverterTest {
-
+	
 	private static final String EXPECTED_FILE = "ORM_O01.hl7";
-
+	
 	@Spy
 	@Autowired
 	private MessageControlIdSource controlIdSource;
-
+	
 	@Autowired
 	@InjectMocks
 	private MshGenerator mshGenerator;
-
+	
 	@Autowired
 	private ORMO01OrderConverter orderConverter;
-
+	
 	@Autowired
 	private PatientService patientService;
-
+	
 	@Autowired
 	private ProviderService providerService;
-
+	
 	@Autowired
 	private SCCHL7Config scchl7Config;
-
+	
 	@Before
 	public void init() {
 		OrderConverterTestUtils.mockRollingNumber(controlIdSource);
 	}
-
+	
 	@Test
 	public void dummyTest() {
 		assertTrue(true);
 	}
-
-//	@Test
+	
+	//	@Test
 	public void shouldGenerateMessage() throws Exception {
 		executeDataSet(DATASET);
 		Patient patient = patientService.getPatient(PATIENT_ID);
 		Provider provider = providerService.getProvider(PROVIDER_ID);
 		HL7TestOrder order = new HL7TestOrder(patient, provider);
-
+		
 		Encounter e = order.value();
-
+		
 		e.getEncounterType().setUuid("abcdefg1234567");
-
+		
 		String msg = orderConverter.createMessage(e, OrderControl.NEW_ORDER, scchl7Config);
 		
 		String expected = HL7TestMsgUtil.readMsg(EXPECTED_FILE);

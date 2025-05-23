@@ -27,7 +27,20 @@
 
 	<aware_of_modules>
 		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>
+		<aware_of_module version="${reportingVersion}">org.openmrs.module.reporting</aware_of_module>
 	</aware_of_modules>
+
+	<conditionalResources>
+		<conditionalResource>
+			<path>/lib/labintegration-api-reporting-${project.parent.version}.jar</path>
+			<modules>
+				<module>
+					<moduleId>org.openmrs.module.reporting</moduleId>
+					<version>${reportingVersion}</version>
+				</module>
+			</modules>
+		</conditionalResource>
+	</conditionalResources>
 
 	<!-- AOP
 	<advice>

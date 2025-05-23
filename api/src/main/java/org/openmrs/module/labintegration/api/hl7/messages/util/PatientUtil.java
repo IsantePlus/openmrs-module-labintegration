@@ -28,8 +28,8 @@ public final class PatientUtil {
 		}
 		
 		if (id == null) {
-			throw new MessageCreationException(String.format("Patient %s does not have an identifier with UUID: %s",
-			    patient.getPatientId(), typeUuid));
+			throw new MessageCreationException(
+			        String.format("Patient %s does not have an identifier with UUID: %s", patient.getPatientId(), typeUuid));
 		}
 		
 		return id;

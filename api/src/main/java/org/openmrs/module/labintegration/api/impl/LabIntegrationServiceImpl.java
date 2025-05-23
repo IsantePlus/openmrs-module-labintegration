@@ -23,7 +23,7 @@ public class LabIntegrationServiceImpl extends BaseOpenmrsService implements Lab
 	
 	@Autowired
 	private OpenElisHL7Config openElisHL7Config;
-
+	
 	@Autowired
 	private OrderSenderManager orderSenderManager;
 	
@@ -32,8 +32,8 @@ public class LabIntegrationServiceImpl extends BaseOpenmrsService implements Lab
 		List<OrderDestination> orderDestinations = OrderDestination.getOrderDestinations(encounter);
 		validateDestinations(orderDestinations);
 		LOGGER.info("Started processing order (created or updated) in Encounter {} to {}", encounter.getUuid(),
-				StringUtils.join(orderDestinations, ','));
-
+		    StringUtils.join(orderDestinations, ','));
+		
 		for (OrderDestination destination : orderDestinations) {
 			if (destination.equals(OrderDestination.SCC)) {
 				orderSenderManager.sendOrders(encounter, destination);
@@ -44,8 +44,7 @@ public class LabIntegrationServiceImpl extends BaseOpenmrsService implements Lab
 	}
 	
 	private void validateDestinations(List<OrderDestination> orderDestinations) {
-		if (orderDestinations.contains(OrderDestination.OPEN_ELIS)
-				&& !openElisHL7Config.isOpenElisConfigured()) {
+		if (orderDestinations.contains(OrderDestination.OPEN_ELIS) && !openElisHL7Config.isOpenElisConfigured()) {
 			throw new LabIntegrationException("Tried to order from OpenELIS that is not configured");
 		}
 	}

@@ -30,11 +30,11 @@ public class HL7TestOrder {
 	public static final String CONCEPT_CODE = "44871-2";
 	
 	public static final int SCHEDULED_DATE_MONTH = 2;
-
+	
 	public static final int ACTIVATED_DATE_MONTH = 3;
-
+	
 	public static final int EFFECTIVE_START_DATE_MONTH = 4;
-
+	
 	private final Encounter encounter;
 	
 	public HL7TestOrder(Patient patient, Provider provider) {
@@ -45,11 +45,11 @@ public class HL7TestOrder {
 	private static Date getScheduledDate() {
 		return getDefaultDate(SCHEDULED_DATE_MONTH);
 	}
-
+	
 	private static Date getActivatedDate() {
 		return getDefaultDate(ACTIVATED_DATE_MONTH);
 	}
-
+	
 	private static Date getEffectiveStartDate() {
 		return getDefaultDate(EFFECTIVE_START_DATE_MONTH);
 	}
@@ -74,19 +74,19 @@ public class HL7TestOrder {
 		
 		EncounterType encounterType = new EncounterType(ENC_TYPE_NAME, "description");
 		when(encounter.getEncounterType()).thenReturn(encounterType);
-
+		
 		when(encounter.getPatient()).thenReturn(patient);
-
+		
 		EncounterProvider encProvider = mock(EncounterProvider.class);
 		when(encProvider.getProvider()).thenReturn(provider);
 		when(encounter.getEncounterProviders()).thenReturn(new HashSet<>(singletonList(encProvider)));
-
+		
 		when(encounter.getEncounterDatetime()).thenReturn(getScheduledDate());
-
+		
 		Location location = new Location();
 		location.setUuid("LOCATION-UUID");
 		when(encounter.getLocation()).thenReturn(location);
-
+		
 		return encounter;
 	}
 	
@@ -102,24 +102,24 @@ public class HL7TestOrder {
 		
 		ConceptReferenceTerm otherTerm = new ConceptReferenceTerm(otherSource, "XXXX", "other name");
 		ConceptMap otherMapping = new ConceptMap(otherTerm, new ConceptMapType());
-
+		
 		Concept topConcept = new Concept();
 		topConcept.setId(1271);
-
+		
 		Concept concept = new Concept();
 		concept.setUuid("63cbd0ac-7b4d-477a-910d-8e75168275bf");
 		concept.addConceptMapping(otherMapping);
 		concept.addConceptMapping(loincMapping);
 		concept.setId(657);
-
+		
 		Obs obs = mock(Obs.class);
 		when(obs.getEncounter()).thenReturn(encounter);
 		when(obs.getConcept()).thenReturn(topConcept);
 		when(obs.getValueCoded()).thenReturn(concept);
-
+		
 		when(encounter.getObs()).thenReturn(new HashSet<>(singletonList(obs)));
 	}
-
+	
 	public Encounter value() {
 		return encounter;
 	}

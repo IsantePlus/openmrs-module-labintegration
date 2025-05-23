@@ -13,6 +13,7 @@ import org.openmrs.api.EncounterService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.BaseModuleActivator;
 import org.openmrs.module.labintegration.api.event.SaveEncounterAfterAdvice;
+import org.openmrs.module.reporting.report.manager.ReportManagerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,18 @@ public class LabIntegrationActivator extends BaseModuleActivator {
 	public void started() {
 		LOGGER.info("Started Lab Integration");
 		Context.addAdvice(EncounterService.class, getFormSubmitAfterAdvice());
+		//ReportManagerUtil.setupAllReports(ActivatedReportManager.class);
+		for (ActivatedReportManager reportManager : Context.getRegisteredComponents(ActivatedReportManager.class)) {
+			if (reportManager.isActivated()) {
+				LOGGER.info("Setting up report " + reportManager.getName() + "...");
+				try {
+					ReportManagerUtil.setupReport(reportManager);
+				}
+				catch (Exception e) {
+					LOGGER.error("Failed to setup '" + reportManager.getName() + "' report because of: " + e.getMessage());
+				}
+			}
+		}
 	}
 	
 	/**
@@ -42,7 +55,6 @@ public class LabIntegrationActivator extends BaseModuleActivator {
 	}
 	
 	private SaveEncounterAfterAdvice getFormSubmitAfterAdvice() {
-		return Context.getRegisteredComponent(
-				"labintegration.SaveEncounterAfterAdvice", SaveEncounterAfterAdvice.class);
+		return Context.getRegisteredComponent("labintegration.SaveEncounterAfterAdvice", SaveEncounterAfterAdvice.class);
 	}
 }
