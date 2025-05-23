@@ -41,8 +41,8 @@ public class LabModulePropertySource {
 		    conceptDesignation.getSourceName());
 		
 		if (concept == null) {
-			throw new LabHL7ConfigurationException("Concept " + conceptProp + " not found, "
-			        + "proper concept must be configured");
+			throw new LabHL7ConfigurationException(
+			        "Concept " + conceptProp + " not found, " + "proper concept must be configured");
 		}
 		
 		return concept;

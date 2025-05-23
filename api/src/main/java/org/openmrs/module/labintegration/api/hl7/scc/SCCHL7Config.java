@@ -19,22 +19,22 @@ public class SCCHL7Config extends AbstractHL7Config {
 	private static final String PID_TYPE_UUID = "labintegration.scc.pidTypeUuid";
 	
 	private static final String DEFAULT_PID_TYPE_UUID = "05a29f94-c0ed-11e2-94be-8c13b969e334";
-
+	
 	private static final String PATIENT_DATE_OF_BIRTH_FORMAT = "yyyyMMdd";
-
+	
 	private static final String ADMIT_DATE_FORMAT = "yyyyMMdd";
-
+	
 	private Map<String, String> lnspCodeMapping;
-
+	
 	public SCCHL7Config() {
 		lnspCodeMapping = new HashMap<>();
 		lnspCodeMapping.put("25836-8", "63cbd0ac-7b4d-477a-910d-8e75168275bf");
 		lnspCodeMapping.put("44871-2", "4f318d58-7647-47e2-92dd-7b568aa26360");
 	}
-
+	
 	@Autowired
 	private SCCOrderIdentifier orderIdentifier;
-
+	
 	@Override
 	public String getReceivingApplication() {
 		return null;
@@ -54,27 +54,27 @@ public class SCCHL7Config extends AbstractHL7Config {
 	public OrderIdentifier buildOrderIdentifier(Encounter encounter) {
 		return orderIdentifier;
 	}
-
+	
 	@Override
 	public boolean isBillingNumberNeeded() {
 		return true;
 	}
-
+	
 	@Override
 	public String getSendingFacilityNamespaceID() {
 		return SENDING_FACILITY_NAMESPACE_ID;
 	}
-
+	
 	@Override
 	public String getPatientDateOfBirthFormat() {
 		return PATIENT_DATE_OF_BIRTH_FORMAT;
 	}
-
+	
 	@Override
 	public String getAdmitDateFormat() {
 		return ADMIT_DATE_FORMAT;
 	}
-
+	
 	public String mapConceptToLnspTest(String code) {
 		String result = "";
 		if (this.lnspCodeMapping.containsKey(code)) {
@@ -82,6 +82,5 @@ public class SCCHL7Config extends AbstractHL7Config {
 		}
 		return result;
 	}
-
-
+	
 }

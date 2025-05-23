@@ -20,23 +20,22 @@ public class Acknowledgement {
 	Acknowledgement(ACK ack) {
 		String ackCode = ack.getMSA().getAcknowledgmentCode().getValue();
 		this.success = APP_ACCEPT.equals(ackCode) || COMMIT_ACCEPT.equals(ackCode);
-
+		
 		this.msgId = ack.getMSH().getMessageControlID().getValue();
 		this.errorCode = ack.getERR().getHL7ErrorCode().getIdentifier().getValue();
-
+		
 		this.errorDiagnosticsInformation = ack.getERR().getDiagnosticInformation().getValue();
-
+		
 	}
-
+	
 	Acknowledgement(ORL_O22 orl) {
 		String ackCode = orl.getMSA().getAcknowledgmentCode().getValue();
 		this.success = APP_ACCEPT.equals(ackCode) || COMMIT_ACCEPT.equals(ackCode);
-
+		
 		this.msgId = orl.getMSH().getMessageControlID().getValue();
 		this.errorCode = orl.getERR().getHL7ErrorCode().getIdentifier().getValue();
-
-		this.errorDiagnosticsInformation = orl.getERR().getErr3_HL7ErrorCode().
-				getCwe9_OriginalText().getValue();
+		
+		this.errorDiagnosticsInformation = orl.getERR().getErr3_HL7ErrorCode().getCwe9_OriginalText().getValue();
 	}
 	
 	public boolean isSuccess() {

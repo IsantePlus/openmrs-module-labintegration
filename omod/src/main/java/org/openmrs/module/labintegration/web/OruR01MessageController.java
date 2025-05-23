@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "api/message/orders/results")
 public class OruR01MessageController {
-
+	
 	@Autowired
 	private OruRo1Receiver receiver;
-
+	
 	@RequestMapping(method = RequestMethod.GET)
-	@ResponseBody public String parseOruR01Message(@RequestBody String msg) throws MessageCreationException, HL7Exception {
+	@ResponseBody
+	public String parseOruR01Message(@RequestBody String msg) throws MessageCreationException, HL7Exception {
 		ACK ack = receiver.receiveMsg(msg);
 		return ack.encode();
 	}

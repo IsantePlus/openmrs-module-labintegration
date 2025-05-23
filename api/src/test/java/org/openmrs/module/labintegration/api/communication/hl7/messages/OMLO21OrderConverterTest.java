@@ -49,13 +49,13 @@ public class OMLO21OrderConverterTest extends AbstractOrderConverterTest {
 	public void init() {
 		OrderConverterTestUtils.mockRollingNumber(controlIdSource);
 	}
-
+	
 	@Test
 	public void dummyTest() {
 		assertTrue(true);
 	}
 	
-//	@Test
+	//	@Test
 	public void shouldGenerateMessage() throws Exception {
 		executeDataSet(DATASET);
 		Patient patient = patientService.getPatient(PATIENT_ID);

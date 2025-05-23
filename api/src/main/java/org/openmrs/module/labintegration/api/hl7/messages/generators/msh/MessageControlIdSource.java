@@ -9,11 +9,11 @@ import java.util.Date;
 
 @Component
 public class MessageControlIdSource {
-
+	
 	private static final int RESET_BOUNDARY = 99999;
-
+	
 	private int rollingNumber;
-
+	
 	private HL7Config hl7Config = new SCCHL7Config();
 	
 	public String generateId(Date date) {

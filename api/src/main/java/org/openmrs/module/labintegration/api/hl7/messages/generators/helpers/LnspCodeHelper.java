@@ -13,37 +13,37 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LnspCodeHelper {
-
-    @Autowired
-    private SCCHL7Config scchl7Config;
-
-    public void updateUniversalServiceID(OBR obr, Obs obs) throws DataTypeException {
-        String conceptCode = ConceptUtil.getLoincCode(obs);
-        String lnspCode = findLnspCodeIfExist(obs, conceptCode);
-
-        if (StringUtils.isNotBlank(lnspCode)) {
-            obr.getUniversalServiceIdentifier().getIdentifier().setValue(lnspCode);
-        }
-    }
-
-    private String findLnspCodeIfExist(Obs obs, String conceptCode) {
-        String result = null;
-        String alternativeConceptUuid = scchl7Config.mapConceptToLnspTest(conceptCode);
-
-        if (StringUtils.isNotBlank(alternativeConceptUuid)) {
-            Obs alternativeObs = EncounterUtil.findObsByConceptUuid(obs.getEncounter(), alternativeConceptUuid);
-            if (alternativeObs == null) {
-                throw new IllegalStateException("Wrong concept used for ordered test.");
-            }
-
-            Concept alternativeConcept = alternativeObs.getValueCoded();
-            if (alternativeConcept != null) {
-                result = ConceptUtil.getLnspCode(alternativeConcept);
-                if (StringUtils.isBlank(result)) {
-                    throw new IllegalStateException("LNSP code is mandatory");
-                }
-            }
-        }
-        return result;
-    }
+	
+	@Autowired
+	private SCCHL7Config scchl7Config;
+	
+	public void updateUniversalServiceID(OBR obr, Obs obs) throws DataTypeException {
+		String conceptCode = ConceptUtil.getLoincCode(obs);
+		String lnspCode = findLnspCodeIfExist(obs, conceptCode);
+		
+		if (StringUtils.isNotBlank(lnspCode)) {
+			obr.getUniversalServiceIdentifier().getIdentifier().setValue(lnspCode);
+		}
+	}
+	
+	private String findLnspCodeIfExist(Obs obs, String conceptCode) {
+		String result = null;
+		String alternativeConceptUuid = scchl7Config.mapConceptToLnspTest(conceptCode);
+		
+		if (StringUtils.isNotBlank(alternativeConceptUuid)) {
+			Obs alternativeObs = EncounterUtil.findObsByConceptUuid(obs.getEncounter(), alternativeConceptUuid);
+			if (alternativeObs == null) {
+				throw new IllegalStateException("Wrong concept used for ordered test.");
+			}
+			
+			Concept alternativeConcept = alternativeObs.getValueCoded();
+			if (alternativeConcept != null) {
+				result = ConceptUtil.getLnspCode(alternativeConcept);
+				if (StringUtils.isBlank(result)) {
+					throw new IllegalStateException("LNSP code is mandatory");
+				}
+			}
+		}
+		return result;
+	}
 }

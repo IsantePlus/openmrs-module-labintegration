@@ -39,7 +39,8 @@ public class PidGenerator {
 	@Autowired
 	private RegistrationDataHelper registrationObsHelper;
 	
-	public void updatePid(PID pid, Encounter encounter, HL7Config hl7Config) throws DataTypeException, MessageCreationException {
+	public void updatePid(PID pid, Encounter encounter, HL7Config hl7Config)
+	        throws DataTypeException, MessageCreationException {
 		Patient patient = encounter.getPatient();
 		// add encounter on updateIdNumber
 		idHelper.updateIdNumber(pid, patient, hl7Config, encounter);

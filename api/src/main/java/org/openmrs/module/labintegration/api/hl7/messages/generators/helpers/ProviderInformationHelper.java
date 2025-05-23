@@ -22,7 +22,7 @@ public class ProviderInformationHelper {
 		
 		for (LocationAttribute locationAttribute : encounter.getLocation().getAttributes()) {
 			
-			if (locationAttribute.getAttributeType().getUuid().equals(uuid)) {				
+			if (locationAttribute.getAttributeType().getUuid().equals(uuid)) {
 				siteCode = locationAttribute.getValueReference();
 			}
 		}
@@ -33,5 +33,3 @@ public class ProviderInformationHelper {
 		personNameHelper.updatePersonName(xcn, personName);
 	}
 }
-
-

@@ -29,7 +29,7 @@ public class Pv1Generator {
 		
 		assignedPatientLocationHelper.updateAssignedPatientLocation(pv1, hl7Config, encounter);
 		assignedPatientLocationHelper.assignedAlternativeVisitId(pv1, hl7Config, encounter);
-
+		
 		if (hl7Config.getAdmitDateFormat() != null) {
 			DateFormat df = new SimpleDateFormat(hl7Config.getAdmitDateFormat());
 			pv1.getAdmitDateTime().getTime().setValue(df.format(encounter.getEncounterDatetime()));
@@ -41,7 +41,7 @@ public class Pv1Generator {
 	private void updateAttendingDoctor(PV1 pv1, Encounter encounter) throws HL7Exception {
 		int quantity = pv1.getAttendingDoctorReps();
 		pv1.insertAttendingDoctor(quantity);
-
+		
 		Provider doctor = encounter.getEncounterProviders().iterator().next().getProvider();
 		XCN orderingProvider = pv1.getAttendingDoctor(quantity);
 		providerInformationHelper.updateProviderInformation(orderingProvider, doctor, encounter);

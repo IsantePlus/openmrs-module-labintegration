@@ -3,7 +3,7 @@ package org.openmrs.module.labintegration.api.hl7.messages.mappers;
 import org.openmrs.Order;
 
 public final class PriorityMapper {
-
+	
 	public static String map(Order.Urgency urgency) {
 		switch (urgency) {
 			case STAT:

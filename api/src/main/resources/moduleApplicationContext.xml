@@ -65,4 +65,12 @@
             </map>
         </property>
     </bean>
+    <bean parent="serviceContext">
+        <property name="moduleService">
+            <list>
+                <value>org.openmrs.module.labintegration.api.LabIntegrationReportService</value>
+                <ref bean="labintegration.LabIntegrationReportServiceImpl"/>
+            </list>
+        </property>
+    </bean>
 </beans>

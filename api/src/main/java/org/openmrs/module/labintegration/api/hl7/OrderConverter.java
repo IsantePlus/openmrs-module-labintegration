@@ -7,5 +7,6 @@ import org.openmrs.module.labintegration.api.hl7.messages.OrderControl;
 
 public interface OrderConverter {
 	
-	String createMessage(Encounter encounter, OrderControl orderControl, HL7Config hl7Config) throws MessageCreationException;
+	String createMessage(Encounter encounter, OrderControl orderControl, HL7Config hl7Config)
+	        throws MessageCreationException;
 }

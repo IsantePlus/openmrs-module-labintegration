@@ -11,27 +11,29 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OrderingProviderHelper {
-
+	
 	@Autowired
 	private ProviderInformationHelper providerInformationHelper;
-
+	
 	public void updateOrderingProvider(ORC orc, Obs obs) throws HL7Exception {
 		int quantity = orc.getOrderingProviderReps();
 		orc.insertOrderingProvider(quantity);
-
+		
 		XCN orderingProvider = orc.getOrderingProvider(quantity);
-		providerInformationHelper.updateProviderInformation(orderingProvider, ProviderHelper.getProvider(obs), obs.getEncounter());
-
+		providerInformationHelper.updateProviderInformation(orderingProvider, ProviderHelper.getProvider(obs),
+		    obs.getEncounter());
+		
 		orc.getOrderingProvider()[quantity] = orderingProvider;
 	}
-
+	
 	public void updateOrderingProvider(OBR obr, Obs obs) throws HL7Exception {
 		int quantity = obr.getOrderingProviderReps();
 		obr.insertOrderingProvider(quantity);
-
+		
 		XCN orderingProvider = obr.getOrderingProvider(quantity);
-		providerInformationHelper.updateProviderInformation(orderingProvider, ProviderHelper.getProvider(obs), obs.getEncounter());
-
+		providerInformationHelper.updateProviderInformation(orderingProvider, ProviderHelper.getProvider(obs),
+		    obs.getEncounter());
+		
 		obr.getOrderingProvider()[quantity] = orderingProvider;
 	}
 }
