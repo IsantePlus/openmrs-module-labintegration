@@ -31,6 +31,6 @@
             <groupId>org.openmrs.module</groupId>
             <artifactId>calculation-api</artifactId>
             <scope>provided</scope>
-		</dependency>
+	    </dependency>
     </dependencies>
 </project>
