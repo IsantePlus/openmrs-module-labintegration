@@ -27,10 +27,10 @@
             <artifactId>reporting-api-2.0</artifactId>
             <scope>provided</scope>
         </dependency>
-         <dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>calculation-api</artifactId>
-              <scope>provided</scope>
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>calculation-api</artifactId>
+            <scope>provided</scope>
 		</dependency>
     </dependencies>
 </project>
