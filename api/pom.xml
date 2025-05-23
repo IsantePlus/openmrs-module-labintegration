@@ -17,12 +17,12 @@
             <groupId>org.openmrs.web</groupId>
             <artifactId>openmrs-web</artifactId>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>org.openmrs.module</groupId>
             <artifactId>reporting-api</artifactId>
               <scope>provided</scope>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>org.openmrs.module</groupId>
             <artifactId>reporting-api-2.0</artifactId>
             <scope>provided</scope>
