@@ -36,8 +36,6 @@ jobs:
       - name: Cache Maven packages
         uses: actions/cache@v4
         with:
-          uses: actions/cache@v4
-          with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
