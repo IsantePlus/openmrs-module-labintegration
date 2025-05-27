@@ -71,7 +71,7 @@
     </pluginRepositories>
 
     <properties>
-        <revision>2.3.7-SNAPSHOT</revision>
+        <revision>2.3.8-SNAPSHOT</revision>
         <openmrsPlatformVersion>2.0.5</openmrsPlatformVersion>
         <reportingVersion>0.10.6</reportingVersion>
         <calculationVersion>1.1</calculationVersion>
