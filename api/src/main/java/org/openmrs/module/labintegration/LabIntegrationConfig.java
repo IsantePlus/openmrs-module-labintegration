@@ -18,4 +18,6 @@ import org.springframework.stereotype.Component;
 public class LabIntegrationConfig {
 	
 	public static final String MODULE_PRIVILEGE = "Lab Integration Privilege";
+	
+	public final static String GP_LABORATORY_FORM_NAME = "labintegration.LaboratoryFormName";
 }
