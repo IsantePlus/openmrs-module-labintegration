@@ -28,7 +28,6 @@ import org.apache.commons.logging.LogFactory;
 
 public class EncounterServiceRoundAdvice extends StaticMethodMatcherPointcutAdvisor implements Advisor {
 	
-	// we no longer register this aop round advice since it interfers with the proper functioning of the saveEncounter() in OpenMRS core ie in the ED module
 	private OrderService orderService;
 	
 	private AdministrationService administrationService;
