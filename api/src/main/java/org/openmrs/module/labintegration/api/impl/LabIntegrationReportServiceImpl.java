@@ -96,7 +96,7 @@ public class LabIntegrationReportServiceImpl extends BaseOpenmrsService implemen
 		if (testResults != null) {
 			if (orderResults != null) {
 				List<Obs> displayOrders = orderResults.stream().filter(o -> obsSelector.isValidTestType(o))
-				        .map(o -> transToDisplayResultTest(o)).collect(Collectors.toList());
+				        .map(o -> translateToDisplayResultTest(o)).collect(Collectors.toList());
 				testResults.addAll(displayOrders);
 			}
 			return testResults;
@@ -105,7 +105,7 @@ public class LabIntegrationReportServiceImpl extends BaseOpenmrsService implemen
 		return Collections.emptyList();
 	}
 	
-	private Obs transToDisplayResultTest(Obs obs) {
+	private Obs translateToDisplayResultTest(Obs obs) {
 		ConceptService conceptService = Context.getConceptService();
 		Obs displayResult = new Obs();
 		displayResult.setId(obs.getId());
