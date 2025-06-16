@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -99,7 +100,7 @@ public class LabIntegrationReportServiceImpl extends BaseOpenmrsService implemen
 				        .map(o -> translateToDisplayResultTest(o)).collect(Collectors.toList());
 				testResults.addAll(displayOrders);
 			}
-			return testResults;
+			return testResults.stream().sorted(Comparator.comparing(Obs::getId)).collect(Collectors.toList());
 		}
 		
 		return Collections.emptyList();
@@ -112,7 +113,7 @@ public class LabIntegrationReportServiceImpl extends BaseOpenmrsService implemen
 		displayResult.setPerson(obs.getPerson());
 		displayResult.setEncounter(obs.getEncounter());
 		displayResult.setConcept(conceptService.getConcept(obs.getValueCoded().getId()));
-		displayResult.setObsDatetime(obs.getObsDatetime());
+		displayResult.setObsDatetime(null);
 		displayResult.setValueText("");
 		return displayResult;
 	}
