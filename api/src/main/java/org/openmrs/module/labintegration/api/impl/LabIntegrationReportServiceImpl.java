@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.openmrs.module.labintegration.api.LabIntegrationReportsConstants.FREE_TEXT_RESULT_CONCEPT_ID;
 import static org.openmrs.module.labintegration.api.LabIntegrationReportsConstants.TESTS_ORDERED_CONCEPT_ID;
@@ -53,29 +54,66 @@ public class LabIntegrationReportServiceImpl extends BaseOpenmrsService implemen
 		    startDate, endDate, false, null);
 		
 		Set<Person> persons = new LinkedHashSet<>(orders.size());
-		Set<Concept> orderedTests = new LinkedHashSet<>(orders.size());
-		Set<Encounter> orderEncounters = new LinkedHashSet<>(orders.size());
+		Set<Concept> resultTests = new LinkedHashSet<>(orders.size());
+		Set<Encounter> resultEncounters = new LinkedHashSet<>(orders.size());
 		
 		for (Obs order : orders) {
 			persons.add(order.getPerson());
-			orderedTests.add(order.getConcept());
-			orderEncounters.add(order.getEncounter());
+			resultTests.add(order.getConcept());
+			resultEncounters.add(order.getEncounter());
 		}
 		
 		// freeTextResults are used to capture results with errors or other issues, so may not correspond
 		// directly to an ordered test
 		Concept freeTextResults = conceptService.getConcept(FREE_TEXT_RESULT_CONCEPT_ID);
 		if (freeTextResults != null) {
-			orderedTests.add(freeTextResults);
+			resultTests.add(freeTextResults);
 		}
-		List<Obs> testResults = obsService.getObservations(new ArrayList<>(persons), new ArrayList<>(orderEncounters),
-		    new ArrayList<>(orderedTests), null, null, null, Arrays.asList("obsDatetime desc", "obsId asc"), null, null,
-		    null, null, false);
+		List<Obs> testResults = obsService.getObservations(new ArrayList<>(persons), new ArrayList<>(resultEncounters),
+		    new ArrayList<>(resultTests), null, null, null, Arrays.asList("obsDatetime desc", "obsId asc"), null, null, null,
+		    null, false);
+		
+		Set<Integer> resultEncounterIds = resultEncounters.stream().map(Encounter::getId).collect(Collectors.toSet());
+		
+		// Unresulted Orders	
+		List<Obs> unresultedOrders = obsService.getObservations(null, null, Collections.singletonList(labOrderConcept), null,
+		    null, null, null, null, null, startDate, endDate, false, null);
+		Set<Encounter> orderEncounters = new LinkedHashSet<>(unresultedOrders.size());
+		Set<Person> orderPersons = new LinkedHashSet<>(unresultedOrders.size());
+		for (Obs order : unresultedOrders) {
+			if (!obsSelector.isValidTestType(order) || resultEncounterIds.contains(order.getEncounter().getId())) {
+				continue;
+			}
+			
+			orderPersons.add(order.getPerson());
+			orderEncounters.add(order.getEncounter());
+		}
+		
+		List<Obs> orderResults = obsService.getObservations(new ArrayList<>(orderPersons), new ArrayList<>(orderEncounters),
+		    Collections.singletonList(labOrderConcept), null, null, null, Arrays.asList("obsDatetime desc", "obsId asc"),
+		    null, null, null, null, false);
 		
 		if (testResults != null) {
+			if (orderResults != null) {
+				List<Obs> displayOrders = orderResults.stream().filter(o -> obsSelector.isValidTestType(o))
+				        .map(o -> transToDisplayResultTest(o)).collect(Collectors.toList());
+				testResults.addAll(displayOrders);
+			}
 			return testResults;
 		}
 		
 		return Collections.emptyList();
+	}
+	
+	private Obs transToDisplayResultTest(Obs obs) {
+		ConceptService conceptService = Context.getConceptService();
+		Obs displayResult = new Obs();
+		displayResult.setId(obs.getId());
+		displayResult.setPerson(obs.getPerson());
+		displayResult.setEncounter(obs.getEncounter());
+		displayResult.setConcept(conceptService.getConcept(obs.getValueCoded().getId()));
+		displayResult.setObsDatetime(obs.getObsDatetime());
+		displayResult.setValueText("");
+		return displayResult;
 	}
 }
