@@ -10,7 +10,7 @@ public final class LabIntegrationReportsConstants {
 	
 	public static final String LOCATION_ISANTE_CODE_UUID = "0e52924e-4ebb-40ba-9b83-b198b532653b";
 	
-	public static final String ISANTEPLUS_IDENDTIFIER_TYPE_UUID = "05a29f94-c0ed-11e2-94be-8c13b969e334";
+	public static final String ISANTEPLUS_IDENDTIFIER_TYPE_UUID = "0e0c7cc2-3491-4675-b705-746e372ff346";
 	
 	private LabIntegrationReportsConstants() {
 	}

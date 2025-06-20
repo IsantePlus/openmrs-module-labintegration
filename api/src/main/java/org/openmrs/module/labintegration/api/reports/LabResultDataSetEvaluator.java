@@ -99,7 +99,10 @@ public class LabResultDataSetEvaluator implements DataSetEvaluator {
 						value = obs.getPerson().getPersonName().getFullName();
 						break;
 					case COLUMN_ISANTEPLUS_ID:
-						value = getPatientIdentifier(obs.getPersonId());
+						String locationCode = locationCodeCache.containsKey(obs.getEncounter().getLocation())
+						        ? locationCodeCache.get(obs.getEncounter().getLocation())
+						        : "";
+						value = getPatientIdentifier(obs.getPersonId(), locationCode);
 						break;
 					case COLUMN_DATE_ORDERED:
 						value = obs.getEncounter().getEncounterDatetime();
@@ -147,12 +150,12 @@ public class LabResultDataSetEvaluator implements DataSetEvaluator {
 		return null;
 	}
 	
-	protected String getPatientIdentifier(Integer personId) {
+	protected String getPatientIdentifier(Integer personId, String locationCode) {
 		PatientService patientService = Context.getPatientService();
 		Patient patient = patientService.getPatient(personId);
 		PatientIdentifierType pit = patientService.getPatientIdentifierTypeByUuid(ISANTEPLUS_IDENDTIFIER_TYPE_UUID);
 		patient.getPatientIdentifier(pit);
 		PatientIdentifier pid = patient.getPatientIdentifier(pit);
-		return pid != null ? pid.getIdentifier() : "";
+		return pid != null ? pid.getIdentifier() : locationCode + '4' + personId;
 	}
 }
