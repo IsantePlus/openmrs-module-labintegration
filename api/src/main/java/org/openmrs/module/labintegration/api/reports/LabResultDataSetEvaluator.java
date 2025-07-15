@@ -1,6 +1,7 @@
 package org.openmrs.module.labintegration.api.reports;
 
 import org.openmrs.Concept;
+import org.openmrs.ConceptNumeric;
 import org.openmrs.Location;
 import org.openmrs.LocationAttribute;
 import org.openmrs.Obs;
@@ -114,7 +115,7 @@ public class LabResultDataSetEvaluator implements DataSetEvaluator {
 						value = obs.getObsDatetime();
 						break;
 					case COLUMN_RESULT:
-						value = obsValueConverter.convert(obs);
+						value = obsValueConverter.convert(obs) + getUnits(obs);
 						break;
 				}
 				if (value != null) {
@@ -157,5 +158,10 @@ public class LabResultDataSetEvaluator implements DataSetEvaluator {
 		patient.getPatientIdentifier(pit);
 		PatientIdentifier pid = patient.getPatientIdentifier(pit);
 		return pid != null ? pid.getIdentifier() : locationCode + '4' + personId;
+	}
+	
+	protected String getUnits(Obs obs) {
+		ConceptNumeric conceptNumeric = Context.getConceptService().getConceptNumeric(obs.getConcept().getId());
+		return conceptNumeric != null && obs.getValueNumeric() != null ? " " + conceptNumeric.getUnits() : "";
 	}
 }

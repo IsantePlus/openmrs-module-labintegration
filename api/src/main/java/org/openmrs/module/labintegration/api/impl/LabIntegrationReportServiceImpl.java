@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -29,7 +30,11 @@ import static org.openmrs.module.labintegration.api.LabIntegrationReportsConstan
 public class LabIntegrationReportServiceImpl extends BaseOpenmrsService implements LabIntegrationReportService {
 	
 	@Override
-	public List<Obs> getLabResults(Date startDate, Date endDate) {
+	public List<Obs> getLabResults(Date inputStartDate, Date inputEndDate) {
+		
+		Date startDate = getStartOfDay(inputStartDate);
+		Date endDate = getEndOfDay(inputEndDate);
+		
 		ConceptService conceptService = Context.getConceptService();
 		ObsService obsService = Context.getObsService();
 		ObsSelector obsSelector = new ObsSelector();
@@ -52,7 +57,7 @@ public class LabIntegrationReportServiceImpl extends BaseOpenmrsService implemen
 		}
 		
 		List<Obs> orders = obsService.getObservations(null, null, orderConcepts, null, null, null, null, null, null,
-		    startDate, endDate, false, null);
+		    startDate, endDate, false);
 		
 		Set<Person> persons = new LinkedHashSet<>(orders.size());
 		Set<Concept> resultTests = new LinkedHashSet<>(orders.size());
@@ -70,9 +75,14 @@ public class LabIntegrationReportServiceImpl extends BaseOpenmrsService implemen
 		if (freeTextResults != null) {
 			resultTests.add(freeTextResults);
 		}
-		List<Obs> testResults = obsService.getObservations(new ArrayList<>(persons), new ArrayList<>(resultEncounters),
-		    new ArrayList<>(resultTests), null, null, null, Arrays.asList("obsDatetime desc", "obsId asc"), null, null, null,
-		    null, false);
+		List<Obs> testResults = new ArrayList<>();
+		
+		if (!persons.isEmpty() && !resultEncounters.isEmpty()) {
+			testResults = obsService.getObservations(new ArrayList<>(persons), new ArrayList<>(resultEncounters),
+			    new ArrayList<>(resultTests), null, null, null, Arrays.asList("obsDatetime desc", "obsId asc"), null, null,
+			    startDate, endDate, false);
+			
+		}
 		
 		Set<Integer> resultEncounterIds = resultEncounters.stream().map(Encounter::getId).collect(Collectors.toSet());
 		
@@ -89,10 +99,12 @@ public class LabIntegrationReportServiceImpl extends BaseOpenmrsService implemen
 			orderPersons.add(order.getPerson());
 			orderEncounters.add(order.getEncounter());
 		}
-		
-		List<Obs> orderResults = obsService.getObservations(new ArrayList<>(orderPersons), new ArrayList<>(orderEncounters),
-		    Collections.singletonList(labOrderConcept), null, null, null, Arrays.asList("obsDatetime desc", "obsId asc"),
-		    null, null, null, null, false);
+		List<Obs> orderResults = new ArrayList<>();
+		if (!orderPersons.isEmpty() && !orderEncounters.isEmpty()) {
+			orderResults = obsService.getObservations(new ArrayList<>(orderPersons), new ArrayList<>(orderEncounters),
+			    Collections.singletonList(labOrderConcept), null, null, null, Arrays.asList("obsDatetime desc", "obsId asc"),
+			    null, null, startDate, endDate, false);
+		}
 		
 		if (testResults != null) {
 			if (orderResults != null) {
@@ -116,5 +128,25 @@ public class LabIntegrationReportServiceImpl extends BaseOpenmrsService implemen
 		displayResult.setObsDatetime(null);
 		displayResult.setValueText("");
 		return displayResult;
+	}
+	
+	public static Date getStartOfDay(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return cal.getTime();
+	}
+	
+	public static Date getEndOfDay(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.HOUR_OF_DAY, 23);
+		cal.set(Calendar.MINUTE, 59);
+		cal.set(Calendar.SECOND, 59);
+		cal.set(Calendar.MILLISECOND, 999);
+		return cal.getTime();
 	}
 }
