@@ -47,6 +47,8 @@ public class LabResultDataSetEvaluator implements DataSetEvaluator {
 	
 	private final String COLUMN_TEST_ORDERED = "Test Ordered";
 	
+	private final String COLUMN_TEST_ORDERED_TYPE = "Test Ordered Type";
+	
 	private final String COLUMN_DATE_RESULTED = "Date Resulted";
 	
 	private final String COLUMN_RESULT = "Result";
@@ -77,6 +79,8 @@ public class LabResultDataSetEvaluator implements DataSetEvaluator {
 		            String.class),
 		    new DataSetColumn(COLUMN_DATE_ORDERED, MessageUtil.translate("labintegration.results.date.ordered"), Date.class),
 		    new DataSetColumn(COLUMN_TEST_ORDERED, MessageUtil.translate("labintegration.results.test.ordered"),
+		            Concept.class),
+		    new DataSetColumn(COLUMN_TEST_ORDERED_TYPE, MessageUtil.translate("labintegration.results.test.ordered.type"),
 		            Concept.class),
 		    new DataSetColumn(COLUMN_DATE_RESULTED, MessageUtil.translate("labintegration.results.date.resulted"),
 		            Date.class),
@@ -110,6 +114,9 @@ public class LabResultDataSetEvaluator implements DataSetEvaluator {
 						break;
 					case COLUMN_TEST_ORDERED:
 						value = ObjectUtil.format(obs.getConcept());
+						break;
+					case COLUMN_TEST_ORDERED_TYPE:
+						value = ObjectUtil.format(obs.getConcept().getAnswers());
 						break;
 					case COLUMN_DATE_RESULTED:
 						value = obs.getObsDatetime();
