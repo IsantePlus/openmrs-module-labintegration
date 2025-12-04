@@ -139,6 +139,7 @@
 		<description>
 			The URL to the OpenELIS endpoint that accepts HL7 message posts.
 		</description>`
+		<defaultValue>https://oe.openelis.org:8443/api/OpenELIS-Global</defaultValue>
 	</globalProperty>
 	<globalProperty>
 		<property>@MODULE_ID@.openElis.inboundHost</property>
@@ -177,6 +178,16 @@
 		</description>
 		<defaultValue>yyyyMMddHHmmss</defaultValue>
 	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.LaboratoryFormName</property>
+		<description>The Name of the Laboratory Form for Capturing Laborders</description>
+		<defaultValue>Analyse de Laboratoire</defaultValue>
+	</globalProperty>
+	<advice>
+		<point>org.openmrs.api.EncounterService</point>
+		<class>@MODULE_PACKAGE@.api.advice.EncounterServiceRoundAdvice</class>
+	</advice>
+
 	<!-- Required Global Properties -->
 
 	<!--
