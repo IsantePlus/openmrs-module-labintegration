@@ -59,7 +59,6 @@ public class EncounterServiceRoundAdvice extends StaticMethodMatcherPointcutAdvi
 			String labFormName = administrationService.getGlobalProperty(LabIntegrationConfig.GP_LABORATORY_FORM_NAME,
 			    LAB_FORM_NAME);
 			CareSetting careSetting = orderService.getCareSetting(2);
-			ObsSelector obsSelector = new ObsSelector();
 			if (args[0] instanceof Encounter) {
 				Encounter encounter = (Encounter) args[0];
 				log.debug("captured encounter " + encounter.getUuid());
@@ -72,12 +71,11 @@ public class EncounterServiceRoundAdvice extends StaticMethodMatcherPointcutAdvi
 							if (destinationObs.get().getValueText().equals(OPENELIS_DESTINATION)) {
 								Set<Concept> testConcepts = new HashSet<>();
 								encounter.getObs().forEach(obs -> {
-									if (obsSelector.isValidTestType(obs)) {
+									if (obs.getValueCoded() != null) {
 										if (obs.getValueCoded().getConceptClass().getName().equals(TEST_CLASS)) {
 											testConcepts.add(obs.getValueCoded());
 										}
 									}
-									
 								});
 								Set<Order> orders = testConcepts.stream().map(testConcept -> {
 									TestOrder order = new TestOrder();
