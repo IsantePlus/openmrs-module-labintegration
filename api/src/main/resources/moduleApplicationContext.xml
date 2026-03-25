@@ -27,26 +27,21 @@
 
     <!-- Wraps LabIntegrationService methods in DB transactions and OpenMRS interceptors,
     which set audit info like dateCreated, changedBy, etc.-->
-<!--    <bean id="labintegration.LabIntegrationService"
+    <bean id="labintegration.LabIntegrationService"
           class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="transactionManager">
-            <ref bean="transactionManager"/>
-        </property>
+        <property name="transactionManager" ref="transactionManager"/>
         <property name="target">
             <bean class="org.openmrs.module.labintegration.api.impl.LabIntegrationServiceImpl">
-                <property name="dao" ref="labintegration.LabIntegrationDao"/>
+                <property name="openElisHL7Config" ref="OpenElisHL7Config"/>
+                <property name="orderSenderManager" ref="orderSenderManager"/>
             </bean>
         </property>
-        <property name="preInterceptors">
-            <ref bean="serviceInterceptors"/>
-        </property>
-        <property name="transactionAttributeSource">
-            <ref bean="transactionAttributeSource"/>
-        </property>
+        <property name="preInterceptors" ref="serviceInterceptors"/>
+        <property name="transactionAttributeSource" ref="transactionAttributeSource"/>
     </bean>
 
-    &lt;!&ndash; Adds LabIntegrationService to OpenMRS context so it can be accessed
-    calling Context.getService(LabIntegrationService.class) &ndash;&gt;
+    <!-- Adds LabIntegrationService to OpenMRS context so it can be accessed
+    calling Context.getService(LabIntegrationService.class) -->
     <bean parent="serviceContext">
         <property name="moduleService">
             <list>
@@ -54,9 +49,10 @@
                 <ref bean="labintegration.LabIntegrationService"/>
             </list>
         </property>
-    </bean>-->
+    </bean>
+
     <bean id="hL7ServiceLabIntegration" class="org.openmrs.hl7.impl.HL7ServiceImpl" factory-method="getInstance">
-        <property name="HL7DAO"><ref bean="hL7DAO"/></property>
+        <property name="HL7DAO" ref="hL7DAO"/>
         <property name="parser"><bean class="ca.uhn.hl7v2.parser.GenericParser" /></property>
         <property name="router"><bean class="ca.uhn.hl7v2.app.MessageTypeRouter" /></property>
         <property name="HL7Handlers">

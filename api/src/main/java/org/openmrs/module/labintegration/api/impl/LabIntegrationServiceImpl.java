@@ -16,15 +16,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component("labintegration.LabIntegrationServiceImpl")
 public class LabIntegrationServiceImpl extends BaseOpenmrsService implements LabIntegrationService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(LabIntegrationServiceImpl.class);
 	
-	@Autowired
 	private OpenElisHL7Config openElisHL7Config;
 	
-	@Autowired
 	private OrderSenderManager orderSenderManager;
 	
 	@Override
@@ -47,5 +44,13 @@ public class LabIntegrationServiceImpl extends BaseOpenmrsService implements Lab
 		if (orderDestinations.contains(OrderDestination.OPEN_ELIS) && !openElisHL7Config.isOpenElisConfigured()) {
 			throw new LabIntegrationException("Tried to order from OpenELIS that is not configured");
 		}
+	}
+	
+	public void setOpenElisHL7Config(OpenElisHL7Config openElisHL7Config) {
+		this.openElisHL7Config = openElisHL7Config;
+	}
+	
+	public void setOrderSenderManager(OrderSenderManager orderSenderManager) {
+		this.orderSenderManager = orderSenderManager;
 	}
 }
