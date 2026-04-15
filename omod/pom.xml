@@ -77,7 +77,7 @@
                                     <packaging>omod</packaging>
                                     <groupId>${project.parent.groupId}</groupId>
                                     <generatePom>false</generatePom>
-                                    <artifactId>${project.parent.artifactId}</artifactId>
+                                    <artifactId>${project.parent.artifactId}-omod</artifactId>
                                     <version>${project.version}</version>
                                 </configuration>
                             </execution>
