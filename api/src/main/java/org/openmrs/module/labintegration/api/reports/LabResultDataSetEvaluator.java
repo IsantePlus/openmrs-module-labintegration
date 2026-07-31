@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.openmrs.module.labintegration.api.LabIntegrationReportsConstants.LOCATION_ISANTE_CODE_UUID;
+import static org.openmrs.module.labintegration.api.LabIntegrationReportsConstants.ST_CODE_IDENTIFIER_TYPE_UUID;
 import static org.openmrs.module.labintegration.api.LabIntegrationReportsConstants.ISANTEPLUS_IDENDTIFIER_TYPE_UUID;
 
 @Handler(supports = LabResultDataSetDefinition.class)
@@ -38,6 +39,8 @@ public class LabResultDataSetEvaluator implements DataSetEvaluator {
 	private final String COLUMN_NUMBER = "Number";
 	
 	private final String COLUMN_CLINIC_CODE = "Clinic Code";
+	
+	private final String COLUMN_ST_CODE = "ST Code";
 	
 	private final String COLUMN_ISANTEPLUS_ID = "ISantePlus ID";
 	
@@ -71,6 +74,7 @@ public class LabResultDataSetEvaluator implements DataSetEvaluator {
 		List<DataSetColumn> columns = Arrays.asList(
 		    new DataSetColumn(COLUMN_NUMBER, MessageUtil.translate("labintegration.results.clinic.no"), String.class),
 		    new DataSetColumn(COLUMN_CLINIC_CODE, MessageUtil.translate("labintegration.results.clinic.code"), String.class),
+		    new DataSetColumn(COLUMN_ST_CODE, MessageUtil.translate("labintegration.results.st.code"), String.class),
 		    new DataSetColumn(COLUMN_ISANTEPLUS_ID, MessageUtil.translate("labintegration.results.isanteplus.id"),
 		            String.class),
 		    new DataSetColumn(COLUMN_PATIENT_NAME, MessageUtil.translate("labintegration.results.patient.name"),
@@ -95,6 +99,9 @@ public class LabResultDataSetEvaluator implements DataSetEvaluator {
 						break;
 					case COLUMN_CLINIC_CODE:
 						value = extractLocationCode(obs, locationCodeCache);
+						break;
+					case COLUMN_ST_CODE:
+						value = getStCode(obs.getPersonId());
 						break;
 					case COLUMN_PATIENT_NAME:
 						value = obs.getPerson().getPersonName().getFullName();
@@ -155,9 +162,16 @@ public class LabResultDataSetEvaluator implements DataSetEvaluator {
 		PatientService patientService = Context.getPatientService();
 		Patient patient = patientService.getPatient(personId);
 		PatientIdentifierType pit = patientService.getPatientIdentifierTypeByUuid(ISANTEPLUS_IDENDTIFIER_TYPE_UUID);
-		patient.getPatientIdentifier(pit);
 		PatientIdentifier pid = patient.getPatientIdentifier(pit);
 		return pid != null ? pid.getIdentifier() : locationCode + '4' + personId;
+	}
+	
+	protected String getStCode(Integer personId) {
+		PatientService patientService = Context.getPatientService();
+		Patient patient = patientService.getPatient(personId);
+		PatientIdentifierType pit = patientService.getPatientIdentifierTypeByUuid(ST_CODE_IDENTIFIER_TYPE_UUID);
+		PatientIdentifier pid = patient.getPatientIdentifier(pit);
+		return pid != null ? pid.getIdentifier() : "";
 	}
 	
 	protected String getUnits(Obs obs) {
